@@ -1,2 +1,5 @@
 /build
 google-services.json
+build.gradle.kts
+gradle-wrapper.properties
+misc.xml
