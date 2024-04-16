@@ -78,4 +78,6 @@ dependencies {
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
+    // View model
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
 }
