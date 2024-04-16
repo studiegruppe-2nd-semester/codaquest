@@ -2,24 +2,14 @@ package com.example.codaquest.ui.components.onboarding
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.codaquest.Greeting
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
-/*
-At what level are you in coding?
-
- "Beginner",
- "Intermediate",
- "Advanced"
- */
-
 @Composable
-fun Question1 (
+fun Question3 (
     viewModel : OnboardingViewModel
 ) {
     Column {
@@ -43,9 +33,9 @@ fun Question1 (
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun Greeting3Preview() {
     CodaQuestTheme {
         val viewModel : OnboardingViewModel = viewModel()
-        Question1(viewModel = viewModel)
+        Question3(viewModel = viewModel)
     }
 }
