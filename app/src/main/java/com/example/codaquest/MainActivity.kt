@@ -11,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
+import androidx.navigation.compose.rememberNavController
+import com.example.codaquest.navigation.SetupNavHost
 import com.example.codaquest.ui.components.onboarding.OnboardingScreen
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
@@ -25,7 +28,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    OnboardingScreen()
+
+                    navController = rememberNavController()
+                    SetupNavHost(navController = navController)
                 }
             }
         }
