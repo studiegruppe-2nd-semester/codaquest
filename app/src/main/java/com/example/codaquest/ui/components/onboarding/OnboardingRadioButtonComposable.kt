@@ -8,14 +8,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
-/*
-At what level are you in coding?
-
- "Beginner",
- "Intermediate",
- "Advanced"
- */
-
 @Composable
 fun OnboardingRadioButtonComposable (
     viewModel : OnboardingViewModel

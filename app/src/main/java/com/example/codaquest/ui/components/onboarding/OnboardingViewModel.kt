@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavHostController
 import com.example.codaquest.classes.OnboardingQuestion
 import com.example.codaquest.classes.OnboardingQuestionTypes
 
@@ -24,12 +25,17 @@ class OnboardingViewModel : ViewModel () {
     var nextButton: String by mutableStateOf("Next")
         private set
 
-    fun nextQuestion() {
+    fun nextQuestion(
+//        navController: NavController
+    ) {
         if ((currentQuestion < questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             currentQuestion++
-            if (currentQuestion == questions.size) {
+            if (currentQuestion == questions.size - 1) {
                 nextButton = "Finish"
             }
+        }
+        else if ((currentQuestion == questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
+
         }
     }
 
