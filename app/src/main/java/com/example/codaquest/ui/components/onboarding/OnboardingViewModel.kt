@@ -57,7 +57,7 @@ class OnboardingViewModel : ViewModel () {
         ),
     ))
 
-//    var question1Answer :  String? by mutableStateOf(null)
+
 
     fun addButtonColor (answer : String): Color {
         if (answer == questions[currentQuestion].answer.value) {
@@ -68,12 +68,7 @@ class OnboardingViewModel : ViewModel () {
         }
     }
 
-//    var question2Answer : String by mutableStateOf("")
-//        private set
-//
-//    fun onQuestion2AnswerChange (newValue : String) {
-//        question2Answer = newValue
-//    }
+
 
 
 
