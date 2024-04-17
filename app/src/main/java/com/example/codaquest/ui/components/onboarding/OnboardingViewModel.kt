@@ -10,11 +10,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.example.codaquest.classes.OnboardingData
 import com.example.codaquest.classes.OnboardingQuestion
 import com.example.codaquest.classes.OnboardingQuestionTypes
+import com.example.codaquest.repositories.UserRepository
 
 @SuppressLint("MutableCollectionMutableState")
 class OnboardingViewModel : ViewModel () {
+    private val userRepository : UserRepository = UserRepository()
     var currentQuestion: Int by mutableIntStateOf(0)
         private set
 
@@ -37,6 +40,11 @@ class OnboardingViewModel : ViewModel () {
             }
         }
         else if ((currentQuestion == questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
+            userRepository.updateItem(OnboardingData(
+                level = questions[0].answer.value,
+                languages = questions[1].answer.value,
+                projectLength = questions[2].answer.value.toInt()
+            ))
             navController.navigate("home")
         }
     }

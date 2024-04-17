@@ -2,6 +2,7 @@ package com.example.codaquest.repositories
 
 import android.content.ContentValues
 import android.util.Log
+import com.example.codaquest.classes.OnboardingData
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
@@ -9,18 +10,18 @@ import kotlinx.coroutines.tasks.await
 class UserRepository {
     private val db = Firebase.firestore
 
-    fun updateItem(itemId: String, item: Any) {
+    fun updateItem (onboardingData: OnboardingData) {
         // https://stackoverflow.com/questions/56608046/update-a-document-in-firestore
-        db.collection("users").document(itemId).update(
-            "firstname", "John",
-            "lastname", "Smith",
-            "age", 25
+        db.collection("users").document("temp").update(
+            "level", onboardingData.level,
+            "languages", onboardingData.languages,
+            "project-length", onboardingData.projectLength
         )
             .addOnSuccessListener {
-
+                Log.d("update", "Update success")
             }
-            .addOnFailureListener {
-
+            .addOnFailureListener { e ->
+                Log.d("update", "update failure: $e")
             }
     }
 
