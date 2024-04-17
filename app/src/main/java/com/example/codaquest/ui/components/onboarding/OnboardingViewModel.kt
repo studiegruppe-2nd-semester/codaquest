@@ -9,7 +9,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.codaquest.classes.OnboardingData
 import com.example.codaquest.classes.OnboardingQuestion
 import com.example.codaquest.classes.OnboardingQuestionTypes
@@ -45,7 +44,7 @@ class OnboardingViewModel : ViewModel () {
                 languages = questions[1].answer.value,
                 projectLength = questions[2].answer.value.toInt()
             ))
-            navController.navigate("home")
+            navController.navigate("profile")
         }
     }
 
@@ -68,11 +67,10 @@ class OnboardingViewModel : ViewModel () {
 
 
     fun addButtonColor (answer : String): Color {
-        if (answer == questions[currentQuestion].answer.value) {
-            return Color.Red
-        }
-        else {
-            return Color.Blue
+        return if (answer == questions[currentQuestion].answer.value) {
+            Color.Red
+        } else {
+            Color.Blue
         }
     }
 

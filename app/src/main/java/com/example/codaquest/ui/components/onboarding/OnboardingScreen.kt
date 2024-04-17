@@ -42,7 +42,7 @@ fun OnboardingScreen (
                 .padding(horizontal = 5.dp)
                 .fillMaxWidth(0.1f),
                 contentPadding = PaddingValues(0.dp),
-                onClick = { /*TODO*/ }
+                onClick = { navController.navigate("profile") }
             ) {
                 Text(text = "X")
             }
