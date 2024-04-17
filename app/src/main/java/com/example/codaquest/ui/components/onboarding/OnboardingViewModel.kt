@@ -36,7 +36,7 @@ class OnboardingViewModel : ViewModel () {
             }
         }
         else if ((currentQuestion == questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
-            navController.navigate("homepage")
+            navController.navigate("home")
         }
     }
 
