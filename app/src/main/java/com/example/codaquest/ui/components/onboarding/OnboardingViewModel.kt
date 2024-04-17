@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -58,12 +59,12 @@ class OnboardingViewModel : ViewModel () {
 
 //    var question1Answer :  String? by mutableStateOf(null)
 
-    fun addButtonColor (answer : String) {
+    fun addButtonColor (answer : String): Color {
         if (answer == questions[currentQuestion].answer.value) {
-            return
+            return Color.Red
         }
         else {
-            return
+            return Color.Blue
         }
     }
 
