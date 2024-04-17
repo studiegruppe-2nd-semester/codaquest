@@ -22,7 +22,7 @@ fun OnboardingScreen (
             OnboardingQuestionTypes.IntField -> OnboardingIntFieldComposable(viewModel = viewModel)
         }
 
-        Button(onClick = { viewModel.nextQuestion() }) {
+        Button(onClick = { viewModel.nextQuestion(navController) }) {
             Text(viewModel.nextButton)
         }
     }
