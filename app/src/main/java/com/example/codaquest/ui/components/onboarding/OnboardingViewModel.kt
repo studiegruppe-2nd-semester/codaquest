@@ -21,6 +21,12 @@ class OnboardingViewModel : ViewModel () {
     var nextButton: String by mutableStateOf("Next")
         private set
 
+    fun previousQuestion () {
+        if (currentQuestion > 0 ) {
+            currentQuestion--
+        }
+    }
+
     fun nextQuestion(
         navController: NavController
     ) {

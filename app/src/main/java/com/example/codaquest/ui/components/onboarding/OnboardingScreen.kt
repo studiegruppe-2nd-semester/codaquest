@@ -78,7 +78,7 @@ fun OnboardingScreen (
         Row {
 
             Button(
-                onClick = { viewModel.nextQuestion(navController) },
+                onClick = { viewModel.previousQuestion() },
                 contentPadding = PaddingValues(0.dp)
             ) {
                 Text("Previous")
