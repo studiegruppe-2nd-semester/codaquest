@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.codaquest.classes.OnboardingQuestion
 import com.example.codaquest.classes.OnboardingQuestionTypes
@@ -26,7 +27,7 @@ class OnboardingViewModel : ViewModel () {
         private set
 
     fun nextQuestion(
-//        navController: NavController
+        navController: NavController
     ) {
         if ((currentQuestion < questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             currentQuestion++
@@ -35,7 +36,7 @@ class OnboardingViewModel : ViewModel () {
             }
         }
         else if ((currentQuestion == questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
-
+            navController.navigate("homepage")
         }
     }
 
