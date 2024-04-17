@@ -9,6 +9,21 @@ import kotlinx.coroutines.tasks.await
 class UserRepository {
     private val db = Firebase.firestore
 
+    fun updateItem(itemId: String, item: Any) {
+        // https://stackoverflow.com/questions/56608046/update-a-document-in-firestore
+        db.collection("users").document(itemId).update(
+            "firstname", "John",
+            "lastname", "Smith",
+            "age", 25
+        )
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener {
+
+            }
+    }
+
 //    fun addNote(note: Note) {
 //        // Create a new user with a first and last name.
 //        // Here Firestore will create a DocumentId but we dont need to add it when creating an object
