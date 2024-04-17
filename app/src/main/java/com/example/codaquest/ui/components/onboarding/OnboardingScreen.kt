@@ -1,5 +1,6 @@
 package com.example.codaquest.ui.components.onboarding
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -40,6 +41,7 @@ fun OnboardingScreen (
             Button(modifier = Modifier
                 .padding(horizontal = 5.dp)
                 .fillMaxWidth(0.1f),
+                contentPadding = PaddingValues(0.dp),
                 onClick = { /*TODO*/ }
             ) {
                 Text(text = "X")
@@ -75,18 +77,20 @@ fun OnboardingScreen (
             }
         }
 
-        Row {
+        Row(modifier = Modifier
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
 
-            Button(
+            Button(modifier = Modifier.padding(5.dp),
                 onClick = { viewModel.previousQuestion() },
                 contentPadding = PaddingValues(0.dp)
             ) {
                 Text("Previous")
             }
 
-            Button(
-                onClick = { viewModel.nextQuestion(navController) },
-                contentPadding = PaddingValues(0.dp)
+            Button(modifier = Modifier.padding(5.dp),
+                onClick = { viewModel.nextQuestion(navController) }
             ) {
                 Text(viewModel.nextButton)
             }
