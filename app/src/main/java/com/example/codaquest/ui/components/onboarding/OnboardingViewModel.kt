@@ -12,12 +12,6 @@ import androidx.navigation.NavHostController
 import com.example.codaquest.classes.OnboardingQuestion
 import com.example.codaquest.classes.OnboardingQuestionTypes
 
-/*
-Questions:
- "At what level are you in coding?",
- "Which coding languages do you code in?",
- "How much time do you usually want to spend on a single project?"
- */
 @SuppressLint("MutableCollectionMutableState")
 class OnboardingViewModel : ViewModel () {
     var currentQuestion: Int by mutableIntStateOf(0)
