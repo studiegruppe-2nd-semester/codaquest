@@ -21,10 +21,11 @@ class OnboardingViewModel : ViewModel () {
     var currentQuestion: Int by mutableIntStateOf(0)
         private set
 
-    private var nextButton: String by mutableStateOf("Next")
+    var nextButton: String by mutableStateOf("Next")
+        private set
 
     fun nextQuestion() {
-        if (currentQuestion < questions.size && questions[currentQuestion].answer.value.isNotEmpty()) {
+        if ((currentQuestion < questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             currentQuestion++
             if (currentQuestion == questions.size) {
                 nextButton = "Finish"
@@ -50,8 +51,13 @@ class OnboardingViewModel : ViewModel () {
 
 //    var question1Answer :  String? by mutableStateOf(null)
 
-    fun changeButtonColor (answer : String) {
-        
+    fun addButtonColor (answer : String) {
+        if (answer == questions[currentQuestion].answer.value) {
+            return
+        }
+        else {
+            return
+        }
     }
 
 //    var question2Answer : String by mutableStateOf("")

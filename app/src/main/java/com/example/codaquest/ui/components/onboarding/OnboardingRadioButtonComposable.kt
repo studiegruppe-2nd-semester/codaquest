@@ -24,19 +24,12 @@ fun OnboardingRadioButtonComposable (
         Text(viewModel.questions[viewModel.currentQuestion].question)
 
         viewModel.questions[viewModel.currentQuestion].options?.forEach { option ->
-            Button(onClick = { viewModel.questions[viewModel.currentQuestion].answer.value = option}) {
+            Button(
+                onClick = { viewModel.questions[viewModel.currentQuestion].answer.value = option}
+            ) {
                 Text(text = option)
             }
         }
-
-
-//        Button(onClick = { viewModel.question1Answer = "Intermediate" }) {
-//            Text(text = "Intermediate")
-//        }
-//
-//        Button(onClick = { viewModel.question1Answer = "Advanced" }) {
-//            Text(text = "Advanced")
-//        }
 
         Text(text = viewModel.questions[viewModel.currentQuestion].answer.value)
     }

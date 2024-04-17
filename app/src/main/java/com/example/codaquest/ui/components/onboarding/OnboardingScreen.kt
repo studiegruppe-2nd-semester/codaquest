@@ -26,7 +26,7 @@ fun OnboardingScreen () {
         }
 
         Button(onClick = { viewModel.nextQuestion() }) {
-            Text("Next Question")
+            Text(viewModel.nextButton)
         }
     }
 }
