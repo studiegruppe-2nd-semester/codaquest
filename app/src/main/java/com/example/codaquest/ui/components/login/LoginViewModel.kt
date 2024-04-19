@@ -65,6 +65,25 @@ class LoginViewModel: ViewModel() {
     }
 
     // ----------------------------------------- SIGN UP
+    fun signUp(navController: NavController, sharedViewModel: SharedViewModel, loginViewModel: LoginViewModel) {
+        if (password == passwordConfirm) {
+            error = ""
+
+            if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
+                accountService.signUp(
+                    email = email,
+                    username = username,
+                    password = password,
+                    navController = navController,
+                    sharedViewModel = sharedViewModel,
+                    loginViewModel = loginViewModel
+                )
+            }
+        }
+        else {
+            error = "Confirmed password does not match"
+        }
+    }
 
     // ----------------------------------------- ERROR
     var error: String by mutableStateOf("")

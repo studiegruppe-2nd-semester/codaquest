@@ -37,7 +37,8 @@ fun SetupNavHost (
 
         composable("onboarding"){
             OnboardingScreen(
-                navController = navController
+                navController = navController,
+                sharedViewModel = sharedViewModel
             )
         }
 

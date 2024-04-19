@@ -1,7 +1,6 @@
 package com.example.codaquest.services
 
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.codaquest.repositories.UserRepository
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.login.LoginViewModel
@@ -13,20 +12,25 @@ class AccountService {
 
     private val userRepository = UserRepository()
 
-    fun authenticate(
+    fun signUp(
         email: String,
+        username: String,
         password: String,
-        navController: NavHostController,
-//        viewModel: LoginViewModel
+        navController: NavController,
+        sharedViewModel: SharedViewModel,
+        loginViewModel: LoginViewModel
     ) {
         Firebase.auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-//                viewModel.updateUI(Firebase.auth.currentUser)
-//                viewModel.error = ""
-//                navController.navigate("success")
+                loginViewModel.error = ""
+
+                val user = Firebase.auth.currentUser
+                if (user != null) {
+                    userRepository.addUserData(user.uid, username, navController, sharedViewModel)
+                }
             }
             .addOnFailureListener {
-//                viewModel.error = "User already exists"
+                loginViewModel.error = "User already exists"
             }
     }
 
