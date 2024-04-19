@@ -7,15 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.codaquest.classes.User
 import com.example.codaquest.services.AccountService
+import com.example.codaquest.ui.components.SharedViewModel
 
 class LoginViewModel: ViewModel() {
-
-    private var user: User? = null
-
-    fun changeUser(newUser: User?) {
-        user = newUser
-    }
-
     // ----------------------------------------- ACCOUNT SERVICE
     val accountService = AccountService()
 
@@ -48,9 +42,9 @@ class LoginViewModel: ViewModel() {
     }
 
     // ----------------------------------------- LOGIN
-    fun login(navController: NavController, viewModel: LoginViewModel) {
+    fun login(navController: NavController, sharedViewModel: SharedViewModel) {
         if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
-            accountService.login(email, password, navController, viewModel)
+            accountService.login(email, password, navController, sharedViewModel)
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.codaquest.services
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.codaquest.repositories.UserRepository
+import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.login.LoginViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
@@ -33,13 +34,13 @@ class AccountService {
         email: String,
         password: String,
         navController: NavController,
-        loginViewModel: LoginViewModel
+        sharedViewModel: SharedViewModel
     ) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 val user = Firebase.auth.currentUser
                 if (user != null) {
-                    userRepository.getUserData(user.uid, loginViewModel)
+                    userRepository.getUserData(user.uid, sharedViewModel)
                 }
 //                viewModel.error = ""
                 navController.navigate("profile")

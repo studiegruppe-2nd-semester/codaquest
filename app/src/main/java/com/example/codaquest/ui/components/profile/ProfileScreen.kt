@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
 import com.example.codaquest.ui.theme.CodaQuestTheme
@@ -33,7 +34,8 @@ import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @Composable
 fun ProfileScreen(
-    navController: NavController
+    navController: NavController,
+    sharedViewModel: SharedViewModel
 ) {
     val viewModel : ProfileViewModel = viewModel()
 
@@ -66,10 +68,12 @@ fun ProfileScreen(
                 ) {
 
                 }
-                Text(
-                    text = "Username",
-                    fontSize = 30.sp
-                )
+                (if (sharedViewModel.user?.username != null) sharedViewModel.user!!.username else "username not found")?.let {
+                    Text(
+                        text = it,
+                        fontSize = 30.sp
+                    )
+                }
             }
 
             Column {
@@ -77,11 +81,16 @@ fun ProfileScreen(
                     text = "Saved projects",
                     fontSize = 30.sp
                 )
-
-                LazyColumn {
-                    items(viewModel.projects) { item ->
-                        ProjectComposable(project = item)
+                
+                if (viewModel.projects.isNotEmpty()) {
+                    LazyColumn {
+                        items(viewModel.projects) { item ->
+                            ProjectComposable(project = item)
+                        }
                     }
+                }
+                else {
+                    Text(text = "No saved projects found")
                 }
             }
         }
@@ -91,10 +100,10 @@ fun ProfileScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProfileScreenPreview() {
-    CodaQuestTheme {
-        ProfileScreen(rememberNavController())
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ProfileScreenPreview() {
+//    CodaQuestTheme {
+//        ProfileScreen(rememberNavController())
+//    }
+//}

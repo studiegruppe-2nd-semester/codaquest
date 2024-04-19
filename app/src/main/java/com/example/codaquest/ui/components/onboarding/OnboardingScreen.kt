@@ -22,11 +22,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.codaquest.classes.OnboardingQuestionTypes
+import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @Composable
 fun OnboardingScreen (
-    navController: NavController
+    navController: NavController,
+    sharedViewModel: SharedViewModel
 ) {
     val viewModel : OnboardingViewModel = viewModel()
 
@@ -97,10 +99,10 @@ fun OnboardingScreen (
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun OnboardingScreenPreview() {
-    CodaQuestTheme {
-        OnboardingScreen(rememberNavController())
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun OnboardingScreenPreview() {
+//    CodaQuestTheme {
+//        OnboardingScreen(rememberNavController(), )
+//    }
+//}
