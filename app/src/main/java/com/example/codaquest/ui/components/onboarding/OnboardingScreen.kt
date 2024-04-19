@@ -99,11 +99,11 @@ fun OnboardingScreen (
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun OnboardingScreenPreview() {
-    CodaQuestTheme {
-        val sharedViewModel: SharedViewModel = viewModel()
-        OnboardingScreen(rememberNavController(), sharedViewModel)
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun OnboardingScreenPreview() {
+//    CodaQuestTheme {
+//        val sharedViewModel: SharedViewModel = viewModel()
+//        OnboardingScreen(rememberNavController(), sharedViewModel)
+//    }
+//}
