@@ -22,8 +22,6 @@ fun LoginComposable (
     sharedViewModel: SharedViewModel,
     loginViewModel: LoginViewModel
 ) {
-    val accountService = AccountService()
-
     Column (modifier = Modifier
         .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -36,9 +34,7 @@ fun LoginComposable (
             label = { Text("Password")})
 
         Button(onClick = {
-            accountService.login(
-                email = loginViewModel.email,
-                password = loginViewModel.password,
+            loginViewModel.login(
                 navController = navController,
                 sharedViewModel = sharedViewModel,
                 loginViewModel = loginViewModel

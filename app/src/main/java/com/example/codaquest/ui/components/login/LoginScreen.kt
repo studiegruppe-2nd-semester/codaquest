@@ -19,12 +19,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.codaquest.classes.LoginState
+import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.onboarding.OnboardingScreen
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @Composable
 fun LoginScreen(
-    navController: NavController
+    navController: NavController,
+    sharedViewModel: SharedViewModel
 ) {
     val loginViewModel: LoginViewModel = viewModel()
 
@@ -41,7 +43,7 @@ fun LoginScreen(
 
         Box(modifier = Modifier.fillMaxHeight(0.5f)) {
             when (loginViewModel.state) {
-                LoginState.login -> LoginComposable(navController, loginViewModel)
+                LoginState.login -> LoginComposable(navController, sharedViewModel, loginViewModel)
                 LoginState.signup -> SignUpComposable(loginViewModel)
             }
         }
@@ -56,15 +58,5 @@ fun LoginScreen(
             }
         }
 
-
-
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginPreview() {
-    CodaQuestTheme {
-        LoginScreen(rememberNavController())
     }
 }

@@ -52,9 +52,15 @@ class LoginViewModel: ViewModel() {
     }
 
     // ----------------------------------------- LOGIN
-    fun login(navController: NavController, sharedViewModel: SharedViewModel) {
+    fun login(navController: NavController, sharedViewModel: SharedViewModel, loginViewModel: LoginViewModel) {
         if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
-            accountService.login(email, password, navController, sharedViewModel)
+            accountService.login(
+                email = email,
+                password = password,
+                navController = navController,
+                sharedViewModel = sharedViewModel,
+                loginViewModel = loginViewModel
+            )
         }
     }
 

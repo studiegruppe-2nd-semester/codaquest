@@ -30,7 +30,8 @@ fun SetupNavHost (
 
         composable("login"){
             LoginScreen(
-                navController = navController
+                navController = navController,
+                sharedViewModel = sharedViewModel
             )
         }
 
