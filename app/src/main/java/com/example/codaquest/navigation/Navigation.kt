@@ -24,6 +24,7 @@ fun SetupNavHost (
         composable("home") {
             HomeScreen(
                 navController = navController,
+                sharedViewModel = sharedViewModel
                 )
         }
 

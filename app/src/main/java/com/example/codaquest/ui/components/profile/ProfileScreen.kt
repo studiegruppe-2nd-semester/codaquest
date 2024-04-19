@@ -97,7 +97,7 @@ fun ProfileScreen(
             }
         }
 
-        NavBar(navController)
+        NavBar(navController, sharedViewModel)
 
     }
 }
