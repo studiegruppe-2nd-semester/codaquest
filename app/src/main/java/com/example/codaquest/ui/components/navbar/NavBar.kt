@@ -19,12 +19,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.codaquest.services.AccountService
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @Composable
 fun NavBar(
     navController: NavController
 ) {
+    val accountService = AccountService()
+
     Box(modifier = Modifier
         .background(Color.Red)
         .fillMaxWidth()
@@ -46,7 +49,14 @@ fun NavBar(
             )
 
             Text(modifier = Modifier
-                .clickable { navController.navigate("profile") },
+                .clickable {
+                   if (accountService.getCurrentUser() != null) {
+                       navController.navigate("profile")
+                   }
+                   else {
+//                       navController.navigate("login")
+                   }
+                },
                 text = "PROFILE",
                 fontSize = 20.sp
             )

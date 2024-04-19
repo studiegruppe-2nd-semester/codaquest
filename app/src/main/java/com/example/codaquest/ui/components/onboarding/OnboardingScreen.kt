@@ -67,7 +67,7 @@ fun OnboardingScreen (
 
         Box(modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.6f),
+            .fillMaxHeight(0.5f),
             contentAlignment = Alignment.Center
         ) {
             when (viewModel.questions[viewModel.currentQuestion].type) {
@@ -84,7 +84,6 @@ fun OnboardingScreen (
 
             Button(modifier = Modifier.padding(5.dp),
                 onClick = { viewModel.previousQuestion() },
-                contentPadding = PaddingValues(0.dp)
             ) {
                 Text("Previous")
             }

@@ -2,6 +2,7 @@ package com.example.codaquest.services
 
 import androidx.navigation.NavHostController
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 
 class AccountService {
@@ -37,5 +38,9 @@ class AccountService {
             .addOnFailureListener {
 //                viewModel.error = "Wrong username or password"
             }
+    }
+
+    fun getCurrentUser(): FirebaseUser? {
+        return Firebase.auth.currentUser
     }
 }

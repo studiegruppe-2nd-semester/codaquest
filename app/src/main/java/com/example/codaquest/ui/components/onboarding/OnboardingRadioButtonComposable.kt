@@ -28,9 +28,9 @@ fun OnboardingRadioButtonComposable (
     ) {
         Text(modifier = Modifier.padding(vertical = 20.dp),
             text = viewModel.questions[viewModel.currentQuestion].question,
-            fontSize = 30.sp,
+            fontSize = 20.sp,
             textAlign = TextAlign.Center,
-            lineHeight = 35.sp,
+            lineHeight = 25.sp,
             )
 
         viewModel.questions[viewModel.currentQuestion].options?.forEach { option ->

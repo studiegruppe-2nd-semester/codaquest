@@ -26,6 +26,7 @@ class OnboardingViewModel : ViewModel () {
     fun previousQuestion () {
         if (currentQuestion > 0 ) {
             currentQuestion--
+            if (nextButton != "Next") nextButton = "Next"
         }
     }
 
