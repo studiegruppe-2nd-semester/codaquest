@@ -54,7 +54,7 @@ fun NavBar(
                        navController.navigate("profile")
                    }
                    else {
-//                       navController.navigate("login")
+                       navController.navigate("login")
                    }
                 },
                 text = "PROFILE",
