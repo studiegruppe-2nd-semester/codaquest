@@ -12,13 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.codaquest.Greeting
+import com.example.codaquest.services.AccountService
+import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @Composable
 fun LoginComposable (
     navController: NavController,
+    sharedViewModel: SharedViewModel,
     loginViewModel: LoginViewModel
 ) {
+    val accountService = AccountService()
+
     Column (modifier = Modifier
         .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
@@ -30,9 +35,19 @@ fun LoginComposable (
             onValueChange = {loginViewModel.updatePassword(it)},
             label = { Text("Password")})
 
-       Button(onClick = {}) {
-           Text(text = "Log In")
-       }
+        Button(onClick = {
+            accountService.login(
+                email = loginViewModel.email,
+                password = loginViewModel.password,
+                navController = navController,
+                sharedViewModel = sharedViewModel,
+                loginViewModel = loginViewModel
+            )
+        }) {
+        Text(text = "Log In")
+        }
+
+        Text(text = loginViewModel.error)
     }
 }
 

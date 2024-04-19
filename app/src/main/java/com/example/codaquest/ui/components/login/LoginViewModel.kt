@@ -59,4 +59,8 @@ class LoginViewModel: ViewModel() {
     }
 
     // ----------------------------------------- SIGN UP
+
+    // ----------------------------------------- ERROR
+    var error: String by mutableStateOf("")
+
 }

@@ -34,7 +34,8 @@ class AccountService {
         email: String,
         password: String,
         navController: NavController,
-        sharedViewModel: SharedViewModel
+        sharedViewModel: SharedViewModel,
+        loginViewModel: LoginViewModel
     ) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
@@ -42,11 +43,11 @@ class AccountService {
                 if (user != null) {
                     userRepository.getUserData(user.uid, sharedViewModel)
                 }
-//                viewModel.error = ""
+                loginViewModel.error = ""
                 navController.navigate("profile")
             }
             .addOnFailureListener {
-//                viewModel.error = "Wrong username or password"
+                loginViewModel.error = "Wrong username or password"
             }
     }
 
