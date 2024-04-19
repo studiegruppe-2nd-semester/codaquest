@@ -1,9 +1,17 @@
 package com.example.codaquest.ui.components.profile
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.example.codaquest.classes.Project
+import com.example.codaquest.services.AccountService
 
 class ProfileViewModel: ViewModel() {
+    private val accountService = AccountService()
+
+    fun logout(navController: NavController) {
+        accountService.logout(navController = navController)
+    }
+
     val projects: List<Project> = listOf(
         Project(
             title = "project 1",

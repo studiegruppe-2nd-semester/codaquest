@@ -39,12 +39,12 @@ class AccountService {
     ) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
+                loginViewModel.error = ""
+
                 val user = Firebase.auth.currentUser
                 if (user != null) {
-                    userRepository.getUserData(user.uid, sharedViewModel)
+                    userRepository.getUserData(user.uid, navController, sharedViewModel)
                 }
-                loginViewModel.error = ""
-                navController.navigate("profile")
             }
             .addOnFailureListener {
                 loginViewModel.error = "Wrong username or password"
@@ -53,5 +53,10 @@ class AccountService {
 
     fun getCurrentUser(): FirebaseUser? {
         return Firebase.auth.currentUser
+    }
+
+    fun logout(navController: NavController) {
+        Firebase.auth.signOut()
+        navController.navigate("home")
     }
 }

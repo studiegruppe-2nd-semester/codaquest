@@ -1,17 +1,18 @@
 package com.example.codaquest.repositories
 
+import android.content.ContentValues
 import android.util.Log
+import androidx.navigation.NavController
 import com.example.codaquest.classes.OnboardingData
 import com.example.codaquest.classes.User
 import com.example.codaquest.ui.components.SharedViewModel
-import com.example.codaquest.ui.components.login.LoginViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 class UserRepository {
     private val db = Firebase.firestore
 
-    fun getUserData(userUid: String, sharedViewModel: SharedViewModel) {
+    fun getUserData(userUid: String, navController: NavController, sharedViewModel: SharedViewModel) {
         db.collection("users").document(userUid).get()
             .addOnSuccessListener { document ->
 
@@ -27,10 +28,13 @@ class UserRepository {
                     onboardingData = onboardingData
                 ))
 
-//              Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                navController.navigate("profile")
+
+              Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
             }
             .addOnFailureListener { exception ->
-//                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                navController.navigate("profile")
             }
     }
 

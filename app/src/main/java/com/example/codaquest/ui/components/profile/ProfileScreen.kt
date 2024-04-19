@@ -1,6 +1,7 @@
 package com.example.codaquest.ui.components.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,16 +18,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
-import com.example.codaquest.ui.theme.CodaQuestTheme
 
 /*
  TODO - IF NOT LOGGED IN AND YOU CLICK ON PROFILE FROM NAV BAR, IT SHOULD GO DIRECTLY TO LOGIN PAGE
@@ -53,7 +51,11 @@ fun ProfileScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Settings")
-                Text(text = "Logout")
+                Text(modifier = Modifier.clickable {
+                    viewModel.logout(navController)
+                },
+                    text = "Logout"
+                )
             }
 
             Column(modifier = Modifier
@@ -100,11 +102,11 @@ fun ProfileScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProfileScreenPreview() {
-    CodaQuestTheme {
-        val sharedViewModel: SharedViewModel = viewModel()
-        ProfileScreen(rememberNavController(), sharedViewModel)
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ProfileScreenPreview() {
+//    CodaQuestTheme {
+//        val sharedViewModel: SharedViewModel = viewModel()
+//        ProfileScreen(rememberNavController(), sharedViewModel)
+//    }
+//}
