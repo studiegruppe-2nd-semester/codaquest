@@ -40,7 +40,7 @@ class OnboardingViewModel : ViewModel () {
             }
         }
         else if ((currentQuestion == questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
-            userRepository.updateItem(OnboardingData(
+            userRepository.updateUserData(OnboardingData(
                 level = questions[0].answer.value,
                 languages = questions[1].answer.value,
                 projectLength = questions[2].answer.value.toInt()

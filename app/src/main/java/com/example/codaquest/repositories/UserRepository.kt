@@ -2,13 +2,38 @@ package com.example.codaquest.repositories
 
 import android.util.Log
 import com.example.codaquest.classes.OnboardingData
+import com.example.codaquest.classes.User
+import com.example.codaquest.ui.components.login.LoginViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 class UserRepository {
     private val db = Firebase.firestore
 
-    fun updateItem (onboardingData: OnboardingData) {
+    fun getUserData(userUid: String, loginViewModel: LoginViewModel) {
+        db.collection("users").document(userUid).get()
+            .addOnSuccessListener { document ->
+
+                val onboardingData = OnboardingData(
+                    level = document.data?.get("level")?.toString(),
+                    languages = document.data?.get("languages")?.toString(),
+                    projectLength = document.data?.get("project-length")?.toString()?.toInt()
+                )
+
+                loginViewModel.changeUser(User(
+                    userUid = document.id,
+                    username = document.data?.get("username")?.toString(),
+                    onboardingData = onboardingData
+                ))
+
+//              Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+            }
+            .addOnFailureListener { exception ->
+//                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+            }
+    }
+
+    fun updateUserData (onboardingData: OnboardingData) {
         // https://stackoverflow.com/questions/56608046/update-a-document-in-firestore
         db.collection("users").document("temp").update(
             "level", onboardingData.level,

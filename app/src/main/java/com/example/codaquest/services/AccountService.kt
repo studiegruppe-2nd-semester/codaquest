@@ -1,11 +1,17 @@
 package com.example.codaquest.services
 
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.example.codaquest.repositories.UserRepository
+import com.example.codaquest.ui.components.login.LoginViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 
 class AccountService {
+
+    private val userRepository = UserRepository()
+
     fun authenticate(
         email: String,
         password: String,
@@ -26,14 +32,17 @@ class AccountService {
     fun login(
         email: String,
         password: String,
-        navController: NavHostController,
-//        viewModel: LoginViewModel
+        navController: NavController,
+        loginViewModel: LoginViewModel
     ) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-//                viewModel.updateUI(Firebase.auth.currentUser)
+                val user = Firebase.auth.currentUser
+                if (user != null) {
+                    userRepository.getUserData(user.uid, loginViewModel)
+                }
 //                viewModel.error = ""
-//                navController.navigate("success")
+                navController.navigate("profile")
             }
             .addOnFailureListener {
 //                viewModel.error = "Wrong username or password"
