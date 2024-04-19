@@ -23,10 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.codaquest.classes.Project
 import com.example.codaquest.ui.components.navbar.NavBar
-import com.example.codaquest.ui.components.onboarding.OnboardingScreen
-import com.example.codaquest.ui.components.onboarding.OnboardingViewModel
+import com.example.codaquest.ui.components.project.ProjectComposable
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 /*

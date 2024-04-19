@@ -1,4 +1,4 @@
-package com.example.codaquest.ui.components.profile
+package com.example.codaquest.ui.components.project
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
