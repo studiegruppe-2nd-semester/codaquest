@@ -27,8 +27,7 @@ import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @Composable
 fun OnboardingScreen (
-    navController: NavController,
-    sharedViewModel: SharedViewModel
+    navController: NavController
 ) {
     val viewModel : OnboardingViewModel = viewModel()
 
@@ -99,11 +98,10 @@ fun OnboardingScreen (
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun OnboardingScreenPreview() {
-//    CodaQuestTheme {
-//        val sharedViewModel: SharedViewModel = viewModel()
-//        OnboardingScreen(rememberNavController(), sharedViewModel)
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun OnboardingScreenPreview() {
+    CodaQuestTheme {
+        OnboardingScreen(rememberNavController())
+    }
+}

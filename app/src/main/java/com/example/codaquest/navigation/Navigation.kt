@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.home.HomeScreen
+import com.example.codaquest.ui.components.login.LoginScreen
 import com.example.codaquest.ui.components.onboarding.OnboardingScreen
 import com.example.codaquest.ui.components.profile.ProfileScreen
 
@@ -18,7 +19,7 @@ fun SetupNavHost (
 
     NavHost(
         navController = navController,
-        startDestination = "onboarding" ) {
+        startDestination = "home" ) {
 
         composable("home") {
             HomeScreen(
@@ -27,10 +28,15 @@ fun SetupNavHost (
                 )
         }
 
+        composable("login"){
+            LoginScreen(
+                navController = navController
+            )
+        }
+
         composable("onboarding"){
             OnboardingScreen(
-                navController = navController,
-                sharedViewModel = sharedViewModel
+                navController = navController
             )
         }
 

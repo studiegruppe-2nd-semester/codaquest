@@ -11,13 +11,15 @@ import com.example.codaquest.ui.components.SharedViewModel
 
 class LoginViewModel: ViewModel() {
     // ----------------------------------------- ACCOUNT SERVICE
-    val accountService = AccountService()
+    private val accountService = AccountService()
 
     // ----------------------------------------- LOGIN/SIGNUP STATE
-    var state: LoginState = LoginState.login
-
+    var state: LoginState by mutableStateOf(LoginState.login)
+    var stateButtonText by mutableStateOf("Create new account")
+        private set
     fun updateState() {
         state = if (state == LoginState.login) LoginState.signup else LoginState.login
+        stateButtonText = if (stateButtonText == "Create new account") "Login" else "Create new account"
     }
 
 
