@@ -30,7 +30,7 @@ fun LoginComposable (
             onValueChange = {loginViewModel.updatePassword(it)},
             label = { Text("Password")})
 
-       Button(onClick = {navController.navigate("home")}) {
+       Button(onClick = {}) {
            Text(text = "Log In")
        }
     }
