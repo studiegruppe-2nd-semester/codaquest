@@ -43,10 +43,10 @@ class LoginViewModel: ViewModel() {
     }
 
     // ----------------------------------------- PASSWORD CHECK
-    var passwordCheck: String by mutableStateOf("")
+    var passwordConfirm: String by mutableStateOf("")
         private set
-    fun updatePasswordCheck(newValue: String) {
-        passwordCheck = newValue
+    fun updatePasswordConfirm(newValue: String) {
+        passwordConfirm = newValue
     }
 
     // ----------------------------------------- LOGIN
