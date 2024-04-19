@@ -5,13 +5,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.example.codaquest.classes.User
+import com.example.codaquest.classes.LoginState
 import com.example.codaquest.services.AccountService
 import com.example.codaquest.ui.components.SharedViewModel
 
 class LoginViewModel: ViewModel() {
     // ----------------------------------------- ACCOUNT SERVICE
     val accountService = AccountService()
+
+    // ----------------------------------------- LOGIN/SIGNUP STATE
+    var state: LoginState = LoginState.login
+
+    fun updateState() {
+        state = if (state == LoginState.login) LoginState.signup else LoginState.login
+    }
+
 
     // ----------------------------------------- USERNAME
     var username: String by mutableStateOf("")
