@@ -1,5 +1,8 @@
 package com.example.codaquest.ui.components.login
 
-fun SignUp() {
+import androidx.compose.runtime.Composable
 
+@Composable
+fun SignUpComposable() {
+    // hello
 }
