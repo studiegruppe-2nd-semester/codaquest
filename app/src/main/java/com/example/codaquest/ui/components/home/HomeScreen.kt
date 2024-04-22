@@ -10,10 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 
 @Composable
-fun HomeScreen (navController: NavController) {
+fun HomeScreen (
+    navController: NavController,
+    sharedViewModel: SharedViewModel
+) {
     // So we can see it the right screen delete the text if necessary
 
     Box(modifier = Modifier.fillMaxSize(),
@@ -32,6 +36,6 @@ fun HomeScreen (navController: NavController) {
             // Your code ends here
         }
 
-        NavBar(navController)
+        NavBar(navController, sharedViewModel)
     }
 }

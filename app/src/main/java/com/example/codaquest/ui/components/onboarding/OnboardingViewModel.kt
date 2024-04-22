@@ -13,6 +13,7 @@ import com.example.codaquest.classes.OnboardingData
 import com.example.codaquest.classes.OnboardingQuestion
 import com.example.codaquest.classes.OnboardingQuestionTypes
 import com.example.codaquest.repositories.UserRepository
+import com.example.codaquest.ui.components.SharedViewModel
 
 @SuppressLint("MutableCollectionMutableState")
 class OnboardingViewModel : ViewModel () {
@@ -31,7 +32,8 @@ class OnboardingViewModel : ViewModel () {
     }
 
     fun nextQuestion(
-        navController: NavController
+        navController: NavController,
+        sharedViewModel: SharedViewModel
     ) {
         if ((currentQuestion < questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             currentQuestion++
@@ -39,13 +41,18 @@ class OnboardingViewModel : ViewModel () {
                 nextButton = "Finish"
             }
         }
+        // IF THE LAST QUESTION IS ANSWERED, ADD TO FIRESTORE
         else if ((currentQuestion == questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
-            userRepository.updateItem(OnboardingData(
-                level = questions[0].answer.value,
-                languages = questions[1].answer.value,
-                projectLength = questions[2].answer.value.toInt()
-            ))
-            navController.navigate("profile")
+            userRepository.updateUserData(
+                OnboardingData(
+                    level = questions[0].answer.value,
+                    languages = questions[1].answer.value,
+                    projectLength = questions[2].answer.value.toInt()
+                ),
+                navController = navController,
+                sharedViewModel = sharedViewModel
+            )
+
         }
     }
 
@@ -65,8 +72,6 @@ class OnboardingViewModel : ViewModel () {
         ),
     ))
 
-
-
     fun addButtonColor (answer : String): Color {
         return if (answer == questions[currentQuestion].answer.value) {
             Color.Red
@@ -74,10 +79,4 @@ class OnboardingViewModel : ViewModel () {
             Color.Blue
         }
     }
-
-
-
-
-
-
 }
