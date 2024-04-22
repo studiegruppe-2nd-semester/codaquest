@@ -3,8 +3,10 @@ package com.example.codaquest.ui.components.onboarding
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +35,12 @@ fun OnboardingTextFieldComposable (
 
         TextField(
             value = viewModel.questions[viewModel.currentQuestion].answer.value,
-            onValueChange = { viewModel.questions[viewModel.currentQuestion].answer.value = it })
+            onValueChange = { viewModel.questions[viewModel.currentQuestion].answer.value = it },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+            ),
+        )
     }
 }
 

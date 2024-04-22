@@ -34,6 +34,7 @@ fun NavBar(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Text(modifier = Modifier
                 .clickable { navController.navigate("home") },
                 text = "Home",

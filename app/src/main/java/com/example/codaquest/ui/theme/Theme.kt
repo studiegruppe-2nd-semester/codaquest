@@ -86,6 +86,7 @@ private val DarkColors = darkColorScheme(
     error = md_theme_dark_error,
     background = md_theme_dark_background,
     surface = md_theme_dark_surface,
+    inversePrimary = md_theme_dark_primaryGreyedOut
 )
 
 @Composable

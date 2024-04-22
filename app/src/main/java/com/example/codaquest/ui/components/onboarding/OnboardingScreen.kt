@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,7 +31,10 @@ fun OnboardingScreen (
 ) {
     val viewModel : OnboardingViewModel = viewModel()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier
+        .padding(0.5.dp)
+        .fillMaxSize()
+    ) {
 
         // PROGRESS BAR
         Row(modifier = Modifier
@@ -37,21 +42,27 @@ fun OnboardingScreen (
             .fillMaxHeight(0.1f),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Button(modifier = Modifier
                 .padding(horizontal = 5.dp)
                 .fillMaxWidth(0.1f),
                 contentPadding = PaddingValues(0.dp),
-                onClick = { navController.navigate("profile") }
+                onClick = { navController.navigate("profile") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent
+                )
             ) {
                 Text(text = "X")
             }
+
             LinearProgressIndicator(
                 progress = { (viewModel.currentQuestion + 1).toFloat() / viewModel.questions.size.toFloat() },
                 modifier = Modifier
                     .padding(horizontal = 5.dp)
                     .fillMaxWidth(0.8f),
-                color = Color.Red //progress color
+                color = MaterialTheme.colorScheme.primary //progress color
             )
+
             Box(modifier = Modifier
                 .fillMaxWidth(),
                 contentAlignment = Alignment.Center
@@ -83,12 +94,18 @@ fun OnboardingScreen (
 
             Button(modifier = Modifier.padding(5.dp),
                 onClick = { viewModel.previousQuestion() },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (viewModel.currentQuestion == 0) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary
+                )
             ) {
                 Text("Previous")
             }
 
             Button(modifier = Modifier.padding(5.dp),
-                onClick = { viewModel.nextQuestion(navController, sharedViewModel) }
+                onClick = { viewModel.nextQuestion(navController, sharedViewModel) },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
             ) {
                 Text(viewModel.nextButton)
             }
