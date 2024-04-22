@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -25,7 +26,7 @@ fun NavBar(
     sharedViewModel: SharedViewModel
 ) {
     Box(modifier = Modifier
-        .background(Color.Red)
+        .background(MaterialTheme.colorScheme.secondary)
         .fillMaxWidth()
         .height(70.dp)
     ) {
@@ -35,8 +36,9 @@ fun NavBar(
         ) {
             Text(modifier = Modifier
                 .clickable { navController.navigate("home") },
-                text = "HOME",
-                fontSize = 20.sp
+                text = "Home",
+                fontSize = 20.sp,
+                color = Color.White
             )
 
             VerticalDivider(
@@ -53,8 +55,9 @@ fun NavBar(
                        navController.navigate("login")
                    }
                 },
-                text = "PROFILE",
-                fontSize = 20.sp
+                text = "Profile",
+                fontSize = 20.sp,
+                color = Color.White
             )
         }
     }

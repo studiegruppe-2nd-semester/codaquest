@@ -8,6 +8,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.navigation.NavController
 import com.example.codaquest.ui.components.SharedViewModel
 
@@ -22,27 +23,35 @@ fun SignUpComposable(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         TextField(value = loginViewModel.username,
             onValueChange = { loginViewModel.updateUsername(it) },
-            label = { Text("Username")})
+            label = { Text("Username")}
+        )
 
         TextField(value = loginViewModel.email,
             onValueChange = { loginViewModel.updateEmail(it) },
-            label = { Text("Email")})
+            label = { Text("Email")}
+        )
 
         TextField(value = loginViewModel.password,
             onValueChange = { loginViewModel.updatePassword(it) },
-            label = { Text("Password")})
+            label = { Text("Password")},
+            visualTransformation = PasswordVisualTransformation()
+        )
 
         TextField(value = loginViewModel.passwordConfirm,
             onValueChange = { loginViewModel.updatePasswordConfirm(it) },
-            label = { Text("Confirm password")})
+            label = { Text("Confirm password")},
+            visualTransformation = PasswordVisualTransformation()
+        )
 
         Button(onClick = {
             loginViewModel.signUp(navController, sharedViewModel, loginViewModel)
         }) {
             Text("Sign Up")
         }
+
         Text(text = loginViewModel.error)
     }
 }

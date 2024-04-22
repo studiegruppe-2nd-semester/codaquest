@@ -1,25 +1,72 @@
 package com.example.codaquest.ui.components.project
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.codaquest.classes.Project
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ProjectComposable(project: Project) {
-    Column {
-        Text(text = project.title)
+    Column(modifier = Modifier
+        .padding(5.dp)
+        .fillMaxWidth()
+        .clip(shape = RoundedCornerShape(20.dp))
+        .background(color = MaterialTheme.colorScheme.secondary)
+        .padding(15.dp, 10.dp)
+    ) {
+        Text(
+            text = project.title,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.fillMaxWidth()
+        )
 
-        Row {
-            Text(text = "Language: ${project.language}")
-            Text(text = "Length: ${project.length} hours")
-            Text(text = "Level: ${project.level}")
+        FlowRow(modifier = Modifier
+            .padding(vertical = 5.dp),
+            verticalArrangement = Arrangement.spacedBy(7.dp)
+        ) {
+            val list = listOf(
+                "Language: ${project.language}",
+                "Length: ${project.length} hours",
+                "Level: ${project.level}"
+            )
+
+            list.forEach { item ->
+                Box(modifier = Modifier
+                    .padding(end = 5.dp)
+                    .clip(shape = RoundedCornerShape(20.dp))
+                    .background(color = MaterialTheme.colorScheme.primary)
+                    .padding(10.dp, 5.dp)
+
+                ) {
+                    Text(
+                        text = item,
+                        color = Color.Black
+                    )
+                }
+            }
         }
 
-        Text(text = project.description)
+        Text(
+            text = project.description,
+            modifier = Modifier.padding(vertical = 5.dp)
+        )
 
         Text(text = "Requirements:")
         project.requirements.forEach { requirement ->

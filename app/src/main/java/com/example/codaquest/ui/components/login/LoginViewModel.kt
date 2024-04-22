@@ -44,7 +44,7 @@ class LoginViewModel: ViewModel() {
         password = newValue
     }
 
-    // ----------------------------------------- PASSWORD CHECK
+    // ----------------------------------------- PASSWORD CONFIRM
     var passwordConfirm: String by mutableStateOf("")
         private set
     fun updatePasswordConfirm(newValue: String) {
