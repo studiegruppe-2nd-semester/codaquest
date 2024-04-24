@@ -44,3 +44,11 @@ https://platform.openai.com/docs/guides/text-generation/json-mode
 
 6. Tokenizer - calculate amount of tokens
 https://platform.openai.com/tokenizer
+
+
+TODO
+1. Connect prompt reply to home screen
+2. style homescreen
+3. secure sharedviewmodel connection of projects to different screen (save project)
+4. 5 min video
+5. finish document with styletile etc
