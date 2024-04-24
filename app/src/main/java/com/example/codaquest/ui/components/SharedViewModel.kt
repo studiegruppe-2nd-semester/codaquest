@@ -6,6 +6,13 @@ import com.example.codaquest.repositories.UserRepository
 import com.example.codaquest.services.AccountService
 
 class SharedViewModel: ViewModel() {
+    var key: String? = null
+        private set
+    fun updateKey(newKey: String) {
+        key = newKey
+    }
+
+
     init {
         fetchUserData()
     }
@@ -22,6 +29,7 @@ class SharedViewModel: ViewModel() {
 
         if (userUid !== null) {
             val userRepository = UserRepository()
+            userRepository.getKey(this)
             userRepository.getUserData(userUid, null, sharedViewModel = this)
         }
     }
