@@ -42,6 +42,8 @@ class ProjectRepository {
             .whereEqualTo("uid", uid)
             .get()
             .addOnSuccessListener { documents ->
+                val projects = mutableListOf<Project>()
+
                 documents.forEach { document ->
                     val newProject = Project(
                         title = document.data["title"]?.toString(),
@@ -56,15 +58,14 @@ class ProjectRepository {
                         }
                     )
 
-                    val projects = sharedViewModel.user?.projects
-                    projects?.add(newProject)
-
-                    sharedViewModel.changeUser(
-                        sharedViewModel.user?.copy(
-                            projects = projects
-                        )
-                    )
+                    projects.add(newProject)
                 }
+
+                sharedViewModel.changeUser(
+                    sharedViewModel.user?.copy(
+                        projects = projects
+                    )
+                )
             }
     }
 

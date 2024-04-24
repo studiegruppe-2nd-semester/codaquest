@@ -19,8 +19,6 @@ class SharedViewModel: ViewModel() {
     fun updateKey(newKey: String) {
         key = newKey
     }
-
-
     init {
         fetchUserData()
     }

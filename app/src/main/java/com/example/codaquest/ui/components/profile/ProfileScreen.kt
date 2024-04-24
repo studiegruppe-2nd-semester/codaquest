@@ -140,12 +140,3 @@ fun ProfileScreen(
 
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ProfileScreenPreview() {
-//    CodaQuestTheme {
-//        val sharedViewModel: SharedViewModel = viewModel()
-//        ProfileScreen(rememberNavController(), sharedViewModel)
-//    }
-//}
