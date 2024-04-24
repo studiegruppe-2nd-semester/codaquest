@@ -1,20 +1,21 @@
 package com.example.codaquest.classes
 
 data class Project(
+    // USER ID
+    var uid: String? = null,
+
+    // Svar fra chat gpt titel
+    var title: String? = null,
+
     //Indtastning
-    var keywords: String,
+    var keywords: String? = null,
+    val language: String? = null,
+    val length: Int? = null,
+    val level: String? = null,
 
-    //Svar fra chat gpt
-    var title: String,
+    // Svar fra chat gpt beskrivelse
+    val description: String? = null,
 
-    //Indtastning
-    val language: String,
-    val hours: Int?,
-    val level: String,
-
-    // Svar fra chat gpt (planen)
-    val description: String,
-
-    // Den her ved jeg ikke hvad er...
-    val requirements: List<String>
+    // Svar fra chat gpt planen
+    val steps: List<String>? = null,
 )
