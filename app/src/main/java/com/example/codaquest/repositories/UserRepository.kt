@@ -12,6 +12,15 @@ import com.google.firebase.firestore.firestore
 class UserRepository {
     private val db = Firebase.firestore
 
+    fun getKey(
+        sharedViewModel: SharedViewModel
+    ) {
+        db.collection("api").document("information").get()
+            .addOnSuccessListener { document ->
+                document.data?.get("key")?.toString()?.let { sharedViewModel.updateKey(it) }
+            }
+    }
+
     fun getUserData(
         userUid: String,
         navController: NavController?,

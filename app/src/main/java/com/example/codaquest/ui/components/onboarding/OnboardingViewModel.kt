@@ -1,6 +1,8 @@
 package com.example.codaquest.ui.components.onboarding
 
 import android.annotation.SuppressLint
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -72,11 +74,12 @@ class OnboardingViewModel : ViewModel () {
         ),
     ))
 
+    @Composable
     fun addButtonColor (answer : String): Color {
         return if (answer == questions[currentQuestion].answer.value) {
-            Color.Red
+            MaterialTheme.colorScheme.tertiary
         } else {
-            Color.Blue
+            MaterialTheme.colorScheme.secondary
         }
     }
 }

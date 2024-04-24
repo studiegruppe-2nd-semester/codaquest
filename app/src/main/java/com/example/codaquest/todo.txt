@@ -41,3 +41,6 @@ https://platform.openai.com/docs/guides/text-generation/json-mode
     USER: I am looking for a project that fits these key words: "view models, basic android app". The project should be an
     app made by Kotlin Jetpack Compose, and the average completion time for the project should be 5 hours. I am a beginner
     in coding with Kotlin
+
+6. Tokenizer - calculate amount of tokens
+https://platform.openai.com/tokenizer
