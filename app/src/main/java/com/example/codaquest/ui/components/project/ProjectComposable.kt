@@ -31,11 +31,13 @@ fun ProjectComposable(project: Project) {
         .background(color = MaterialTheme.colorScheme.secondary)
         .padding(15.dp, 10.dp)
     ) {
-        Text(
-            text = project.title,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.fillMaxWidth()
-        )
+        project.title?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
 
         FlowRow(modifier = Modifier
             .padding(vertical = 5.dp),
@@ -63,14 +65,16 @@ fun ProjectComposable(project: Project) {
             }
         }
 
-        Text(
-            text = project.description,
-            modifier = Modifier.padding(vertical = 5.dp)
-        )
+        project.description?.let {
+            Text(
+                text = it,
+                modifier = Modifier.padding(vertical = 5.dp)
+            )
+        }
 
-        Text(text = "Requirements:")
-        project.requirements.forEach { requirement ->
-            Text(text = "- $requirement")
+        Text(text = "Steps:")
+        project.steps?.forEach { steps ->
+            Text(text = "- $steps")
         }
     }
 }
@@ -81,17 +85,17 @@ fun ProjectComposablePreview() {
     CodaQuestTheme {
         ProjectComposable(
             Project(
-            title = "project 1",
-            language = "Kotlin",
-            length = 5,
-            level = "Beginner",
-            description = "description text bla bla bla",
-            requirements = listOf(
-                "Step 1",
-                "Step 2",
-                "Step 3",
-                "Step 4",
-            )
+                title = "Pizza Lover",
+                keywords = "pizza",
+                language = "Kotlin",
+                length = 5,
+                level = "Beginner",
+                description = "This project is about pizza bla bla",
+                steps = listOf(
+                    "Step 1",
+                    "step 2",
+                    "step 3"
+        )
         )
         )
     }
