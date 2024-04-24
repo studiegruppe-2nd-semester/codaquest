@@ -96,8 +96,8 @@ fun HomeScreen (
                         .padding(top = 30.dp)
                 )
 
-                Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Generate project")
+                Button(onClick = { sharedViewModel.promptApi(homeScreenViewModel) }) {
+                    Text(text = "Generate Project")
                 }
 
 
