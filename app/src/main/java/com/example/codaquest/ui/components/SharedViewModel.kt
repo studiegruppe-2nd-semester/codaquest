@@ -1,9 +1,12 @@
 package com.example.codaquest.ui.components
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.codaquest.classes.User
 import com.example.codaquest.repositories.UserRepository
 import com.example.codaquest.services.AccountService
+import com.example.codaquest.services.ApiService
+import kotlinx.coroutines.launch
 
 class SharedViewModel: ViewModel() {
     var key: String? = null
@@ -32,5 +35,16 @@ class SharedViewModel: ViewModel() {
             userRepository.getKey(this)
             userRepository.getUserData(userUid, null, sharedViewModel = this)
         }
+    }
+
+
+    fun promptApi() {
+        val apiService = ApiService()
+        apiService.initiateApi(this)
+
+        viewModelScope.launch {
+            apiService.promptApi()
+        }
+
     }
 }

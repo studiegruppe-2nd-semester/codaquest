@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
+import com.example.codaquest.services.ApiService
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
@@ -42,6 +44,7 @@ fun ProfileScreen(
     sharedViewModel: SharedViewModel
 ) {
     val viewModel : ProfileViewModel = viewModel()
+
 
     Box(modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter) {
@@ -62,6 +65,10 @@ fun ProfileScreen(
 //                    text = "Settings" --- todo
                     text = ""
                 )
+
+                Button(onClick = { sharedViewModel.promptApi() }) {
+                    Text(text = "Fetch")
+                }
 
                 Text(modifier = Modifier
                     .clickable {

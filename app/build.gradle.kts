@@ -82,4 +82,17 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     // View model
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
+//    // import Kotlin API client BOM
+//    implementation("com.aallam.openai:openai-client-bom:3.7.1")
+//
+//    // define dependencies without versions
+//    implementation("com.aallam.openai:openai-client")
+//    runtimeOnly("io.ktor:ktor-client-okhttp")
+
+    implementation("com.aallam.openai:openai-client:3.7.1")
+    implementation("io.ktor:ktor-client-android:2.3.10")
 }
+//repositories {
+//    mavenCentral()
+//}
