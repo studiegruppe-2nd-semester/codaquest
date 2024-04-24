@@ -10,6 +10,7 @@ import com.example.codaquest.repositories.ProjectRepository
 import com.example.codaquest.repositories.UserRepository
 import com.example.codaquest.services.AccountService
 import com.example.codaquest.services.ApiService
+import com.example.codaquest.ui.components.home.HomeScreenViewModel
 import kotlinx.coroutines.launch
 
 class SharedViewModel: ViewModel() {
@@ -45,12 +46,12 @@ class SharedViewModel: ViewModel() {
     }
 
 
-    fun promptApi() {
+    fun promptApi(homeScreenViewModel: HomeScreenViewModel) {
         val apiService = ApiService()
         apiService.initiateApi(this)
 
         viewModelScope.launch {
-            apiService.promptApi()
+            apiService.promptApi(homeScreenViewModel)
         }
 
     }

@@ -68,9 +68,7 @@ fun ProfileScreen(
                         text = ""
                     )
 
-                    Button(onClick = { sharedViewModel.promptApi() }) {
-                        Text(text = "Fetch")
-                    }
+
 
                     Text(modifier = Modifier
                         .clickable {
