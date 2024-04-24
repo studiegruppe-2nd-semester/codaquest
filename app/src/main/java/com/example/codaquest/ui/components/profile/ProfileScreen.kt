@@ -1,7 +1,6 @@
 package com.example.codaquest.ui.components.profile
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -49,77 +50,89 @@ fun ProfileScreen(
     Box(modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter) {
 
-        Column(modifier = Modifier
+        LazyColumn(modifier = Modifier
             .padding(5.dp)
             .padding(bottom = 70.dp)
-            .fillMaxSize()
+//            .fillMaxSize()
         ) {
-            Row(modifier = Modifier
-                .padding(top = 10.dp)
-                .fillMaxWidth()
-                .fillMaxHeight(0.1f),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            item {
+                Row(modifier = Modifier
+                    .padding(top = 10.dp)
+                    .fillMaxWidth()
+                    .height(50.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
 
-                Text(
-//                    text = "Settings" --- todo
-                    text = ""
-                )
-
-                Button(onClick = { sharedViewModel.promptApi() }) {
-                    Text(text = "Fetch")
-                }
-
-                Text(modifier = Modifier
-                    .clickable {
-                        viewModel.logout(navController)
-                    },
-                    text = "Logout"
-                )
-            }
-
-            Column(modifier = Modifier
-                .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                Image(
-                    painter = painterResource(id = R.drawable.profile_picture),
-                    contentDescription = "profile picture",
-                    modifier = Modifier
-                        .padding(bottom = 20.dp)
-                        .size(300.dp)
-                )
-
-                (if (sharedViewModel.user?.username != null) sharedViewModel.user!!.username else "username not found")?.let {
                     Text(
-                        text = it,
-                        fontSize = 30.sp,
-                        color = MaterialTheme.colorScheme.primary
+//                    text = "Settings" --- todo
+                        text = ""
+                    )
+
+                    Button(onClick = { sharedViewModel.promptApi() }) {
+                        Text(text = "Fetch")
+                    }
+
+                    Text(modifier = Modifier
+                        .clickable {
+                            viewModel.logout(navController)
+                        },
+                        text = "Logout"
                     )
                 }
-            }
-            
-            Spacer(modifier = Modifier.height(50.dp))
 
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = "Saved projects",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontSize = 30.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                
-                Spacer(modifier = Modifier.height(10.dp))
-                
-                if (viewModel.projects.isNotEmpty()) {
-                    LazyColumn {
-                        items(viewModel.projects) { item ->
-                            ProjectComposable(project = item)
-                        }
+                Column(modifier = Modifier
+                    .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Image(
+                        painter = painterResource(id = R.drawable.profile_picture),
+                        contentDescription = "profile picture",
+                        modifier = Modifier
+                            .padding(bottom = 20.dp)
+                            .size(300.dp)
+                    )
+
+                    (if (sharedViewModel.user?.username != null) sharedViewModel.user!!.username else "username not found")?.let {
+                        Text(
+                            text = it,
+                            fontSize = 30.sp,
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                 }
-                else {
+
+                Spacer(modifier = Modifier.height(50.dp))
+
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = "Saved projects",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontSize = 30.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+//                    if (viewModel.projects.isNotEmpty()) {
+//                        LazyColumn {
+//                            items(viewModel.projects) { item ->
+//                                ProjectComposable(project = item)
+//                            }
+//                        }
+//                    }
+//                    else {
+//                        Text(text = "No saved projects found")
+//                    }
+                }
+            }
+            if (viewModel.projects.isNotEmpty()) {
+                items(viewModel.projects) { item ->
+                    ProjectComposable(project = item)
+                }
+            }
+            else {
+                item {
                     Text(text = "No saved projects found")
                 }
             }
