@@ -34,6 +34,39 @@ class ProjectRepository {
                 )
             }
     }
+    fun getProjects(
+        uid: String,
+        sharedViewModel: SharedViewModel
+    ) {
+        db.collection("projects")
+            .whereEqualTo("uid", uid)
+            .get()
+            .addOnSuccessListener { documents ->
+                documents.forEach { document ->
+                    val newProject = Project(
+                        title = document.data["title"]?.toString(),
+                        keywords = document.data["keywords"]?.toString(),
+                        language = document.data["language"]?.toString(),
+                        length = document.data["length"]?.toString()?.toInt(),
+                        level = document.data["level"]?.toString(),
+                        description = document.data["description"]?.toString(),
+                        steps = when (val stepsData = document.data["steps"]) {
+                            is List<*> -> stepsData.filterIsInstance<String>()
+                            else -> emptyList()
+                        }
+                    )
+
+                    val projects = sharedViewModel.user?.projects
+                    projects?.add(newProject)
+
+                    sharedViewModel.changeUser(
+                        sharedViewModel.user?.copy(
+                            projects = projects
+                        )
+                    )
+                }
+            }
+    }
 
     fun addProjectData(
     projectID: String,

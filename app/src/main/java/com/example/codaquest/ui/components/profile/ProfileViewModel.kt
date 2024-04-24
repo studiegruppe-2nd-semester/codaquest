@@ -12,32 +12,32 @@ class ProfileViewModel: ViewModel() {
         accountService.logout(navController = navController)
     }
 
-    val projects: List<Project> = listOf(
-        Project(
-            title = "Pizza Lover",
-            keywords = "pizza",
-            language = "Kotlin",
-            length = 5,
-            level = "Beginner",
-            description = "This project is about pizza bla bla",
-            steps = mutableListOf(
-                "Step 1",
-                "step 2",
-                "step 3"
-            )
-        ),
-        Project(
-            title = "UBER TRUCKS",
-            keywords = "Uber for trucks",
-            language = "Kotlin",
-            length = 5,
-            level = "Beginner",
-            description = "This project is about making a uber for trucks bla bla",
-            steps = mutableListOf(
-                "step 1",
-                "step 2",
-                "step 3"
-            )
-        ),
-    )
+//    val projects: List<Project> = listOf(
+//        Project(
+//            title = "Pizza Lover",
+//            keywords = "pizza",
+//            language = "Kotlin",
+//            length = 5,
+//            level = "Beginner",
+//            description = "This project is about pizza bla bla",
+//            steps = mutableListOf(
+//                "Step 1",
+//                "step 2",
+//                "step 3"
+//            )
+//        ),
+//        Project(
+//            title = "UBER TRUCKS",
+//            keywords = "Uber for trucks",
+//            language = "Kotlin",
+//            length = 5,
+//            level = "Beginner",
+//            description = "This project is about making a uber for trucks bla bla",
+//            steps = mutableListOf(
+//                "step 1",
+//                "step 2",
+//                "step 3"
+//            )
+//        ),
+//    )
 }

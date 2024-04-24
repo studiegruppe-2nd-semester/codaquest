@@ -126,8 +126,8 @@ fun ProfileScreen(
 //                    }
                 }
             }
-            if (viewModel.projects.isNotEmpty()) {
-                items(viewModel.projects) { item ->
+            if (sharedViewModel.user?.projects?.isNotEmpty() == true) {
+                items(sharedViewModel.user?.projects!!) { item ->
                     ProjectComposable(project = item)
                 }
             }
