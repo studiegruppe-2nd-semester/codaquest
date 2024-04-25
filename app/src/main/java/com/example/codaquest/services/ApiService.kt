@@ -52,8 +52,8 @@ class ApiService {
         println("COMPLETION: $completion")
         println("COMPLETION: ${completion.choices[0].message.content}")
 
-        val apiRespond = completion.choices[0].message.content
-        val respondJson = apiRespond?.let { JSONObject(it) }
+        val apiResponse = completion.choices[0].message.content
+        val respondJson = apiResponse?.let { JSONObject(it) }
 
         getJsonIntoHashMap(respondJson)
 
@@ -71,15 +71,13 @@ class ApiService {
         val apiRespondHashMap = hashMapOf<String,Any>()
 
         val jsonObjectKeys = apiRespond?.keys()
-        if (jsonObjectKeys != null) {
-            if (jsonObjectKeys.hasNext()) {
-                val key = jsonObjectKeys.next()
-                val value = apiRespond.get(key)
-                apiRespondHashMap[key] = value
-            }
-
+        while (jsonObjectKeys?.hasNext() == true) {
+            val key = jsonObjectKeys.next()
+            val value = apiRespond.get(key)
+            apiRespondHashMap[key] = value
         }
-        for ((key,value ) in apiRespondHashMap) {
+
+        for ((key, value) in apiRespondHashMap) {
             println("Key: $key, Value: $value")
         }
 
