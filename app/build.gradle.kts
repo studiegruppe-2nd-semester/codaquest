@@ -92,6 +92,11 @@ dependencies {
 
     implementation("com.aallam.openai:openai-client:3.7.1")
     implementation("io.ktor:ktor-client-android:2.3.10")
+
+    // Json gradle
+    //implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0"
+
+
 }
 //repositories {
 //    mavenCentral()
