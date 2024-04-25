@@ -8,10 +8,12 @@ import androidx.lifecycle.ViewModel
 import com.example.codaquest.classes.Project
 import com.example.codaquest.repositories.ProjectRepository
 import com.example.codaquest.ui.components.SharedViewModel
+import org.json.JSONObject
 
 
 class HomeScreenViewModel : ViewModel () {
     private val projectRepository : ProjectRepository = ProjectRepository()
+
 
     var keyWords: String by mutableStateOf("")
         private set
@@ -63,6 +65,29 @@ class HomeScreenViewModel : ViewModel () {
         )
 
     )
+
+
+
+    fun getJsonIntoHashMap (apiRespond: JSONObject?) : HashMap<String, Any> {
+        val apiRespondHashMap = hashMapOf<String,Any>()
+
+        val jsonObjectKeys = apiRespond?.keys()
+        while (jsonObjectKeys?.hasNext() == true) {
+            val key = jsonObjectKeys.next()
+            val value = apiRespond.get(key)
+            apiRespondHashMap[key] = value
+        }
+
+        /*
+        for ((key, value) in apiRespondHashMap) {
+            println("Key: $key, Value: $value")
+        }
+         */
+
+
+
+        return apiRespondHashMap
+    }
 
     fun addProject (
         sharedViewModel: SharedViewModel

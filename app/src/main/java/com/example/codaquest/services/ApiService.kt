@@ -55,7 +55,7 @@ class ApiService {
         val apiResponse = completion.choices[0].message.content
         val respondJson = apiResponse?.let { JSONObject(it) }
 
-        getJsonIntoHashMap(respondJson)
+        homeScreenViewModel.getJsonIntoHashMap(respondJson)
 
 
 
@@ -67,6 +67,7 @@ class ApiService {
 
     }
 
+    /*
     private fun getJsonIntoHashMap (apiRespond: JSONObject?) : HashMap<String, Any> {
         val apiRespondHashMap = hashMapOf<String,Any>()
 
@@ -86,6 +87,8 @@ class ApiService {
 
         return apiRespondHashMap
     }
+     */
+
 
 
 
