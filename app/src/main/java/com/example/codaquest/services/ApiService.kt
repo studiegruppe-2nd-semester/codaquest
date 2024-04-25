@@ -1,6 +1,5 @@
 package com.example.codaquest.services
 
-import android.util.Log
 import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
 import com.aallam.openai.api.chat.ChatMessage
@@ -9,13 +8,12 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
-import com.example.codaquest.classes.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.home.HomeScreenViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.serialization.json.Json
-import kotlin.math.log
+import org.json.JSONObject
 import kotlin.time.Duration.Companion.seconds
+
+
 
 class ApiService {
     private lateinit var openAI: OpenAI
@@ -54,17 +52,40 @@ class ApiService {
         println("COMPLETION: $completion")
         println("COMPLETION: ${completion.choices[0].message.content}")
 
-        /*
         val apiRespond = completion.choices[0].message.content
-        val apiRespondToJson = apiRespond?.let { Json.decodeFromString<String>(it) }
-        if (apiRespondToJson != null) {
-            Log.d("Api-JsonRespond", apiRespondToJson)
-        }
-         */
+        val respondJson = apiRespond?.let { JSONObject(it) }
+
+        getJsonIntoHashMap(respondJson)
 
 
 
+        /*
         // or, as flow
 //        val completions: Flow<ChatCompletionChunk> = openAI.chatCompletions(chatCompletionRequest)
+
+         */
+
     }
+
+    private fun getJsonIntoHashMap (apiRespond: JSONObject?) : HashMap<String, Any> {
+        val apiRespondHashMap = hashMapOf<String,Any>()
+
+        val jsonObjectKeys = apiRespond?.keys()
+        if (jsonObjectKeys != null) {
+            if (jsonObjectKeys.hasNext()) {
+                val key = jsonObjectKeys.next()
+                val value = apiRespond.get(key)
+                apiRespondHashMap[key] = value
+            }
+
+        }
+        for ((key,value ) in apiRespondHashMap) {
+            println("Key: $key, Value: $value")
+        }
+
+        return apiRespondHashMap
+    }
+
+
+
 }
