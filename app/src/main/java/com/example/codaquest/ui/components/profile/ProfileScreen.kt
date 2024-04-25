@@ -72,7 +72,7 @@ fun ProfileScreen(
 
                     Text(modifier = Modifier
                         .clickable {
-                            viewModel.logout(navController)
+                            viewModel.logout(navController, sharedViewModel)
                         },
                         text = "Logout"
                     )

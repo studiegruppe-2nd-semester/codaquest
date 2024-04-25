@@ -4,12 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.codaquest.classes.Project
 import com.example.codaquest.services.AccountService
+import com.example.codaquest.ui.components.SharedViewModel
 
 class ProfileViewModel: ViewModel() {
     private val accountService = AccountService()
 
-    fun logout(navController: NavController) {
-        accountService.logout(navController = navController)
+    fun logout(
+        navController: NavController,
+        sharedViewModel: SharedViewModel
+    ) {
+        accountService.logout(navController, sharedViewModel)
     }
 
 //    val projects: List<Project> = listOf(

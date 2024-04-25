@@ -59,8 +59,14 @@ class AccountService {
         return Firebase.auth.currentUser
     }
 
-    fun logout(navController: NavController) {
+    fun logout(
+        navController: NavController,
+        sharedViewModel: SharedViewModel
+    ) {
         Firebase.auth.signOut()
+
+        sharedViewModel.changeUser(null)
+
         navController.navigate("home")
     }
 }
