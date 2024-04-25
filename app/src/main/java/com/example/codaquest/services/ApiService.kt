@@ -77,9 +77,12 @@ class ApiService {
             apiRespondHashMap[key] = value
         }
 
+        /*
         for ((key, value) in apiRespondHashMap) {
             println("Key: $key, Value: $value")
         }
+         */
+
 
         return apiRespondHashMap
     }
