@@ -54,11 +54,15 @@ class ApiService {
         println("COMPLETION: $completion")
         println("COMPLETION: ${completion.choices[0].message.content}")
 
+        /*
         val apiRespond = completion.choices[0].message.content
         val apiRespondToJson = apiRespond?.let { Json.decodeFromString<String>(it) }
         if (apiRespondToJson != null) {
             Log.d("Api-JsonRespond", apiRespondToJson)
         }
+         */
+
+
 
         // or, as flow
 //        val completions: Flow<ChatCompletionChunk> = openAI.chatCompletions(chatCompletionRequest)
