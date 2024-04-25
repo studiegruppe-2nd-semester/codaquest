@@ -1,5 +1,6 @@
 package com.example.codaquest.services
 
+import android.util.Log
 import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
 import com.aallam.openai.api.chat.ChatMessage
@@ -12,6 +13,8 @@ import com.example.codaquest.classes.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.home.HomeScreenViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.json.Json
+import kotlin.math.log
 import kotlin.time.Duration.Companion.seconds
 
 class ApiService {
@@ -50,6 +53,12 @@ class ApiService {
         // HERE YOU ONLY GET THE MESSAGE CONTENT THAT THE AI ANSWERED
         println("COMPLETION: $completion")
         println("COMPLETION: ${completion.choices[0].message.content}")
+
+        val apiRespond = completion.choices[0].message.content
+        val apiRespondToJson = apiRespond?.let { Json.decodeFromString<String>(it) }
+        if (apiRespondToJson != null) {
+            Log.d("Api-JsonRespond", apiRespondToJson)
+        }
 
         // or, as flow
 //        val completions: Flow<ChatCompletionChunk> = openAI.chatCompletions(chatCompletionRequest)
