@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.navigation.NavController
 import com.example.codaquest.classes.Project
-import com.example.codaquest.classes.User
+import com.example.codaquest.interfaces.UserOperations
 import com.example.codaquest.ui.components.SharedViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -36,7 +36,7 @@ class ProjectRepository {
     }
     fun getProjects(
         uid: String,
-        sharedViewModel: SharedViewModel
+        userOperations: UserOperations
     ) {
         db.collection("projects")
             .whereEqualTo("uid", uid)
@@ -60,25 +60,24 @@ class ProjectRepository {
 
                     projects.add(newProject)
                 }
-
-                sharedViewModel.changeUser(
-                    sharedViewModel.user?.copy(
-                        projects = projects
-                    )
-                )
+                // TODO
+//                dataReceiver.changeUser(
+//                    dataReceiver.user?.copy(
+//                        projects = projects
+//                    )
+//                )
             }
     }
 
     fun addProjectData(
-    projectID: String,
-    title: String,
-    keywords: String,
-    language: String,
-    length: Int,
-    level: String,
-    steps: List<String>,
-    navController: NavController,
-    sharedViewModel: SharedViewModel
+        title: String,
+        keywords: String,
+        language: String,
+        length: Int,
+        level: String,
+        steps: List<String>,
+        navController: NavController,
+        sharedViewModel: SharedViewModel
     ) {
     val dataMap: Map<String, String> = mapOf(
         "title" to title
@@ -87,6 +86,7 @@ class ProjectRepository {
         .addOnSuccessListener {
 
             val projects = sharedViewModel.user?.projects
+
             projects?.add(
                 Project(
                     title = title,
@@ -106,24 +106,22 @@ class ProjectRepository {
             )
             navController.navigate("home")
         }
-        .addOnFailureListener { e ->
+        .addOnFailureListener { _ ->
             Log.d("","")
         }
     }
 
-
-
-
-
-    fun addProject(project: Project) {
-        // Create a new user with a first and last name.
-        // Here Firestore will create a DocumentId but we dont need to add it when creating an object
-
-        // Add a new document with a generated ID
+    fun addProjectToDB(
+        project: Project,
+        onSuccess: (Project) -> Unit
+    ) {
         db.collection("projects")
             .add(project)
             .addOnSuccessListener { documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference}")
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: $documentReference")
+                onSuccess(
+                    project.copy(projectId = documentReference.id)
+                )
             }
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)

@@ -1,13 +1,10 @@
 package com.example.codaquest.ui.components.home
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -17,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.services.ApiService
+import com.example.codaquest.classes.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 
@@ -62,7 +59,7 @@ fun HomeScreen (
                 )
 
                 Text(text = "Language")
-                Text(text = "Which programmin language would you like to code in?")
+                Text(text = "Which programming language would you like to code in?")
                 TextField(
                     value = homeScreenViewModel.language,
                     onValueChange = { homeScreenViewModel.updateLanguage(it) })
@@ -96,7 +93,14 @@ fun HomeScreen (
                         .padding(top = 30.dp)
                 )
 
-                Button(onClick = { sharedViewModel.promptApi(homeScreenViewModel) }) {
+                Button(onClick = { sharedViewModel.promptApi(
+                    Project(
+                        level = homeScreenViewModel.level,
+                        language = homeScreenViewModel.language,
+                        keywords = homeScreenViewModel.keyWords,
+                        length = homeScreenViewModel.length
+                    )
+                ) }) {
                     Text(text = "Generate Project")
                 }
 
@@ -121,7 +125,12 @@ fun HomeScreen (
                 Text(text = if (homeScreenViewModel.project.level != null) homeScreenViewModel.project.level.toString() else "")
 
 
-                Button(onClick = { homeScreenViewModel.addProject(sharedViewModel = sharedViewModel) }) {
+                Button(onClick = { sharedViewModel.user?.userUid?.let { uid ->
+                    homeScreenViewModel.addProject(
+                        uid,
+                        onSuccess = { project -> sharedViewModel.user?.projects?.add(project) }
+                    )
+                } }) {
                     Text(text = "Save project")
                 }
 

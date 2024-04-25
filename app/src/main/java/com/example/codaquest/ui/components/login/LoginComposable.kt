@@ -54,9 +54,12 @@ fun LoginComposable (
 
         Button(onClick = {
                 loginViewModel.login(
-                    navController = navController,
-                    sharedViewModel = sharedViewModel,
-                    loginViewModel = loginViewModel
+                    loginViewModel,
+                    onSuccess = {
+                        sharedViewModel.changeUser(it)
+                        loginViewModel.showError("")
+                        navController.navigate("profile")
+                    }
                 )
             },
             colors = ButtonDefaults.buttonColors(

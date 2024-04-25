@@ -2,10 +2,9 @@ package com.example.codaquest.repositories
 
 import android.content.ContentValues
 import android.util.Log
-import androidx.navigation.NavController
 import com.example.codaquest.classes.OnboardingData
 import com.example.codaquest.classes.User
-import com.example.codaquest.ui.components.SharedViewModel
+import com.example.codaquest.interfaces.UserOperations
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -13,18 +12,17 @@ class UserRepository {
     private val db = Firebase.firestore
 
     fun getKey(
-        sharedViewModel: SharedViewModel
+        userOperations: UserOperations
     ) {
         db.collection("api").document("information").get()
             .addOnSuccessListener { document ->
-                document.data?.get("key")?.toString()?.let { sharedViewModel.updateKey(it) }
+                document.data?.get("key")?.toString()?.let { userOperations.updateKey(it) }
             }
     }
 
     fun getUserData(
         userUid: String,
-        navController: NavController?,
-        sharedViewModel: SharedViewModel
+        onSuccess: (User) -> Unit
     ) {
         db.collection("users").document(userUid).get()
             .addOnSuccessListener { document ->
@@ -35,40 +33,33 @@ class UserRepository {
                     projectLength = document.data?.get("project-length")?.toString()?.toInt()
                 )
 
-                sharedViewModel.changeUser(User(
+                onSuccess(User(
                     userUid = document.id,
                     username = document.data?.get("username")?.toString(),
                     onboardingData = onboardingData
                 ))
 
-                navController?.navigate("profile")
-
               Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)
-                navController?.navigate("profile")
             }
     }
 
     fun addUserData(
         uid: String,
         username: String,
-        navController: NavController,
-        sharedViewModel: SharedViewModel
+        onSuccess: (User) -> Unit
     ) {
         val dataMap: Map<String, String> = mapOf(
             "username" to username
         )
         db.collection("users").document(uid).set(dataMap)
             .addOnSuccessListener {
-                sharedViewModel.changeUser(
-                    User(
+                onSuccess(User(
                     userUid = uid,
                     username = username
-                )
-                )
-                navController.navigate("onboarding")
+                ))
             }
             .addOnFailureListener { e ->
                 Log.d("addData", "addData failure: $e")
@@ -77,43 +68,38 @@ class UserRepository {
 
     }
 
-    fun updateUserData (
+    fun addOnboardingDataToUserData (
         onboardingData: OnboardingData,
-        navController: NavController,
-        sharedViewModel: SharedViewModel
+        user: User,
+        onSuccess: (User) -> Unit
         ) {
         // https://stackoverflow.com/questions/56608046/update-a-document-in-firestore
-        sharedViewModel.user?.let {
-            db.collection("users").document(it.userUid).update(
-                "level", onboardingData.level,
-                "languages", onboardingData.languages,
-                "project-length", onboardingData.projectLength
-            )
-                .addOnSuccessListener {
-                    Log.d("update", "Update success")
-                    val user = sharedViewModel.user
-                    if (user != null) {
-                        sharedViewModel.changeUser(User(
-                            userUid = user.userUid,
-                            username = user.username,
-                            onboardingData = OnboardingData(
-                                level = onboardingData.level,
-                                languages = onboardingData.languages,
-                                projectLength = onboardingData.projectLength
-                            )
-                        ))
-                        navController.navigate("profile")
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.d("update", "update failure: $e")
-                }
-        }
+
+        db.collection("users").document(user.userUid).update(
+            "level", onboardingData.level,
+            "languages", onboardingData.languages,
+            "project-length", onboardingData.projectLength
+        )
+            .addOnSuccessListener {
+                Log.d("update", "Update success")
+
+                onSuccess(user.copy(
+                    onboardingData = OnboardingData(
+                        level = onboardingData.level,
+                        languages = onboardingData.languages,
+                        projectLength = onboardingData.projectLength
+                    )
+                ))
+            }
+            .addOnFailureListener { e ->
+                Log.d("update", "update failure: $e")
+            }
+
     }
 
 //    fun addNote(note: Note) {
 //        // Create a new user with a first and last name.
-//        // Here Firestore will create a DocumentId but we dont need to add it when creating an object
+//        // Here Firestore will create a DocumentId but we don't need to add it when creating an object
 //
 //        // Add a new document with a generated ID
 //        db.collection("notes")

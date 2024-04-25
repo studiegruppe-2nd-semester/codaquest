@@ -5,51 +5,59 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.codaquest.classes.Project
 import com.example.codaquest.classes.User
+import com.example.codaquest.interfaces.UserOperations
 import com.example.codaquest.repositories.ProjectRepository
 import com.example.codaquest.repositories.UserRepository
 import com.example.codaquest.services.AccountService
 import com.example.codaquest.services.ApiService
-import com.example.codaquest.ui.components.home.HomeScreenViewModel
 import kotlinx.coroutines.launch
 
-class SharedViewModel: ViewModel() {
-    var key: String? = null
-        private set
-    fun updateKey(newKey: String) {
-        key = newKey
-    }
+class SharedViewModel: ViewModel(), UserOperations {
     init {
         fetchUserData()
     }
-    var user: User? by mutableStateOf(null)
-        private set
 
-    fun changeUser(newUser: User?) {
-        user = newUser
+//    val navigateToProfile = mutableStateOf(false)
+
+    // ------------------------------------- KEY
+    var key: String? = null
+        private set
+    override fun updateKey(newKey: String) {
+        key = newKey
     }
 
+    // ------------------------------------- USER
+    var user: User? by mutableStateOf(null)
+        private set
+    override fun changeUser(newUser: User?) {
+        this.user = user
+    }
+
+
     private fun fetchUserData() {
-        val accountService = AccountService()
-        val userUid = accountService.getCurrentUser()?.uid
+        viewModelScope.launch {
+            val accountService = AccountService()
+            val userUid = accountService.getCurrentUser()?.uid
 
-        val userRepository = UserRepository()
-        val projectRepository = ProjectRepository()
-        userRepository.getKey(this)
+            val userRepository = UserRepository()
+            val projectRepository = ProjectRepository()
+            userRepository.getKey(this@SharedViewModel)
 
-        if (userUid !== null) {
-            projectRepository.getProjects(userUid, this)
-            userRepository.getUserData(userUid, null, this)
+            if (userUid !== null) {
+                projectRepository.getProjects(userUid, this@SharedViewModel)
+                userRepository.getUserData(userUid, onSuccess = { changeUser(it) })
+            }
         }
     }
 
-
-    fun promptApi(homeScreenViewModel: HomeScreenViewModel) {
+    fun promptApi(projectInfo: Project) {
         val apiService = ApiService()
         apiService.initiateApi(this)
 
         viewModelScope.launch {
-            apiService.promptApi(homeScreenViewModel)
+            apiService.promptApi(projectInfo)
         }
 
     }

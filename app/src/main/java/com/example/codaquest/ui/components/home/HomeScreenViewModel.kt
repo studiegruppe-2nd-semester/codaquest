@@ -7,29 +7,26 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.codaquest.classes.Project
 import com.example.codaquest.repositories.ProjectRepository
-import com.example.codaquest.ui.components.SharedViewModel
 
 
 class HomeScreenViewModel : ViewModel () {
     private val projectRepository : ProjectRepository = ProjectRepository()
 
+    // ------------------------------------- KEYWORDS
     var keyWords: String by mutableStateOf("")
         private set
-
     fun updateKeyWords(newKeyWords: String) {
         keyWords = newKeyWords
     }
-
+    // ------------------------------------- LANGUAGE
     var language: String by mutableStateOf("")
         private set
-
     fun updateLanguage(newLanguage: String) {
         language = newLanguage
     }
-
+    // ------------------------------------- LENGTH
     var length: Int by mutableIntStateOf(0)
         private set
-
     fun updateLength(newLength: String) {
         length = try {
             newLength.toInt()
@@ -39,14 +36,14 @@ class HomeScreenViewModel : ViewModel () {
             0 // Set a default value of 0
         }
     }
-
+    // ------------------------------------- LEVEL
     var level: String by mutableStateOf("")
         private set
-
     fun updateLevel(newLevel: String) {
         level = newLevel
     }
 
+    // ------------------------------------- TEST PROJECT TODO make empty
     var project: Project = Project(
         title = "test",
         keywords = "test",
@@ -65,9 +62,13 @@ class HomeScreenViewModel : ViewModel () {
     )
 
     fun addProject (
-        sharedViewModel: SharedViewModel
+        uid: String,
+        onSuccess: (Project) -> Unit
     ) {
-        projectRepository.addProject(project.copy(uid = sharedViewModel.user?.userUid))
+        projectRepository.addProjectToDB(
+            project.copy(uid = uid),
+            onSuccess = { project -> onSuccess(project) }
+        )
     }
 
 

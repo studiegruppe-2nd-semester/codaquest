@@ -69,7 +69,11 @@ fun SignUpComposable(
         )
 
         Button(onClick = {
-                loginViewModel.signUp(navController, sharedViewModel, loginViewModel)
+                loginViewModel.signUp(onSuccess = {
+                    loginViewModel.showError("")
+                    sharedViewModel.changeUser(it)
+                    navController.navigate("onboarding")
+                })
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.secondary

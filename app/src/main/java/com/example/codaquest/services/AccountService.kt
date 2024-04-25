@@ -1,6 +1,9 @@
 package com.example.codaquest.services
 
 import androidx.navigation.NavController
+import com.example.codaquest.classes.User
+import com.example.codaquest.interfaces.ErrorOperations
+import com.example.codaquest.interfaces.UserOperations
 import com.example.codaquest.repositories.UserRepository
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.login.LoginViewModel
@@ -16,42 +19,36 @@ class AccountService {
         email: String,
         username: String,
         password: String,
-        navController: NavController,
-        sharedViewModel: SharedViewModel,
-        loginViewModel: LoginViewModel
+        errorOperations: ErrorOperations,
+        onSuccess: (User) -> Unit
     ) {
         Firebase.auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                loginViewModel.error = ""
-
                 val user = Firebase.auth.currentUser
                 if (user != null) {
-                    userRepository.addUserData(user.uid, username, navController, sharedViewModel)
+                    userRepository.addUserData(user.uid, username, onSuccess = { onSuccess(it) })
                 }
             }
             .addOnFailureListener {
-                loginViewModel.error = "User already exists"
+                errorOperations.showError("User already exists")
             }
     }
 
     fun login(
         email: String,
         password: String,
-        navController: NavController,
-        sharedViewModel: SharedViewModel,
-        loginViewModel: LoginViewModel
+        errorOperations: ErrorOperations,
+        onSuccess: (User) -> Unit
     ) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                loginViewModel.error = ""
-
                 val user = Firebase.auth.currentUser
                 if (user != null) {
-                    userRepository.getUserData(user.uid, navController, sharedViewModel)
+                    userRepository.getUserData(user.uid, onSuccess = { onSuccess(it) })
                 }
             }
             .addOnFailureListener {
-                loginViewModel.error = "Wrong username or password"
+                errorOperations.showError("Wrong username or password")
             }
     }
 
@@ -60,13 +57,9 @@ class AccountService {
     }
 
     fun logout(
-        navController: NavController,
-        sharedViewModel: SharedViewModel
+        onSuccess: () -> Unit
     ) {
         Firebase.auth.signOut()
-
-        sharedViewModel.changeUser(null)
-
-        navController.navigate("home")
+        onSuccess()
     }
 }

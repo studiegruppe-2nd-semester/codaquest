@@ -32,7 +32,7 @@ class ApiService {
         }!!
     }
 
-    suspend fun promptApi(homeScreenViewModel: HomeScreenViewModel) {
+    suspend fun promptApi(projectInfo: Project) {
         val chatCompletionRequest = ChatCompletionRequest(
             model = ModelId("gpt-3.5-turbo"),
             responseFormat = ChatResponseFormat("json_object"),
@@ -45,7 +45,7 @@ class ApiService {
                 ),
                 ChatMessage(
                     role = ChatRole.User,
-                    content = "I'm ${homeScreenViewModel.level} with the coding language ${homeScreenViewModel.language} and i am looking for a project that fits these key words: ${homeScreenViewModel.keyWords}. The average completion time for the project should be ${homeScreenViewModel.length} hours. "
+                    content = "I'm ${projectInfo.level} with the coding language ${projectInfo.language} and i am looking for a project that fits these key words: ${projectInfo.keywords}. The average completion time for the project should be ${projectInfo.length} hours. "
                 )
             )
         )
