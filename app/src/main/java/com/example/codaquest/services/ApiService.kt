@@ -55,7 +55,11 @@ class ApiService {
         val apiResponse = completion.choices[0].message.content
         val respondJson = apiResponse?.let { JSONObject(it) }
 
-        homeScreenViewModel.getJsonIntoHashMap(respondJson)
+
+        if (respondJson != null) {
+            homeScreenViewModel.getJsonIntoHashMap(respondJson)
+        }
+
 
 
 

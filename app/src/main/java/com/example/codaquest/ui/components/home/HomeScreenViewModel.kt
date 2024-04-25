@@ -7,11 +7,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.codaquest.classes.Project
 import com.example.codaquest.repositories.ProjectRepository
+import com.example.codaquest.services.ApiService
 import com.example.codaquest.ui.components.SharedViewModel
 import org.json.JSONObject
 
 
-class HomeScreenViewModel : ViewModel () {
+class HomeScreenViewModel (private val apiService: ApiService) : ViewModel () {
     private val projectRepository : ProjectRepository = ProjectRepository()
 
 
@@ -49,6 +50,7 @@ class HomeScreenViewModel : ViewModel () {
         level = newLevel
     }
 
+
     var project: Project = Project(
         title = "test",
         keywords = "test",
@@ -68,11 +70,11 @@ class HomeScreenViewModel : ViewModel () {
 
 
 
-    fun getJsonIntoHashMap (apiRespond: JSONObject?) : HashMap<String, Any> {
+    fun getJsonIntoHashMap (apiRespond: JSONObject) : HashMap<String, Any> {
         val apiRespondHashMap = hashMapOf<String,Any>()
 
-        val jsonObjectKeys = apiRespond?.keys()
-        while (jsonObjectKeys?.hasNext() == true) {
+        val jsonObjectKeys = apiRespond.keys()
+        while (jsonObjectKeys.hasNext()) {
             val key = jsonObjectKeys.next()
             val value = apiRespond.get(key)
             apiRespondHashMap[key] = value
@@ -83,8 +85,6 @@ class HomeScreenViewModel : ViewModel () {
             println("Key: $key, Value: $value")
         }
          */
-
-
 
         return apiRespondHashMap
     }
