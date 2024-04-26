@@ -1,14 +1,9 @@
 package com.example.codaquest.ui.components.home
 
-import android.graphics.Paint.Style
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -109,7 +103,7 @@ fun HomeScreen (
                         color = MaterialTheme.colorScheme.primary
                     )
                 )
-                Text(text = "Which programmin language would you like to code in?")
+                Text(text = "Which programming language would you like to code in?")
                 TextField(
                     value = homeScreenViewModel.language,
                     onValueChange = { homeScreenViewModel.updateLanguage(it) })
@@ -134,7 +128,7 @@ fun HomeScreen (
 
 
                 TextField(
-                    value = homeScreenViewModel.length.toString(),
+                    value = if (homeScreenViewModel.length == 0) "" else homeScreenViewModel.length.toString(),
                     onValueChange = { newValue -> homeScreenViewModel.updateLength(newValue) }
                 )
 
@@ -169,7 +163,10 @@ fun HomeScreen (
                         language = homeScreenViewModel.language,
                         keywords = homeScreenViewModel.keyWords,
                         length = homeScreenViewModel.length
-                    )
+                    ),
+                    onSuccess = {
+                        sharedViewModel.project = it
+                    }
                 ) }) {
                     Text(text = "Generate Project")
                 }
@@ -215,15 +212,18 @@ fun HomeScreen (
 
                 */
 
-                ProjectComposable(project = homeScreenViewModel.project)
+                if (!sharedViewModel.project.title.isNullOrEmpty()) {
 
-                Button(onClick = { sharedViewModel.user?.userUid?.let { uid ->
-                    homeScreenViewModel.addProject(
-                        uid,
-                        onSuccess = { project -> sharedViewModel.user?.projects?.add(project) }
-                    )
-                } }) {
-                    Text(text = "Save project")
+                    ProjectComposable(project = sharedViewModel.project)
+
+                    Button(onClick = { sharedViewModel.user?.userUid?.let { uid ->
+                        sharedViewModel.addProject(
+                            uid,
+                            onSuccess = { project -> sharedViewModel.user?.projects?.add(project) }
+                        )
+                    } }) {
+                        Text(text = "Save project")
+                    }
                 }
 
             }

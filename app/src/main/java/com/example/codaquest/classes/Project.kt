@@ -10,7 +10,7 @@ data class Project(
 
     //Indtastning
     var keywords: String? = null,
-    val language: String? = null,
+    var language: String? = null,
     val length: Int? = null,
     val level: String? = null,
 

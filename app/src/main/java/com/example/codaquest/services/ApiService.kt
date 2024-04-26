@@ -8,8 +8,9 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
+import com.example.codaquest.classes.Project
 import com.example.codaquest.ui.components.SharedViewModel
-import com.example.codaquest.ui.components.home.HomeScreenViewModel
+import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.time.Duration.Companion.seconds
 
@@ -30,7 +31,12 @@ class ApiService {
         }!!
     }
 
-    suspend fun promptApi(projectInfo: Project) {
+    suspend fun promptApi(
+        projectInfo: Project,
+        onSuccess: (Project) -> Unit
+    ) {
+        val length = if (projectInfo.length == 0) "a number you choose of" else projectInfo.length
+
         val chatCompletionRequest = ChatCompletionRequest(
             model = ModelId("gpt-3.5-turbo"),
             responseFormat = ChatResponseFormat("json_object"),
@@ -43,39 +49,53 @@ class ApiService {
                 ),
                 ChatMessage(
                     role = ChatRole.User,
-                    content = "I'm ${projectInfo.level} with the coding language ${projectInfo.language} and i am looking for a project that fits these key words: ${projectInfo.keywords}. The average completion time for the project should be ${projectInfo.length} hours. "
+                    content = "I'm ${projectInfo.level} with the coding language ${projectInfo.language} and i am looking for a project that fits these key words: ${projectInfo.keywords}. The average completion time for the project should be $length hours. "
                 )
             )
         )
         val completion: ChatCompletion = openAI.chatCompletion(chatCompletionRequest)
         // HERE YOU ONLY GET THE MESSAGE CONTENT THAT THE AI ANSWERED
-        println("COMPLETION: $completion")
-        println("COMPLETION: ${completion.choices[0].message.content}")
+//        println("COMPLETION: $completion")
+//        println("COMPLETION: ${completion.choices[0].message.content}")
 
         val apiResponse = completion.choices[0].message.content
         val respondJson = apiResponse?.let { JSONObject(it) }
 
         if (respondJson != null) {
-           val responseHashMap = getJsonIntoHashMap(respondJson)
-
+            onSuccess(getJsonIntoHashMap(respondJson))
         }
     }
 
-    private fun getJsonIntoHashMap (apiRespond: JSONObject?) : HashMap<String, Any> {
-        val apiRespondHashMap = hashMapOf<String,Any>()
+    private fun getJsonIntoHashMap (apiResponse: JSONObject?) : Project {
+        val apiResponseHashMap = hashMapOf<String,Any>()
 
-        val jsonObjectKeys = apiRespond?.keys()
+        val jsonObjectKeys = apiResponse?.keys()
+
         while (jsonObjectKeys?.hasNext() == true) {
             val key = jsonObjectKeys.next()
-            val value = apiRespond.get(key)
-            apiRespondHashMap[key] = value
+            val value = apiResponse.get(key)
+//            println("Type of $key: ${value::class.simpleName}")
+            apiResponseHashMap[key] = value
         }
 
-        /*
-        for ((key, value) in apiRespondHashMap) {
+        val stepsJsonArray = apiResponseHashMap["steps"] as? JSONArray
+        val stepsList = stepsJsonArray?.let { jsonArray ->
+            List(jsonArray.length()) { i -> jsonArray.getString(i) }
+        }
+
+        val project = Project(
+            title = apiResponseHashMap["title"]?.toString(),
+            language = apiResponseHashMap["language"]?.toString(),
+            length = apiResponseHashMap["length"]?.toString()?.toInt(),
+            level = apiResponseHashMap["level"]?.toString(),
+            description = apiResponseHashMap["description"]?.toString(),
+            steps = stepsList
+        )
+
+        for ((key, value) in apiResponseHashMap) {
             println("Key: $key, Value: $value")
         }
-         */
-        return apiRespondHashMap
+
+        return project
     }
 }

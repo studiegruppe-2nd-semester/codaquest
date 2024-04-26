@@ -13,8 +13,6 @@ import org.json.JSONObject
 
 
 class HomeScreenViewModel : ViewModel () {
-    private val projectRepository : ProjectRepository = ProjectRepository()
-
     // ------------------------------------- KEYWORDS
     var keyWords: String by mutableStateOf("")
         private set
@@ -45,34 +43,4 @@ class HomeScreenViewModel : ViewModel () {
     fun updateLevel(newLevel: String) {
         level = newLevel
     }
-
-    // ------------------------------------- TEST PROJECT TODO make empty
-    var project: Project = Project(
-        title = "Pizza lovers",
-        keywords = "Pizza",
-        language = "Kotlin",
-        length = 10,
-        level = "Beginner",
-
-        description = "This app is for pizza lovers to share their love for pizza",
-
-        steps = mutableListOf(
-            "Step 1: Set up Android Studio",
-            "Step 2: Make functionality",
-            "Step 3: Make UI"
-        )
-
-    )
-
-    fun addProject (
-        uid: String,
-        onSuccess: (Project) -> Unit
-    ) {
-        projectRepository.addProjectToDB(
-            project.copy(uid = uid),
-            onSuccess = { project -> onSuccess(project) }
-        )
-    }
-
-
 }

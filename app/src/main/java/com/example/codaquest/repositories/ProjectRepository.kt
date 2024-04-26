@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.navigation.NavController
 import com.example.codaquest.classes.Project
+import com.example.codaquest.classes.User
 import com.example.codaquest.interfaces.UserOperations
 import com.example.codaquest.ui.components.SharedViewModel
 import com.google.firebase.Firebase
@@ -36,7 +37,8 @@ class ProjectRepository {
     }
     fun getProjects(
         uid: String,
-        userOperations: UserOperations
+        user: User?,
+        onSuccess: (MutableList<Project>) -> Unit
     ) {
         db.collection("projects")
             .whereEqualTo("uid", uid)
@@ -46,6 +48,7 @@ class ProjectRepository {
 
                 documents.forEach { document ->
                     val newProject = Project(
+                        projectId = document.id,
                         title = document.data["title"]?.toString(),
                         keywords = document.data["keywords"]?.toString(),
                         language = document.data["language"]?.toString(),
@@ -61,11 +64,7 @@ class ProjectRepository {
                     projects.add(newProject)
                 }
                 // TODO
-//                dataReceiver.changeUser(
-//                    dataReceiver.user?.copy(
-//                        projects = projects
-//                    )
-//                )
+                onSuccess(projects)
             }
     }
 

@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.codaquest.classes.Project
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
@@ -67,13 +68,13 @@ fun ProjectComposable(project: Project) {
         project.description?.let {
             Text(
                 text = it,
-                modifier = Modifier.padding(vertical = 5.dp)
+                modifier = Modifier.padding(vertical = 10.dp)
             )
         }
 
-        Text(text = "Steps:")
+        Text(text = "Steps:", fontSize = 20.sp, modifier = Modifier.padding(vertical = 10.dp))
         project.steps?.forEach { steps ->
-            Text(text = "- $steps")
+            Text(text = "- $steps\n", modifier = Modifier.padding(vertical = 5.dp))
         }
     }
 }

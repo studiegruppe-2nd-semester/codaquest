@@ -19,7 +19,7 @@ class SharedViewModel: ViewModel(), UserOperations {
         fetchUserData()
     }
 
-//    val navigateToProfile = mutableStateOf(false)
+    private val projectRepository : ProjectRepository = ProjectRepository()
 
     // ------------------------------------- KEY
     var key: String? = null
@@ -32,33 +32,63 @@ class SharedViewModel: ViewModel(), UserOperations {
     var user: User? by mutableStateOf(null)
         private set
     override fun changeUser(newUser: User?) {
-        this.user = user
+        this.user = newUser
+        println("New user: $user")
     }
 
 
     private fun fetchUserData() {
+        println("Trying to fetch user data")
         viewModelScope.launch {
             val accountService = AccountService()
             val userUid = accountService.getCurrentUser()?.uid
+//            println("useruid: $userUid")
 
             val userRepository = UserRepository()
             val projectRepository = ProjectRepository()
-            userRepository.getKey(this@SharedViewModel)
+
+            userRepository.getKey(onSuccess = {
+                if (it != null) {
+                    updateKey(it)
+                }
+            })
+
 
             if (userUid !== null) {
-                projectRepository.getProjects(userUid, this@SharedViewModel)
-                userRepository.getUserData(userUid, onSuccess = { changeUser(it) })
+                userRepository.getUserData(userUid, onSuccess = { user ->
+                    changeUser(user)
+
+                    projectRepository.getProjects(userUid, user, onSuccess = { projects ->
+                        changeUser(user.copy(projects = projects))
+                    })
+                })
             }
         }
     }
 
-    fun promptApi(projectInfo: Project) {
+    fun promptApi(
+        projectInfo: Project,
+        onSuccess: (Project) -> Unit
+    ) {
         val apiService = ApiService()
         apiService.initiateApi(this)
 
         viewModelScope.launch {
-            apiService.promptApi(projectInfo)
+            apiService.promptApi(projectInfo, onSuccess = { onSuccess(it) })
         }
 
+    }
+
+    // ------------------------------------- GENERATED PROJECT
+    var project by mutableStateOf(Project())
+
+    fun addProject (
+        uid: String,
+        onSuccess: (Project) -> Unit
+    ) {
+        projectRepository.addProjectToDB(
+            project.copy(uid = uid),
+            onSuccess = { project -> onSuccess(project) }
+        )
     }
 }

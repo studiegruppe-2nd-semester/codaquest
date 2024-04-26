@@ -12,11 +12,14 @@ class UserRepository {
     private val db = Firebase.firestore
 
     fun getKey(
-        userOperations: UserOperations
+        onSuccess: (String?) -> Unit
     ) {
         db.collection("api").document("information").get()
             .addOnSuccessListener { document ->
-                document.data?.get("key")?.toString()?.let { userOperations.updateKey(it) }
+                document.data?.get("key")?.toString()?.let { onSuccess(it) }
+            }
+            .addOnFailureListener { e ->
+                println("Error getting documents: $e")
             }
     }
 
@@ -26,7 +29,6 @@ class UserRepository {
     ) {
         db.collection("users").document(userUid).get()
             .addOnSuccessListener { document ->
-
                 val onboardingData = OnboardingData(
                     level = document.data?.get("level")?.toString(),
                     languages = document.data?.get("languages")?.toString(),
