@@ -10,12 +10,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import com.example.codaquest.classes.OnboardingData
 import com.example.codaquest.classes.OnboardingQuestion
 import com.example.codaquest.classes.OnboardingQuestionTypes
+import com.example.codaquest.classes.User
 import com.example.codaquest.repositories.UserRepository
-import com.example.codaquest.ui.components.SharedViewModel
 
 @SuppressLint("MutableCollectionMutableState")
 class OnboardingViewModel : ViewModel () {
@@ -34,8 +33,8 @@ class OnboardingViewModel : ViewModel () {
     }
 
     fun nextQuestion(
-        navController: NavController,
-        sharedViewModel: SharedViewModel
+        user: User,
+        onSuccess: (User) -> Unit
     ) {
         if ((currentQuestion < questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             currentQuestion++
@@ -45,14 +44,14 @@ class OnboardingViewModel : ViewModel () {
         }
         // IF THE LAST QUESTION IS ANSWERED, ADD TO FIRESTORE
         else if ((currentQuestion == questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
-            userRepository.updateUserData(
+            userRepository.addOnboardingDataToUserData(
                 OnboardingData(
                     level = questions[0].answer.value,
                     languages = questions[1].answer.value,
                     projectLength = questions[2].answer.value.toInt()
                 ),
-                navController = navController,
-                sharedViewModel = sharedViewModel
+                user,
+                onSuccess = { onSuccess(it) }
             )
 
         }

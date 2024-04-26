@@ -102,7 +102,16 @@ fun OnboardingScreen (
             }
 
             Button(modifier = Modifier.padding(5.dp),
-                onClick = { viewModel.nextQuestion(navController, sharedViewModel) },
+                onClick = {
+                    sharedViewModel.user?.let {user ->
+                        viewModel.nextQuestion(
+                            user,
+                            onSuccess = {
+                                sharedViewModel.changeUser(it)
+                                navController.navigate("profile")
+                            })
+                    }
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )

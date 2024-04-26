@@ -4,12 +4,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import com.example.codaquest.classes.LoginState
+import com.example.codaquest.classes.User
+import com.example.codaquest.interfaces.ErrorOperations
 import com.example.codaquest.services.AccountService
-import com.example.codaquest.ui.components.SharedViewModel
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel: ViewModel(), ErrorOperations {
     // ----------------------------------------- ACCOUNT SERVICE
     private val accountService = AccountService()
 
@@ -52,20 +52,22 @@ class LoginViewModel: ViewModel() {
     }
 
     // ----------------------------------------- LOGIN
-    fun login(navController: NavController, sharedViewModel: SharedViewModel, loginViewModel: LoginViewModel) {
+    fun login(
+        errorOperations: ErrorOperations,
+        onSuccess: (User) -> Unit
+    ) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             accountService.login(
                 email = email,
                 password = password,
-                navController = navController,
-                sharedViewModel = sharedViewModel,
-                loginViewModel = loginViewModel
+                errorOperations = errorOperations,
+                onSuccess = { onSuccess(it) }
             )
         }
     }
 
     // ----------------------------------------- SIGN UP
-    fun signUp(navController: NavController, sharedViewModel: SharedViewModel, loginViewModel: LoginViewModel) {
+    fun signUp(onSuccess: (User) -> Unit) {
         if (password == passwordConfirm) {
             error = ""
 
@@ -74,9 +76,8 @@ class LoginViewModel: ViewModel() {
                     email = email,
                     username = username,
                     password = password,
-                    navController = navController,
-                    sharedViewModel = sharedViewModel,
-                    loginViewModel = loginViewModel
+                    this,
+                    onSuccess = { onSuccess(it) }
                 )
             }
         }
@@ -87,5 +88,9 @@ class LoginViewModel: ViewModel() {
 
     // ----------------------------------------- ERROR
     var error: String by mutableStateOf("")
+        private set
+    override fun showError(error: String) {
+        this.error = error
+    }
 
 }

@@ -3,6 +3,7 @@ package com.example.codaquest.classes
 data class Project(
     // USER ID
     var uid: String? = null,
+    var projectId: String? = null,
 
     // Svar fra chat gpt titel
     var title: String? = null,
