@@ -55,23 +55,12 @@ class ApiService {
         val apiResponse = completion.choices[0].message.content
         val respondJson = apiResponse?.let { JSONObject(it) }
 
-
         if (respondJson != null) {
-            homeScreenViewModel.getJsonIntoHashMap(respondJson)
+           val responseHashMap = getJsonIntoHashMap(respondJson)
+
         }
-
-
-
-
-        /*
-        // or, as flow
-//        val completions: Flow<ChatCompletionChunk> = openAI.chatCompletions(chatCompletionRequest)
-
-         */
-
     }
 
-    /*
     private fun getJsonIntoHashMap (apiRespond: JSONObject?) : HashMap<String, Any> {
         val apiRespondHashMap = hashMapOf<String,Any>()
 
@@ -87,13 +76,6 @@ class ApiService {
             println("Key: $key, Value: $value")
         }
          */
-
-
         return apiRespondHashMap
     }
-     */
-
-
-
-
 }
