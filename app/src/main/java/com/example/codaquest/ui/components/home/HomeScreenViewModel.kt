@@ -48,18 +48,18 @@ class HomeScreenViewModel : ViewModel () {
     }
 
     var project: Project = Project(
-        title = "test",
-        keywords = "test",
-        language = "test",
+        title = "Pizza lovers",
+        keywords = "Pizza",
+        language = "Kotlin",
         length = 10,
-        level = "test",
+        level = "Beginner",
 
-        description = "test",
+        description = "This app is for pizza lovers to share their love for pizza",
 
         steps = mutableListOf(
-            "test 1",
-            "test 2",
-            "test 4000"
+            "Step 1: Set up Android Studio",
+            "Step 2: Make functionality",
+            "Step 3: Make UI"
         )
 
     )
