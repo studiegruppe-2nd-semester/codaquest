@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
+import com.example.codaquest.classes.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
@@ -63,6 +64,7 @@ fun ProfileScreen(
                             viewModel.logout(
                                 onSuccess = {
                                     sharedViewModel.changeUser(null)
+                                    sharedViewModel.project = Project()
                                     navController.navigate("home")
                                 })
                         },
