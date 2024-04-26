@@ -45,7 +45,6 @@ class SharedViewModel: ViewModel(), UserOperations {
 //            println("useruid: $userUid")
 
             val userRepository = UserRepository()
-            val projectRepository = ProjectRepository()
 
             userRepository.getKey(onSuccess = {
                 if (it != null) {
@@ -57,10 +56,6 @@ class SharedViewModel: ViewModel(), UserOperations {
             if (userUid !== null) {
                 userRepository.getUserData(userUid, onSuccess = { user ->
                     changeUser(user)
-
-                    projectRepository.getProjects(userUid, user, onSuccess = { projects ->
-                        changeUser(user.copy(projects = projects))
-                    })
                 })
             }
         }

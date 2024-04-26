@@ -4,8 +4,6 @@ import android.content.ContentValues
 import android.util.Log
 import androidx.navigation.NavController
 import com.example.codaquest.classes.Project
-import com.example.codaquest.classes.User
-import com.example.codaquest.interfaces.UserOperations
 import com.example.codaquest.ui.components.SharedViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -13,31 +11,30 @@ import com.google.firebase.firestore.firestore
 class ProjectRepository {
     private val db = Firebase.firestore
 
-    fun getProjectData(
-        projectID: String,
-        navController: NavController?,
-        sharedViewModel: SharedViewModel
-    ) {
-        db.collection("projects").document(projectID).get()
-            .addOnSuccessListener { document ->
-
-                val projectData = Project(
-                    title = document.data?.get("title")?.toString(),
-                    keywords = document.data?.get("keywords")?.toString(),
-                    language = document.data?.get("language")?.toString(),
-                    length = document.data?.get("length")?.toString()?.toInt(),
-                    level = document.data?.get("level")?.toString(),
-                    description = document.data?.get("description")?.toString(),
-                    steps = when (val stepsData = document.data?.get("steps")) {
-                        is List<*> -> stepsData.filterIsInstance<String>()
-                        else -> emptyList()
-                    }
-                )
-            }
-    }
+//    fun getProjectData(
+//        projectID: String,
+//        navController: NavController?,
+//        sharedViewModel: SharedViewModel
+//    ) {
+//        db.collection("projects").document(projectID).get()
+//            .addOnSuccessListener { document ->
+//
+//                val projectData = Project(
+//                    title = document.data?.get("title")?.toString(),
+//                    keywords = document.data?.get("keywords")?.toString(),
+//                    language = document.data?.get("language")?.toString(),
+//                    length = document.data?.get("length")?.toString()?.toInt(),
+//                    level = document.data?.get("level")?.toString(),
+//                    description = document.data?.get("description")?.toString(),
+//                    steps = when (val stepsData = document.data?.get("steps")) {
+//                        is List<*> -> stepsData.filterIsInstance<String>()
+//                        else -> emptyList()
+//                    }
+//                )
+//            }
+//    }
     fun getProjects(
         uid: String,
-        user: User?,
         onSuccess: (MutableList<Project>) -> Unit
     ) {
         db.collection("projects")
@@ -63,7 +60,6 @@ class ProjectRepository {
 
                     projects.add(newProject)
                 }
-                // TODO
                 onSuccess(projects)
             }
     }

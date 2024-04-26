@@ -1,12 +1,8 @@
 package com.example.codaquest.services
 
-import androidx.navigation.NavController
 import com.example.codaquest.classes.User
 import com.example.codaquest.interfaces.ErrorOperations
-import com.example.codaquest.interfaces.UserOperations
 import com.example.codaquest.repositories.UserRepository
-import com.example.codaquest.ui.components.SharedViewModel
-import com.example.codaquest.ui.components.login.LoginViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
@@ -44,7 +40,9 @@ class AccountService {
             .addOnSuccessListener {
                 val user = Firebase.auth.currentUser
                 if (user != null) {
-                    userRepository.getUserData(user.uid, onSuccess = { onSuccess(it) })
+                    userRepository.getUserData(user.uid, onSuccess = { newUser ->
+                        onSuccess(newUser)
+                    })
                 }
             }
             .addOnFailureListener {

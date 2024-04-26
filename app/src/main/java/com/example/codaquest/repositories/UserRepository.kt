@@ -4,12 +4,12 @@ import android.content.ContentValues
 import android.util.Log
 import com.example.codaquest.classes.OnboardingData
 import com.example.codaquest.classes.User
-import com.example.codaquest.interfaces.UserOperations
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
 class UserRepository {
     private val db = Firebase.firestore
+    private val projectRepository = ProjectRepository()
 
     fun getKey(
         onSuccess: (String?) -> Unit
@@ -35,11 +35,13 @@ class UserRepository {
                     projectLength = document.data?.get("project-length")?.toString()?.toInt()
                 )
 
-                onSuccess(User(
+                val user = User(
                     userUid = document.id,
                     username = document.data?.get("username")?.toString(),
                     onboardingData = onboardingData
-                ))
+                )
+
+                projectRepository.getProjects(userUid, onSuccess = { onSuccess(user.copy(projects = it)) })
 
               Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
             }
