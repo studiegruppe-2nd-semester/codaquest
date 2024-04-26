@@ -17,5 +17,8 @@ Ideas:
 15. Pinned project
 16. Filter saved projects
 17. Icons?
+18. Profile picture
+19. Share projects with others (Needs to find out how, project copied as text)
+20.
 
 
