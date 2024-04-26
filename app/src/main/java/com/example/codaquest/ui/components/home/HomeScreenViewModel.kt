@@ -12,7 +12,7 @@ import com.example.codaquest.ui.components.SharedViewModel
 import org.json.JSONObject
 
 
-class HomeScreenViewModel (private val apiService: ApiService) : ViewModel () {
+class HomeScreenViewModel () : ViewModel () {
     private val projectRepository : ProjectRepository = ProjectRepository()
 
 
