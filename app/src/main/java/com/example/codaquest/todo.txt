@@ -1,54 +1,21 @@
 TODO FILE:
-
-1. Add openAI API key as an environment key:
-https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
-1.1 OR Set up your API key for a single project
-https://platform.openai.com/docs/quickstart?context=python
-
-
-2. OpenAI API Kotlin Client - Getting Started
-https://github.com/aallam/openai-kotlin/blob/main/guides/GettingStarted.md
-
-3. Prompting through API:
-https://platform.openai.com/docs/guides/text-generation/chat-completions-api
-
-    The main input is the messages parameter. Messages must be an array of message objects, where each object has a role (either
-    "system", "user", or "assistant") and content. Conversations can be as short as one message or many back and forth turns.
-
-    Typically, a conversation is formatted with a system message first, followed by alternating user and assistant messages.
-
-    The system message helps set the behavior of the assistant. For example, you can modify the personality of the assistant or
-    provide specific instructions about how it should behave throughout the conversation. However note that the system message is
-    optional and the model’s behavior without a system message is likely to be similar to using a generic message such as "You are
-    a helpful assistant."
-
-    The user messages provide requests or comments for the assistant to respond to. Assistant messages store previous assistant
-    responses, but can also be written by you to give examples of desired behavior.
-
-    Including conversation history is important when user instructions refer to prior messages. In the example above, the user’s
-    final question of "Where was it played?" only makes sense in the context of the prior messages about the World Series of 2020.
-    Because the models have no memory of past requests, all relevant information must be supplied as part of the conversation history
-    in each request. If a conversation cannot fit within the model’s token limit, it will need to be shortened in some way.
-
-4. Prompt API with response_format as JSON mode (or similar)
-https://platform.openai.com/docs/guides/text-generation/json-mode
-
-5. Example prompt:
-    SYSTEM: You are a coding project generator. Your job is to come up with interesting projects in a chosen coding
-    language and to give the user a project title,  project description along with project requirements (which can also be
-    seen as steps to complete the project)
-
-    USER: I am looking for a project that fits these key words: "view models, basic android app". The project should be an
-    app made by Kotlin Jetpack Compose, and the average completion time for the project should be 5 hours. I am a beginner
-    in coding with Kotlin
-
-6. Tokenizer - calculate amount of tokens
-https://platform.openai.com/tokenizer
+Ideas:
+1. loading feature when generating project
+2. Category to idea block users
+3. level change from number to beginner, intermediate and advanced
+4. loading screen
+5. project screen + expanded pop up projects
+6. Settings + change onboarding answers
+7. Generating project step by step
+8. Exercise features
+9. Project gallery from all users + saving/favorite?
+10. Daily coding challenge
+11. Project rating in gallery
+12. can't take æ,ø,å in all places???
+13. TEST (Unit, UI?)
+14. Unsaved projects (gets deleted from firestore)
+15. Pinned project
+16. Filter saved projects
+17. Icons?
 
 
-TODO
-1. Connect prompt reply to home screen (Ongoing - Nathasja)
-2. style homescreen
-3. secure sharedviewmodel connection of projects to different screen (save project)
-4. 5 min video
-5. finish document with styletile etc (Almost done)
