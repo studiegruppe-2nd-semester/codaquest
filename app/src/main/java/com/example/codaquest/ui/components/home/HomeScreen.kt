@@ -103,7 +103,10 @@ fun HomeScreen (
                         color = MaterialTheme.colorScheme.primary
                     )
                 )
-                Text(text = "Which programming language would you like to code in?")
+                Text(text = "Which programming language would you like to code in?",
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp), // Adjust padding as needed
+                    textAlign = TextAlign.Center)
                 TextField(
                     value = homeScreenViewModel.language,
                     onValueChange = { homeScreenViewModel.updateLanguage(it) })
@@ -147,7 +150,10 @@ fun HomeScreen (
                         color = MaterialTheme.colorScheme.primary
                     )
                 )
-                Text(text = "Which level would you like your project to be?")
+                Text(text = "Which level would you like your project to be?",
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp), // Adjust padding as needed
+                    textAlign = TextAlign.Center)
                 TextField(
                     value = homeScreenViewModel.level,
                     onValueChange = { homeScreenViewModel.updateLevel(it) })
