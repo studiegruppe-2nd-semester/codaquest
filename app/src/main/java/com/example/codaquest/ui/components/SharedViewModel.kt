@@ -41,6 +41,9 @@ class SharedViewModel: ViewModel(), UserOperations {
             user?.projects!!.add(project)
             changeUser(user)
         }
+        else {
+            changeUser(user?.copy(projects = mutableListOf(project)))
+        }
     }
 
 
