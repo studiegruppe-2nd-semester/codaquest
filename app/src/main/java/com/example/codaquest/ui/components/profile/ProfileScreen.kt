@@ -1,7 +1,6 @@
 package com.example.codaquest.ui.components.profile
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
+import com.example.codaquest.services.ApiService
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
@@ -43,76 +46,91 @@ fun ProfileScreen(
 ) {
     val viewModel : ProfileViewModel = viewModel()
 
+
     Box(modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomCenter) {
 
-        Column(modifier = Modifier
+        LazyColumn(modifier = Modifier
             .padding(5.dp)
             .padding(bottom = 70.dp)
-            .fillMaxSize()
+//            .fillMaxSize()
         ) {
-            Row(modifier = Modifier
-                .padding(top = 10.dp)
-                .fillMaxWidth()
-                .fillMaxHeight(0.1f),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            item {
+                Row(modifier = Modifier
+                    .padding(top = 10.dp)
+                    .fillMaxWidth()
+                    .height(50.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
 
-                Text(
-//                    text = "Settings" --- todo
-                    text = ""
-                )
-
-                Text(modifier = Modifier
-                    .clickable {
-                        viewModel.logout(navController)
-                    },
-                    text = "Logout"
-                )
-            }
-
-            Column(modifier = Modifier
-                .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                Image(
-                    painter = painterResource(id = R.drawable.profile_picture),
-                    contentDescription = "profile picture",
-                    modifier = Modifier
-                        .padding(bottom = 20.dp)
-                        .size(300.dp)
-                )
-
-                (if (sharedViewModel.user?.username != null) sharedViewModel.user!!.username else "username not found")?.let {
                     Text(
-                        text = it,
-                        fontSize = 30.sp,
-                        color = MaterialTheme.colorScheme.primary
+//                    text = "Settings" --- todo
+                        text = ""
+                    )
+
+
+
+                    Text(modifier = Modifier
+                        .clickable {
+                            viewModel.logout(navController, sharedViewModel)
+                        },
+                        text = "Logout"
                     )
                 }
-            }
-            
-            Spacer(modifier = Modifier.height(50.dp))
 
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = "Saved projects",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontSize = 30.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                
-                Spacer(modifier = Modifier.height(10.dp))
-                
-                if (viewModel.projects.isNotEmpty()) {
-                    LazyColumn {
-                        items(viewModel.projects) { item ->
-                            ProjectComposable(project = item)
-                        }
+                Column(modifier = Modifier
+                    .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Image(
+                        painter = painterResource(id = R.drawable.profile_picture),
+                        contentDescription = "profile picture",
+                        modifier = Modifier
+                            .padding(bottom = 20.dp)
+                            .size(300.dp)
+                    )
+
+                    (if (sharedViewModel.user?.username != null) sharedViewModel.user!!.username else "username not found")?.let {
+                        Text(
+                            text = it,
+                            fontSize = 30.sp,
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                 }
-                else {
+
+                Spacer(modifier = Modifier.height(50.dp))
+
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = "Saved projects",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontSize = 30.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+//                    if (viewModel.projects.isNotEmpty()) {
+//                        LazyColumn {
+//                            items(viewModel.projects) { item ->
+//                                ProjectComposable(project = item)
+//                            }
+//                        }
+//                    }
+//                    else {
+//                        Text(text = "No saved projects found")
+//                    }
+                }
+            }
+            if (sharedViewModel.user?.projects?.isNotEmpty() == true) {
+                items(sharedViewModel.user?.projects!!) { item ->
+                    ProjectComposable(project = item)
+                }
+            }
+            else {
+                item {
                     Text(text = "No saved projects found")
                 }
             }
@@ -122,12 +140,3 @@ fun ProfileScreen(
 
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun ProfileScreenPreview() {
-//    CodaQuestTheme {
-//        val sharedViewModel: SharedViewModel = viewModel()
-//        ProfileScreen(rememberNavController(), sharedViewModel)
-//    }
-//}

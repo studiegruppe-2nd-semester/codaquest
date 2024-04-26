@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.codaquest.services.ApiService
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
@@ -162,8 +163,8 @@ fun HomeScreen (
                         .padding(top = 30.dp)
                 )
 
-                Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Generate project")
+                Button(onClick = { sharedViewModel.promptApi(homeScreenViewModel) }) {
+                    Text(text = "Generate Project")
                 }
 
                 Spacer(modifier = Modifier
