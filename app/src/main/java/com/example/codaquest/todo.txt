@@ -1,4 +1,17 @@
 TODO FILE:
+PROBLEM / RØD TRÅD:
+- The users learn the most while working on their own projects
+- Many users want more repetition and more exercises than what the school gives them
+- Does our app actually help the users?
+- Will the users actually continue to use it or even use it to begin with?
+- What feedback do the users have to make the app better? What is missing?
+- Could this app help you expand your CV?
+- Find people who will download the app and use it in a specified period
+- How can we connect our app to the users pc since that is where they will code?
+    - What if the share feature copies a link to drive or something where the project has been
+        turned into a README file? then the file can easily be downloaded to your pc project repo
+- Maybe make a new survey about projects and exercises and about our app
+
 Ideas:
 1. loading feature when generating project
 2. Category to idea block users

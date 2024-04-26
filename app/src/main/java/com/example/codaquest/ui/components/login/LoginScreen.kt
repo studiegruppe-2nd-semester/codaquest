@@ -41,9 +41,9 @@ fun LoginScreen(
             Text(text = "X")
         }
 
-        Spacer(modifier = Modifier.fillMaxHeight(0.15f))
+        Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
-        Box(modifier = Modifier.fillMaxHeight(0.5f)) {
+        Box(modifier = Modifier.fillMaxHeight(0.6f)) {
             when (loginViewModel.state) {
                 LoginState.login -> LoginComposable(navController, sharedViewModel, loginViewModel)
                 LoginState.signup -> SignUpComposable(navController, sharedViewModel, loginViewModel)
