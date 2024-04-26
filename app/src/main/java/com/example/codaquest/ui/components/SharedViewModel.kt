@@ -36,6 +36,13 @@ class SharedViewModel: ViewModel(), UserOperations {
         println("New user: $user")
     }
 
+    fun addProject(project: Project) {
+        if (user?.projects != null) {
+            user?.projects!!.add(project)
+            changeUser(user)
+        }
+    }
+
 
     private fun fetchUserData() {
         println("Trying to fetch user data")

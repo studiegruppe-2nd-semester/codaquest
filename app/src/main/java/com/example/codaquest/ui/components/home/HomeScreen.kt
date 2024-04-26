@@ -225,8 +225,9 @@ fun HomeScreen (
                     Button(onClick = { sharedViewModel.user?.userUid?.let { uid ->
                         sharedViewModel.addProject(
                             uid,
-                            onSuccess = { project -> sharedViewModel.user?.projects?.add(project) }
+                            onSuccess = { project -> sharedViewModel.addProject(project) }
                         )
+                        navController.navigate("profile")
                     } }) {
                         Text(text = "Save project")
                     }
