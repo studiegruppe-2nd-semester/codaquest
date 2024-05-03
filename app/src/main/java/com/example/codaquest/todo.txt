@@ -34,5 +34,6 @@ Ideas:
 19. Share projects with others (Needs to find out how, project copied as text)
 20. Changed font to sans serif for body text
 21. Light mode
+22. Project folders?
 
 
