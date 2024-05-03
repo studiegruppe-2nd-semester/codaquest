@@ -2,8 +2,10 @@ package com.example.codaquest.repositories
 
 import android.content.ContentValues
 import android.util.Log
+import com.example.codaquest.Models.Level
 import com.example.codaquest.Models.OnboardingData
 import com.example.codaquest.Models.User
+import com.example.codaquest.Models.toEnum
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -30,7 +32,7 @@ class UserRepository {
         db.collection("users").document(userUid).get()
             .addOnSuccessListener { document ->
                 val onboardingData = OnboardingData(
-                    level = document.data?.get("level")?.toString(),
+                    level = document.data?.get("level")?.toString()?.toEnum<Level>(),
                     languages = document.data?.get("languages")?.toString(),
                     projectLength = document.data?.get("project-length")?.toString()?.toInt()
                 )

@@ -10,10 +10,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import com.example.codaquest.Models.Level
 import com.example.codaquest.Models.OnboardingData
 import com.example.codaquest.Models.OnboardingQuestion
 import com.example.codaquest.Models.OnboardingQuestionTypes
 import com.example.codaquest.Models.User
+import com.example.codaquest.Models.toEnum
 import com.example.codaquest.repositories.UserRepository
 
 @SuppressLint("MutableCollectionMutableState")
@@ -46,7 +48,7 @@ class OnboardingViewModel : ViewModel () {
         else if ((currentQuestion == questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             userRepository.addOnboardingDataToUserData(
                 OnboardingData(
-                    level = questions[0].answer.value,
+                    level = questions[0].answer.value.toEnum<Level>(),
                     languages = questions[1].answer.value,
                     projectLength = questions[2].answer.value.toInt()
                 ),
