@@ -15,6 +15,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    # Add google-services secret
+    env:
+      DATA: ${{ secrets.GOOGLE_SERVICES_BASE64 }}
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -27,6 +30,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
+
+      # Decrypt google-services
+      - name: Decrypt google-services.json
+        run: echo $DATA | base64 -di > app/google-services.json
 
       # Grant execute permission for gradlew
       - name: Change wrapper permissions
