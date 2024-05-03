@@ -71,15 +71,22 @@ class SharedViewModel: ViewModel(), UserOperations {
         }
     }
 
-    fun promptApi(
+    fun getProjectSuggestion(
         projectInfo: Project,
-        onSuccess: (Project) -> Unit
+        onSuccess: (Project) -> Unit,
+        onError: (Exception) -> Unit
     ) {
         val apiService = ApiService()
         apiService.initiateApi(this)
 
         viewModelScope.launch {
-            apiService.promptApi(projectInfo, onSuccess = { onSuccess(it) })
+            try {
+                val project = apiService.getProjectSuggestion(projectInfo)
+                onSuccess(project) // Invoke the onSuccess lambda with the result
+            } catch (e: Exception) {
+                onError(e) // Invoke the onError lambda if an exception occurs
+            }
+
         }
 
     }

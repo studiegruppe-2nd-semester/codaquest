@@ -35,7 +35,7 @@ fun LoginComposable (
     ) {
 
         TextField(value = loginViewModel.email,
-            onValueChange = {loginViewModel.updateEmail(it)},
+            onValueChange = { loginViewModel.email = it },
             label = { Text("Email")},
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -44,7 +44,7 @@ fun LoginComposable (
         )
 
         TextField(value = loginViewModel.password,
-            onValueChange = {loginViewModel.updatePassword(it)},
+            onValueChange = { loginViewModel.password = it },
             label = { Text("Password")},
             visualTransformation = PasswordVisualTransformation(),
             colors = TextFieldDefaults.colors(

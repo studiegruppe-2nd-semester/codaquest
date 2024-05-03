@@ -31,7 +31,7 @@ fun SignUpComposable(
     ) {
 
         TextField(value = loginViewModel.username,
-            onValueChange = { loginViewModel.updateUsername(it) },
+            onValueChange = { loginViewModel.username = it },
             label = { Text("Username")},
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -40,7 +40,7 @@ fun SignUpComposable(
         )
 
         TextField(value = loginViewModel.email,
-            onValueChange = { loginViewModel.updateEmail(it) },
+            onValueChange = { loginViewModel.email = it },
             label = { Text("Email")},
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -49,7 +49,7 @@ fun SignUpComposable(
         )
 
         TextField(value = loginViewModel.password,
-            onValueChange = { loginViewModel.updatePassword(it) },
+            onValueChange = { loginViewModel.password = it },
             label = { Text("Password")},
             visualTransformation = PasswordVisualTransformation(),
             colors = TextFieldDefaults.colors(
@@ -59,7 +59,7 @@ fun SignUpComposable(
         )
 
         TextField(value = loginViewModel.passwordConfirm,
-            onValueChange = { loginViewModel.updatePasswordConfirm(it) },
+            onValueChange = { loginViewModel.passwordConfirm = it },
             label = { Text("Confirm password")},
             visualTransformation = PasswordVisualTransformation(),
             colors = TextFieldDefaults.colors(

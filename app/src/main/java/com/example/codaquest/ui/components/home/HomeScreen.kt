@@ -85,8 +85,8 @@ fun HomeScreen (
                         .padding(horizontal = 16.dp), // Adjust padding as needed
                     textAlign = TextAlign.Center)
                 TextField(
-                    value = homeScreenViewModel.keyWords,
-                    onValueChange = { homeScreenViewModel.updateKeyWords(it) })
+                    value = homeScreenViewModel.project.keywords.toString(),
+                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(keywords = it) })
 
                 Spacer(
                     modifier = Modifier
@@ -108,8 +108,8 @@ fun HomeScreen (
                         .padding(horizontal = 16.dp), // Adjust padding as needed
                     textAlign = TextAlign.Center)
                 TextField(
-                    value = homeScreenViewModel.language,
-                    onValueChange = { homeScreenViewModel.updateLanguage(it) })
+                    value = homeScreenViewModel.project.language.toString(),
+                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(language = it) })
 
                 Spacer(
                     modifier = Modifier
@@ -131,8 +131,8 @@ fun HomeScreen (
 
 
                 TextField(
-                    value = if (homeScreenViewModel.length == 0) "" else homeScreenViewModel.length.toString(),
-                    onValueChange = { newValue -> homeScreenViewModel.updateLength(newValue) }
+                    value = if (homeScreenViewModel.project.length == 0) "" else homeScreenViewModel.project.length.toString(),
+                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(length = it.toIntOrNull() ?: 0) }
                 )
 
 
@@ -155,26 +155,32 @@ fun HomeScreen (
                         .padding(horizontal = 16.dp), // Adjust padding as needed
                     textAlign = TextAlign.Center)
                 TextField(
-                    value = homeScreenViewModel.level,
-                    onValueChange = { homeScreenViewModel.updateLevel(it) })
+                    value = homeScreenViewModel.project.level.toString(),
+                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(level = it) })
 
                 Spacer(
                     modifier = Modifier
                         .padding(top = 30.dp)
                 )
 
-                Button(onClick = { sharedViewModel.promptApi(
+                Button(onClick = { sharedViewModel.getProjectSuggestion(
                     Project(
-                        level = homeScreenViewModel.level,
-                        language = homeScreenViewModel.language,
-                        keywords = homeScreenViewModel.keyWords,
-                        length = homeScreenViewModel.length
+                        level = homeScreenViewModel.project.level,
+                        language = homeScreenViewModel.project.language,
+                        keywords = homeScreenViewModel.project.keywords,
+                        length = homeScreenViewModel.project.length
                     ),
                     onSuccess = {
                         sharedViewModel.project = it
-                    }
+                        homeScreenViewModel.error  = ""
+                    },
+                    onError = { homeScreenViewModel.error = it.toString() }
                 ) }) {
                     Text(text = "Generate Project")
+                }
+
+                if (homeScreenViewModel.error.isNotEmpty()) {
+                    Text(text = homeScreenViewModel.error)
                 }
 
                 Spacer(modifier = Modifier

@@ -31,10 +31,9 @@ class ApiService {
         }!!
     }
 
-    suspend fun promptApi(
+    suspend fun getProjectSuggestion(
         projectInfo: Project,
-        onSuccess: (Project) -> Unit
-    ) {
+    ): Project {
         val length = if (projectInfo.length == 0) "a number you choose of" else projectInfo.length
 
         val chatCompletionRequest = ChatCompletionRequest(
@@ -61,12 +60,14 @@ class ApiService {
         val apiResponse = completion.choices[0].message.content
         val respondJson = apiResponse?.let { JSONObject(it) }
 
-        if (respondJson != null) {
-            onSuccess(getJsonIntoHashMap(respondJson))
+        return if (respondJson != null) {
+            convertJsonToProject(respondJson)
+        } else {
+            throw Exception("API response is null or invalid")
         }
     }
 
-    private fun getJsonIntoHashMap (apiResponse: JSONObject?) : Project {
+    private fun convertJsonToProject (apiResponse: JSONObject?) : Project {
         val apiResponseHashMap = hashMapOf<String,Any>()
 
         val jsonObjectKeys = apiResponse?.keys()

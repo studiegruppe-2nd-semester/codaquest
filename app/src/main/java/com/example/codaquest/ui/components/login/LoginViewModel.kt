@@ -25,31 +25,15 @@ class LoginViewModel: ViewModel(), ErrorOperations {
 
     // ----------------------------------------- USERNAME
     var username: String by mutableStateOf("")
-        private set
-    fun updateUsername(newValue: String) {
-        username = newValue
-    }
 
     // ----------------------------------------- EMAIL
     var email: String by mutableStateOf("")
-        private set
-    fun updateEmail(newValue: String) {
-        email = newValue
-    }
 
     // ----------------------------------------- PASSWORD
     var password: String by mutableStateOf("")
-        private set
-    fun updatePassword(newValue: String) {
-        password = newValue
-    }
 
     // ----------------------------------------- PASSWORD CONFIRM
     var passwordConfirm: String by mutableStateOf("")
-        private set
-    fun updatePasswordConfirm(newValue: String) {
-        passwordConfirm = newValue
-    }
 
     // ----------------------------------------- LOGIN
     fun login(
