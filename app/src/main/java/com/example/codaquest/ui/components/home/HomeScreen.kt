@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.classes.Project
+import com.example.codaquest.Models.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
@@ -52,7 +52,7 @@ fun HomeScreen (
                 Text(text = "Project generator",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp) // Adjust padding as needed
+                        .padding(start = 16.dp, end = 16.dp)
                         .wrapContentSize(Alignment.Center)
                         .padding(top = 20.dp, bottom = 20.dp),
                     style = MaterialTheme.typography.titleLarge,
@@ -62,7 +62,7 @@ fun HomeScreen (
                     lineHeight = 45.sp
                 )
                 Text(text = "Here you can generate a project by answering some questions...Then we do the rest with help from chat-gpt",
-                    modifier = Modifier.padding(horizontal = 16.dp), // Adjust padding as needed
+                    modifier = Modifier.padding(horizontal = 16.dp),
                     textAlign = TextAlign.Center)
 
                 Spacer(

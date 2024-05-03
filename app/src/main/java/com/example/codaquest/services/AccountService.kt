@@ -1,6 +1,6 @@
 package com.example.codaquest.services
 
-import com.example.codaquest.classes.User
+import com.example.codaquest.Models.User
 import com.example.codaquest.interfaces.ErrorOperations
 import com.example.codaquest.repositories.UserRepository
 import com.google.firebase.Firebase

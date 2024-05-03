@@ -1,6 +1,6 @@
 package com.example.codaquest.interfaces
 
-import com.example.codaquest.classes.User
+import com.example.codaquest.Models.User
 
 interface UserOperations {
     fun updateKey(newKey: String)

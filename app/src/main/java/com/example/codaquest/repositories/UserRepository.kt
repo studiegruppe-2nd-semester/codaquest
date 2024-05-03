@@ -2,8 +2,8 @@ package com.example.codaquest.repositories
 
 import android.content.ContentValues
 import android.util.Log
-import com.example.codaquest.classes.OnboardingData
-import com.example.codaquest.classes.User
+import com.example.codaquest.Models.OnboardingData
+import com.example.codaquest.Models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 

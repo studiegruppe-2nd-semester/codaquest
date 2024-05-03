@@ -8,7 +8,7 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
-import com.example.codaquest.classes.Project
+import com.example.codaquest.Models.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import org.json.JSONArray
 import org.json.JSONObject
