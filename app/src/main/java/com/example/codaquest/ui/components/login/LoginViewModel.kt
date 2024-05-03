@@ -4,12 +4,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.codaquest.Models.LoginState
-import com.example.codaquest.Models.User
 import com.example.codaquest.interfaces.ErrorOperations
+import com.example.codaquest.models.LoginState
+import com.example.codaquest.models.User
 import com.example.codaquest.services.AccountService
 
-class LoginViewModel: ViewModel(), ErrorOperations {
+class LoginViewModel : ViewModel(), ErrorOperations {
     // ----------------------------------------- ACCOUNT SERVICE
     private val accountService = AccountService()
 
@@ -17,11 +17,11 @@ class LoginViewModel: ViewModel(), ErrorOperations {
     var state: LoginState by mutableStateOf(LoginState.login)
     var stateButtonText by mutableStateOf("Create new account")
         private set
+
     fun updateState() {
         state = if (state == LoginState.login) LoginState.signup else LoginState.login
         stateButtonText = if (stateButtonText == "Create new account") "Login" else "Create new account"
     }
-
 
     // ----------------------------------------- USERNAME
     var username: String by mutableStateOf("")
@@ -38,14 +38,14 @@ class LoginViewModel: ViewModel(), ErrorOperations {
     // ----------------------------------------- LOGIN
     fun login(
         errorOperations: ErrorOperations,
-        onSuccess: (User) -> Unit
+        onSuccess: (User) -> Unit,
     ) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             accountService.login(
                 email = email,
                 password = password,
                 errorOperations = errorOperations,
-                onSuccess = { onSuccess(it) }
+                onSuccess = { onSuccess(it) },
             )
         }
     }
@@ -61,11 +61,10 @@ class LoginViewModel: ViewModel(), ErrorOperations {
                     username = username,
                     password = password,
                     this,
-                    onSuccess = { onSuccess(it) }
+                    onSuccess = { onSuccess(it) },
                 )
             }
-        }
-        else {
+        } else {
             error = "Confirmed password does not match"
         }
     }
@@ -73,8 +72,8 @@ class LoginViewModel: ViewModel(), ErrorOperations {
     // ----------------------------------------- ERROR
     var error: String by mutableStateOf("")
         private set
+
     override fun showError(error: String) {
         this.error = error
     }
-
 }

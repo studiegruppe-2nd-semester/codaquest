@@ -20,17 +20,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @Composable
-fun OnboardingIntFieldComposable (
-    viewModel : OnboardingViewModel
-) {
+fun OnboardingIntFieldComposable(viewModel: OnboardingViewModel) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             viewModel.questions[viewModel.currentQuestion].question,
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
-            lineHeight = 25.sp
+            lineHeight = 25.sp,
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -39,10 +37,11 @@ fun OnboardingIntFieldComposable (
             value = viewModel.questions[viewModel.currentQuestion].answer.value,
             onValueChange = { viewModel.questions[viewModel.currentQuestion].answer.value = it },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            colors =
+                TextFieldDefaults.colors(
+                    focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                ),
         )
     }
 }
@@ -51,7 +50,7 @@ fun OnboardingIntFieldComposable (
 @Composable
 fun Greeting3Preview() {
     CodaQuestTheme {
-        val viewModel : OnboardingViewModel = viewModel()
+        val viewModel: OnboardingViewModel = viewModel()
         OnboardingIntFieldComposable(viewModel = viewModel)
     }
 }

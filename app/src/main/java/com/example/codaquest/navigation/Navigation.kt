@@ -12,41 +12,38 @@ import com.example.codaquest.ui.components.onboarding.OnboardingScreen
 import com.example.codaquest.ui.components.profile.ProfileScreen
 
 @Composable
-fun SetupNavHost (
-    navController : NavHostController
-) {
+fun SetupNavHost(navController: NavHostController) {
     val sharedViewModel: SharedViewModel = viewModel()
 
     NavHost(
         navController = navController,
-        startDestination = "profile"
+        startDestination = "profile",
     ) {
-
         composable("home") {
             HomeScreen(
                 navController = navController,
-                sharedViewModel = sharedViewModel
-                )
+                sharedViewModel = sharedViewModel,
+            )
         }
 
-        composable("login"){
+        composable("login") {
             LoginScreen(
                 navController = navController,
-                sharedViewModel = sharedViewModel
+                sharedViewModel = sharedViewModel,
             )
         }
 
-        composable("onboarding"){
+        composable("onboarding") {
             OnboardingScreen(
                 navController = navController,
-                sharedViewModel = sharedViewModel
+                sharedViewModel = sharedViewModel,
             )
         }
 
-        composable("profile"){
+        composable("profile") {
             ProfileScreen(
                 navController = navController,
-                sharedViewModel = sharedViewModel
+                sharedViewModel = sharedViewModel,
             )
         }
     }

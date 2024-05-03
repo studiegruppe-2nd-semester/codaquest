@@ -1,0 +1,8 @@
+# .editorconfig
+root = true
+# Set Ktlint rules for the entire project
+[*.{kt,kts}]
+#ktlint_disable_rules = standard:function-naming
+#ktlint_standard_final-newline = disabled # Disables the `final-newline` rule in the `standard` rule set provided by KtLint
+#ktlint_standard_some-experimental-rule = enabled # Enables the (experimental) `some-experimental-rule` in the `standard` rule set provided by KtLint
+#ktlint_custom-rule-set_custom-rule = disabled # Disables the `custom-rule` rule in the `custom-rule-set` rule set (not provided by KtLint)

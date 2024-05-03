@@ -21,63 +21,73 @@ import com.example.codaquest.ui.components.SharedViewModel
 fun SignUpComposable(
     navController: NavController,
     sharedViewModel: SharedViewModel,
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
 ) {
-    Column (
-        modifier = Modifier
-            .fillMaxSize(),
+    Column(
+        modifier =
+            Modifier
+                .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp),
     ) {
-
-        TextField(value = loginViewModel.username,
+        TextField(
+            value = loginViewModel.username,
             onValueChange = { loginViewModel.username = it },
-            label = { Text("Username")},
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            label = { Text("Username") },
+            colors =
+                TextFieldDefaults.colors(
+                    focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                ),
         )
 
-        TextField(value = loginViewModel.email,
+        TextField(
+            value = loginViewModel.email,
             onValueChange = { loginViewModel.email = it },
-            label = { Text("Email")},
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            label = { Text("Email") },
+            colors =
+                TextFieldDefaults.colors(
+                    focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                ),
         )
 
-        TextField(value = loginViewModel.password,
+        TextField(
+            value = loginViewModel.password,
             onValueChange = { loginViewModel.password = it },
-            label = { Text("Password")},
+            label = { Text("Password") },
             visualTransformation = PasswordVisualTransformation(),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            colors =
+                TextFieldDefaults.colors(
+                    focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                ),
         )
 
-        TextField(value = loginViewModel.passwordConfirm,
+        TextField(
+            value = loginViewModel.passwordConfirm,
             onValueChange = { loginViewModel.passwordConfirm = it },
-            label = { Text("Confirm password")},
+            label = { Text("Confirm password") },
             visualTransformation = PasswordVisualTransformation(),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            colors =
+                TextFieldDefaults.colors(
+                    focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                ),
         )
 
-        Button(onClick = {
+        Button(
+            onClick = {
                 loginViewModel.signUp(onSuccess = {
                     loginViewModel.showError("")
                     sharedViewModel.changeUser(it)
                     navController.navigate("onboarding")
                 })
             },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondary
-            )
+            colors =
+                ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.secondary,
+                ),
         ) {
             Text("Sign Up")
         }

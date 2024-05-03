@@ -1,16 +1,8 @@
 package com.example.codaquest.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
-import com.example.codaquest.ui.theme.md_theme_dark_background
-import com.example.codaquest.ui.theme.md_theme_dark_error
-import com.example.codaquest.ui.theme.md_theme_dark_primary
-import com.example.codaquest.ui.theme.md_theme_dark_secondary
-import com.example.codaquest.ui.theme.md_theme_dark_surface
-import com.example.codaquest.ui.theme.md_theme_dark_tertiary
 
 /*
 private val LightColors = lightColorScheme(
@@ -79,21 +71,25 @@ private val DarkColors = darkColorScheme(
 )
  */
 
-private val DarkColors = darkColorScheme(
-    primary = md_theme_dark_primary,
-    secondary = md_theme_dark_secondary,
-    tertiary = md_theme_dark_tertiary,
-    error = md_theme_dark_error,
-    background = md_theme_dark_background,
-    surface = md_theme_dark_surface,
-    inversePrimary = md_theme_dark_primaryGreyedOut
-)
+private val DarkColors =
+    darkColorScheme(
+        primary = md_theme_dark_primary,
+        secondary = md_theme_dark_secondary,
+        tertiary = md_theme_dark_tertiary,
+        error = md_theme_dark_error,
+        background = md_theme_dark_background,
+        surface = md_theme_dark_surface,
+        inversePrimary = md_theme_dark_primaryGreyedOut,
+    )
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
 fun CodaQuestTheme(
 //  useDarkTheme: Boolean = isSystemInDarkTheme(),
-  useDarkTheme: Boolean = true,
-  content: @Composable() () -> Unit
+    useDarkTheme: Boolean = true,
+    content:
+        @Composable()
+        () -> Unit,
 ) {
 //  val colors = if (!useDarkTheme) {
 //    LightColors
@@ -102,9 +98,9 @@ fun CodaQuestTheme(
 //  }
     val colors = DarkColors
 
-  MaterialTheme(
-    colorScheme = colors,
-    content = content,
-    typography = Typography
-  )
+    MaterialTheme(
+        colorScheme = colors,
+        content = content,
+        typography = Typography,
+    )
 }

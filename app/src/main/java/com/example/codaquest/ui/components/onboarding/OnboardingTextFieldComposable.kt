@@ -18,17 +18,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @Composable
-fun OnboardingTextFieldComposable (
-    viewModel : OnboardingViewModel
-) {
+fun OnboardingTextFieldComposable(viewModel: OnboardingViewModel) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             viewModel.questions[viewModel.currentQuestion].question,
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
-            lineHeight = 25.sp
+            lineHeight = 25.sp,
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -36,10 +34,11 @@ fun OnboardingTextFieldComposable (
         TextField(
             value = viewModel.questions[viewModel.currentQuestion].answer.value,
             onValueChange = { viewModel.questions[viewModel.currentQuestion].answer.value = it },
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            colors =
+                TextFieldDefaults.colors(
+                    focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                ),
         )
     }
 }
@@ -48,7 +47,7 @@ fun OnboardingTextFieldComposable (
 @Composable
 fun Greeting2Preview() {
     CodaQuestTheme {
-        val viewModel : OnboardingViewModel = viewModel()
+        val viewModel: OnboardingViewModel = viewModel()
 
         OnboardingTextFieldComposable(viewModel = viewModel)
     }

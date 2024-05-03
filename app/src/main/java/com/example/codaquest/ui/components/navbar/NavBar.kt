@@ -23,42 +23,47 @@ import com.example.codaquest.ui.components.SharedViewModel
 @Composable
 fun NavBar(
     navController: NavController,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel,
 ) {
-    Box(modifier = Modifier
-        .background(MaterialTheme.colorScheme.secondary)
-        .fillMaxWidth()
-        .height(70.dp)
+    Box(
+        modifier =
+            Modifier
+                .background(MaterialTheme.colorScheme.secondary)
+                .fillMaxWidth()
+                .height(70.dp),
     ) {
-        Row(modifier = Modifier.fillMaxSize(),
+        Row(
+            modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-
-            Text(modifier = Modifier
-                .clickable { navController.navigate("home") },
+            Text(
+                modifier =
+                    Modifier
+                        .clickable { navController.navigate("home") },
                 text = "Home",
                 fontSize = 20.sp,
-                color = Color.White
+                color = Color.White,
             )
 
             VerticalDivider(
                 thickness = 2.dp,
-                color = Color.Black
+                color = Color.Black,
             )
 
-            Text(modifier = Modifier
-                .clickable {
-                   if (sharedViewModel.user != null) {
-                       navController.navigate("profile")
-                   }
-                   else {
-                       navController.navigate("login")
-                   }
-                },
+            Text(
+                modifier =
+                    Modifier
+                        .clickable {
+                            if (sharedViewModel.user != null) {
+                                navController.navigate("profile")
+                            } else {
+                                navController.navigate("login")
+                            }
+                        },
                 text = "Profile",
                 fontSize = 20.sp,
-                color = Color.White
+                color = Color.White,
             )
         }
     }

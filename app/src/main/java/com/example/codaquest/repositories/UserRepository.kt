@@ -2,8 +2,8 @@ package com.example.codaquest.repositories
 
 import android.content.ContentValues
 import android.util.Log
-import com.example.codaquest.Models.OnboardingData
-import com.example.codaquest.Models.User
+import com.example.codaquest.models.OnboardingData
+import com.example.codaquest.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -11,9 +11,7 @@ class UserRepository {
     private val db = Firebase.firestore
     private val projectRepository = ProjectRepository()
 
-    fun getKey(
-        onSuccess: (String?) -> Unit
-    ) {
+    fun getKey(onSuccess: (String?) -> Unit) {
         db.collection("api").document("information").get()
             .addOnSuccessListener { document ->
                 document.data?.get("key")?.toString()?.let { onSuccess(it) }
@@ -25,25 +23,27 @@ class UserRepository {
 
     fun getUserData(
         userUid: String,
-        onSuccess: (User) -> Unit
+        onSuccess: (User) -> Unit,
     ) {
         db.collection("users").document(userUid).get()
             .addOnSuccessListener { document ->
-                val onboardingData = OnboardingData(
-                    level = document.data?.get("level")?.toString(),
-                    languages = document.data?.get("languages")?.toString(),
-                    projectLength = document.data?.get("project-length")?.toString()?.toInt()
-                )
+                val onboardingData =
+                    OnboardingData(
+                        level = document.data?.get("level")?.toString(),
+                        languages = document.data?.get("languages")?.toString(),
+                        projectLength = document.data?.get("project-length")?.toString()?.toInt(),
+                    )
 
-                val user = User(
-                    userUid = document.id,
-                    username = document.data?.get("username")?.toString(),
-                    onboardingData = onboardingData
-                )
+                val user =
+                    User(
+                        userUid = document.id,
+                        username = document.data?.get("username")?.toString(),
+                        onboardingData = onboardingData,
+                    )
 
                 projectRepository.getProjects(userUid, onSuccess = { onSuccess(user.copy(projects = it)) })
 
-              Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents: ", exception)
@@ -53,52 +53,58 @@ class UserRepository {
     fun addUserData(
         uid: String,
         username: String,
-        onSuccess: (User) -> Unit
+        onSuccess: (User) -> Unit,
     ) {
-        val dataMap: Map<String, String> = mapOf(
-            "username" to username
-        )
+        val dataMap: Map<String, String> =
+            mapOf(
+                "username" to username,
+            )
         db.collection("users").document(uid).set(dataMap)
             .addOnSuccessListener {
-                onSuccess(User(
-                    userUid = uid,
-                    username = username
-                ))
+                onSuccess(
+                    User(
+                        userUid = uid,
+                        username = username,
+                    ),
+                )
             }
             .addOnFailureListener { e ->
                 Log.d("addData", "addData failure: $e")
             }
-
-
     }
 
-    fun addOnboardingDataToUserData (
+    fun addOnboardingDataToUserData(
         onboardingData: OnboardingData,
         user: User,
-        onSuccess: (User) -> Unit
-        ) {
+        onSuccess: (User) -> Unit,
+    ) {
         // https://stackoverflow.com/questions/56608046/update-a-document-in-firestore
 
         db.collection("users").document(user.userUid).update(
-            "level", onboardingData.level,
-            "languages", onboardingData.languages,
-            "project-length", onboardingData.projectLength
+            "level",
+            onboardingData.level,
+            "languages",
+            onboardingData.languages,
+            "project-length",
+            onboardingData.projectLength,
         )
             .addOnSuccessListener {
                 Log.d("update", "Update success")
 
-                onSuccess(user.copy(
-                    onboardingData = OnboardingData(
-                        level = onboardingData.level,
-                        languages = onboardingData.languages,
-                        projectLength = onboardingData.projectLength
-                    )
-                ))
+                onSuccess(
+                    user.copy(
+                        onboardingData =
+                            OnboardingData(
+                                level = onboardingData.level,
+                                languages = onboardingData.languages,
+                                projectLength = onboardingData.projectLength,
+                            ),
+                    ),
+                )
             }
             .addOnFailureListener { e ->
                 Log.d("update", "update failure: $e")
             }
-
     }
 
 //    fun addNote(note: Note) {
@@ -160,6 +166,6 @@ class UserRepository {
 //            .addOnFailureListener {
 //            }
 //
-////        db.collection("users").document(itemId).set(item)
+// //        db.collection("users").document(itemId).set(item)
 //    }
 }

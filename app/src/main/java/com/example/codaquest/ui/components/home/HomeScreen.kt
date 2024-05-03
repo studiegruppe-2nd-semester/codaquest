@@ -22,160 +22,197 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.Models.Project
+import com.example.codaquest.models.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
 
 @Composable
-fun HomeScreen (
+fun HomeScreen(
     navController: NavController,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel,
 ) {
     val homeScreenViewModel: HomeScreenViewModel = viewModel()
 
     // So we can see it the right screen delete the text if necessary
 
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter,
     ) {
-
-        LazyColumn(modifier = Modifier
-            .padding(5.dp)
-            .padding(bottom = 70.dp)
-            .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-
+        LazyColumn(
+            modifier =
+                Modifier
+                    .padding(5.dp)
+                    .padding(bottom = 70.dp)
+                    .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item {
                 // your code starts here!
-                Text(text = "Project generator",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp)
-                        .wrapContentSize(Alignment.Center)
-                        .padding(top = 20.dp, bottom = 20.dp),
+                Text(
+                    text = "Project generator",
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp)
+                            .wrapContentSize(Alignment.Center)
+                            .padding(top = 20.dp, bottom = 20.dp),
                     style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 40.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 40.sp,
                     color = Color(0xFF6BB38A),
-                    lineHeight = 45.sp
+                    lineHeight = 45.sp,
                 )
-                Text(text = "Here you can generate a project by answering some questions...Then we do the rest with help from chat-gpt",
+                Text(
+                    text = "Here you can generate a project by answering some questions...Then we do the rest with help from chat-gpt",
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    textAlign = TextAlign.Center)
+                    textAlign = TextAlign.Center,
+                )
 
                 Spacer(
-                    modifier = Modifier
-                        .padding(top = 30.dp)
+                    modifier =
+                        Modifier
+                            .padding(top = 30.dp),
                 )
 
-                Text(text = "KeyWords",
-                    modifier = Modifier
-                        .padding(bottom = 10.dp),
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 30.sp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
+                Text(
+                    text = "KeyWords",
+                    modifier =
+                        Modifier
+                            .padding(bottom = 10.dp),
+                    style =
+                        TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 30.sp,
+                            color = MaterialTheme.colorScheme.primary,
+                        ),
                 )
-                Text(text = "Here you insert some KeyWords that you would like your project to include. fx write 'Pizza' if you want the app to be about pizza",
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp), // Adjust padding as needed
-                    textAlign = TextAlign.Center)
+                Text(
+                    text = "Here you insert some KeyWords that you would like your project to include. fx write 'Pizza' if you want the app to be about pizza",
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 16.dp),
+                    // Adjust padding as needed
+                    textAlign = TextAlign.Center,
+                )
                 TextField(
                     value = homeScreenViewModel.project.keywords.toString(),
-                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(keywords = it) })
+                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(keywords = it) },
+                )
 
                 Spacer(
-                    modifier = Modifier
-                        .padding(top = 30.dp)
+                    modifier =
+                        Modifier
+                            .padding(top = 30.dp),
                 )
 
-
-                Text(text = "Language",
-                    modifier = Modifier
-                        .padding(bottom = 10.dp),
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 30.sp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                Text(
+                    text = "Language",
+                    modifier =
+                        Modifier
+                            .padding(bottom = 10.dp),
+                    style =
+                        TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 30.sp,
+                            color = MaterialTheme.colorScheme.primary,
+                        ),
                 )
-                Text(text = "Which programming language would you like to code in?",
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp), // Adjust padding as needed
-                    textAlign = TextAlign.Center)
+                Text(
+                    text = "Which programming language would you like to code in?",
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 16.dp),
+                    // Adjust padding as needed
+                    textAlign = TextAlign.Center,
+                )
                 TextField(
                     value = homeScreenViewModel.project.language.toString(),
-                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(language = it) })
+                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(language = it) },
+                )
 
                 Spacer(
-                    modifier = Modifier
-                        .padding(top = 30.dp)
+                    modifier =
+                        Modifier
+                            .padding(top = 30.dp),
                 )
 
-                Text(text = "Hours",
-                    modifier = Modifier
-                        .padding(bottom = 10.dp),
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 30.sp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                Text(
+                    text = "Hours",
+                    modifier =
+                        Modifier
+                            .padding(bottom = 10.dp),
+                    style =
+                        TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 30.sp,
+                            color = MaterialTheme.colorScheme.primary,
+                        ),
                 )
-                Text(text = "How many hours do you wanna use on this project? See it at size of project?",
+                Text(
+                    text = "How many hours do you wanna use on this project? See it at size of project?",
                     modifier = Modifier.padding(horizontal = 16.dp), // Adjust padding as needed
-                    textAlign = TextAlign.Center)
-
+                    textAlign = TextAlign.Center,
+                )
 
                 TextField(
                     value = if (homeScreenViewModel.project.length == 0) "" else homeScreenViewModel.project.length.toString(),
-                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(length = it.toIntOrNull() ?: 0) }
+                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(length = it.toIntOrNull() ?: 0) },
                 )
-
 
                 Spacer(
-                    modifier = Modifier
-                        .padding(top = 30.dp)
+                    modifier =
+                        Modifier
+                            .padding(top = 30.dp),
                 )
 
-                Text(text = "Level",
-                    modifier = Modifier
-                        .padding(bottom = 10.dp),
-                    style = TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 30.sp,
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                Text(
+                    text = "Level",
+                    modifier =
+                        Modifier
+                            .padding(bottom = 10.dp),
+                    style =
+                        TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 30.sp,
+                            color = MaterialTheme.colorScheme.primary,
+                        ),
                 )
-                Text(text = "Which level would you like your project to be?",
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp), // Adjust padding as needed
-                    textAlign = TextAlign.Center)
+                Text(
+                    text = "Which level would you like your project to be?",
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 16.dp),
+                    // Adjust padding as needed
+                    textAlign = TextAlign.Center,
+                )
                 TextField(
                     value = homeScreenViewModel.project.level.toString(),
-                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(level = it) })
-
-                Spacer(
-                    modifier = Modifier
-                        .padding(top = 30.dp)
+                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(level = it) },
                 )
 
-                Button(onClick = { sharedViewModel.getProjectSuggestion(
-                    Project(
-                        level = homeScreenViewModel.project.level,
-                        language = homeScreenViewModel.project.language,
-                        keywords = homeScreenViewModel.project.keywords,
-                        length = homeScreenViewModel.project.length
-                    ),
-                    onSuccess = {
-                        sharedViewModel.project = it
-                        homeScreenViewModel.error  = ""
-                    },
-                    onError = { homeScreenViewModel.error = it.toString() }
-                ) }) {
+                Spacer(
+                    modifier =
+                        Modifier
+                            .padding(top = 30.dp),
+                )
+
+                Button(onClick = {
+                    sharedViewModel.getProjectSuggestion(
+                        Project(
+                            level = homeScreenViewModel.project.level,
+                            language = homeScreenViewModel.project.language,
+                            keywords = homeScreenViewModel.project.keywords,
+                            length = homeScreenViewModel.project.length,
+                        ),
+                        onSuccess = {
+                            sharedViewModel.project = it
+                            homeScreenViewModel.error = ""
+                        },
+                        onError = { homeScreenViewModel.error = it.toString() },
+                    )
+                }) {
                     Text(text = "Generate Project")
                 }
 
@@ -183,8 +220,11 @@ fun HomeScreen (
                     Text(text = homeScreenViewModel.error)
                 }
 
-                Spacer(modifier = Modifier
-                    .padding(top = 20.dp),)
+                Spacer(
+                    modifier =
+                        Modifier
+                            .padding(top = 20.dp),
+                )
 
                 /*
 
@@ -222,25 +262,25 @@ fun HomeScreen (
                 Text(text = if (homeScreenViewModel.project.length != null) homeScreenViewModel.project.length.toString() else "")
                 Text(text = if (homeScreenViewModel.project.level != null) homeScreenViewModel.project.level.toString() else "")
 
-                */
+                 */
 
                 if (!sharedViewModel.project.title.isNullOrEmpty()) {
-
                     ProjectComposable(project = sharedViewModel.project)
 
-                    Button(onClick = { sharedViewModel.user?.userUid?.let { uid ->
-                        sharedViewModel.addProject(
-                            uid,
-                            onSuccess = { project -> sharedViewModel.addProject(project) }
-                        )
-                        navController.navigate("profile")
-                    } }) {
+                    Button(onClick = {
+                        sharedViewModel.user?.userUid?.let { uid ->
+                            sharedViewModel.addProject(
+                                uid,
+                                onSuccess = { project -> sharedViewModel.addProject(project) },
+                            )
+                            navController.navigate("profile")
+                        }
+                    }) {
                         Text(text = "Save project")
                     }
                 }
-
             }
-        // Your code ends here
+            // Your code ends here
         }
 
         NavBar(navController, sharedViewModel)

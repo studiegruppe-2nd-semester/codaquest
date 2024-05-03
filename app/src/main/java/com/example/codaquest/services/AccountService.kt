@@ -1,14 +1,13 @@
 package com.example.codaquest.services
 
-import com.example.codaquest.Models.User
 import com.example.codaquest.interfaces.ErrorOperations
+import com.example.codaquest.models.User
 import com.example.codaquest.repositories.UserRepository
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 
 class AccountService {
-
     private val userRepository = UserRepository()
 
     fun signUp(
@@ -16,7 +15,7 @@ class AccountService {
         username: String,
         password: String,
         errorOperations: ErrorOperations,
-        onSuccess: (User) -> Unit
+        onSuccess: (User) -> Unit,
     ) {
         Firebase.auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
@@ -34,7 +33,7 @@ class AccountService {
         email: String,
         password: String,
         errorOperations: ErrorOperations,
-        onSuccess: (User) -> Unit
+        onSuccess: (User) -> Unit,
     ) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
@@ -54,9 +53,7 @@ class AccountService {
         return Firebase.auth.currentUser
     }
 
-    fun logout(
-        onSuccess: () -> Unit
-    ) {
+    fun logout(onSuccess: () -> Unit) {
         Firebase.auth.signOut()
         onSuccess()
     }

@@ -1,4 +1,4 @@
-package com.example.codaquest.Models
+package com.example.codaquest.models
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

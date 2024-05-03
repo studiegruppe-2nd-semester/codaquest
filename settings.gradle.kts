@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "CodaQuest"
 include(":app")
- 
