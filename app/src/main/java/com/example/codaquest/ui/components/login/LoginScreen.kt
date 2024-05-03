@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.Models.LoginState
+import com.example.codaquest.models.LoginState
 import com.example.codaquest.ui.components.SharedViewModel
 
 @Composable
