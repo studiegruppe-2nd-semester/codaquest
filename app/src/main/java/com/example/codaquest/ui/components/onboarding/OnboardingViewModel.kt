@@ -10,10 +10,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.example.codaquest.classes.OnboardingData
-import com.example.codaquest.classes.OnboardingQuestion
-import com.example.codaquest.classes.OnboardingQuestionTypes
-import com.example.codaquest.classes.User
+import com.example.codaquest.Models.OnboardingData
+import com.example.codaquest.Models.OnboardingQuestion
+import com.example.codaquest.Models.OnboardingQuestionTypes
+import com.example.codaquest.Models.User
 import com.example.codaquest.repositories.UserRepository
 
 @SuppressLint("MutableCollectionMutableState")

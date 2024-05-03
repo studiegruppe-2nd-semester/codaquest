@@ -19,7 +19,7 @@ fun SetupNavHost (
 
     NavHost(
         navController = navController,
-        startDestination = "home"
+        startDestination = "profile"
     ) {
 
         composable("home") {

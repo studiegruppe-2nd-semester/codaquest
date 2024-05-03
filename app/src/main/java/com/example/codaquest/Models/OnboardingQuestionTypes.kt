@@ -1,4 +1,4 @@
-package com.example.codaquest.classes
+package com.example.codaquest.Models
 
 enum class OnboardingQuestionTypes {
     RadioButton,

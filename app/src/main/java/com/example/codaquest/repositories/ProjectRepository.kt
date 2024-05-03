@@ -3,7 +3,7 @@ package com.example.codaquest.repositories
 import android.content.ContentValues
 import android.util.Log
 import androidx.navigation.NavController
-import com.example.codaquest.classes.Project
+import com.example.codaquest.Models.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -106,7 +106,7 @@ class ProjectRepository {
         }
     }
 
-    fun addProjectToDB(
+    fun addProject(
         project: Project,
         onSuccess: (Project) -> Unit
     ) {

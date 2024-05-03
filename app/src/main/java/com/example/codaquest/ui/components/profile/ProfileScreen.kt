@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
-import com.example.codaquest.classes.Project
+import com.example.codaquest.Models.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
@@ -38,8 +38,7 @@ fun ProfileScreen(
     val viewModel : ProfileViewModel = viewModel()
 
 
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter) {
+    Box(modifier = Modifier.fillMaxSize()) {
 
         LazyColumn(modifier = Modifier
             .padding(5.dp)
@@ -130,7 +129,11 @@ fun ProfileScreen(
             }
         }
 
-        NavBar(navController, sharedViewModel)
-
     }
+
+        Box(contentAlignment = Alignment.BottomCenter) {
+        NavBar(navController, sharedViewModel)
+        }
+
+
 }

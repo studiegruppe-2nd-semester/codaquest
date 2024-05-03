@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.codaquest.classes.Project
+import com.example.codaquest.Models.Project
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @OptIn(ExperimentalLayoutApi::class)

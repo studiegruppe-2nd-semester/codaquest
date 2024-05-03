@@ -5,11 +5,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.codaquest.classes.Project
-import com.example.codaquest.repositories.ProjectRepository
-import com.example.codaquest.services.ApiService
-import com.example.codaquest.ui.components.SharedViewModel
-import org.json.JSONObject
 
 
 class HomeScreenViewModel : ViewModel () {

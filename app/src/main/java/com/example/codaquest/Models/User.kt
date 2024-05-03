@@ -1,4 +1,4 @@
-package com.example.codaquest.classes
+package com.example.codaquest.Models
 
 data class User(
     val userUid: String,

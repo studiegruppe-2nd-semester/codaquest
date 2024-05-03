@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.codaquest.classes.Project
-import com.example.codaquest.classes.User
+import com.example.codaquest.Models.Project
+import com.example.codaquest.Models.User
 import com.example.codaquest.interfaces.UserOperations
 import com.example.codaquest.repositories.ProjectRepository
 import com.example.codaquest.repositories.UserRepository
@@ -91,7 +91,7 @@ class SharedViewModel: ViewModel(), UserOperations {
         uid: String,
         onSuccess: (Project) -> Unit
     ) {
-        projectRepository.addProjectToDB(
+        projectRepository.addProject(
             project.copy(uid = uid),
             onSuccess = { project -> onSuccess(project) }
         )
