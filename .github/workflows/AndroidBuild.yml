@@ -12,13 +12,6 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # FORMAT
-  format:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check and format code style
-        shell: bash
-        run: ./gradlew ktlintFormat
-
 
   # BUILD
   # This workflow contains a single job called "build"
@@ -48,6 +41,11 @@ jobs:
       # Grant execute permission for gradlew
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
+
+      # Format code
+      - name: Check and format code style
+        shell: bash
+        run: ./gradlew ktlintFormat
 
       # Runs a single command using the runners shell
       - name: Build with Gradle
