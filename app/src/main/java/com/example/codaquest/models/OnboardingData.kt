@@ -1,19 +1,17 @@
-package com.example.codaquest.Models
+package com.example.codaquest.models
 
-data class OnboardingData (
+data class OnboardingData(
 
-    val level : Level? = null,
-    val languages : String? = null,
-    val projectLength : Int? = null
+    val level: Level? = null,
+    val languages: String? = null,
+    val projectLength: Int? = null,
 )
 
 enum class Level {
     Beginner,
     Intermediate,
-    Advanced
+    Advanced,
 }
-
-
 
 // This is a function that makes it possible for us to make the
 // code ".toEnum<Level>()" in UserRepository and Onboarding viewmodel.
@@ -25,5 +23,3 @@ inline fun <reified T : Enum<T>> enumValueOfOrNull(name: String): T? =
 // Define the toEnum extension function
 inline fun <reified T : Enum<T>> String?.toEnum(): T? =
     this?.let { enumValueOfOrNull<T>(it) }
-
-

@@ -6,20 +6,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
-
-class HomeScreenViewModel : ViewModel () {
+class HomeScreenViewModel : ViewModel() {
     // ------------------------------------- KEYWORDS
     var keyWords: String by mutableStateOf("")
         private set
     fun updateKeyWords(newKeyWords: String) {
         keyWords = newKeyWords
     }
+
     // ------------------------------------- LANGUAGE
     var language: String by mutableStateOf("")
         private set
     fun updateLanguage(newLanguage: String) {
         language = newLanguage
     }
+
     // ------------------------------------- LENGTH
     var length: Int by mutableIntStateOf(0)
         private set
@@ -32,6 +33,7 @@ class HomeScreenViewModel : ViewModel () {
             0 // Set a default value of 0
         }
     }
+
     // ------------------------------------- LEVEL
     var level: String by mutableStateOf("")
         private set

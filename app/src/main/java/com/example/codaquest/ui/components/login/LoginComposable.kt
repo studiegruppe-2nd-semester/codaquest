@@ -2,9 +2,7 @@ package com.example.codaquest.ui.components.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -14,38 +12,37 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.codaquest.ui.components.SharedViewModel
 
 @Composable
-fun LoginComposable (
+fun LoginComposable(
     navController: NavController,
     sharedViewModel: SharedViewModel,
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
 ) {
-    Column (modifier = Modifier
-        .fillMaxSize(),
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp),
     ) {
-
-        TextField(value = loginViewModel.email,
-            onValueChange = {loginViewModel.updateEmail(it)},
-            label = { Text("Email")},
+        TextField(
+            value = loginViewModel.email,
+            onValueChange = { loginViewModel.updateEmail(it) },
+            label = { Text("Email") },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
                 unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
             ),
         )
 
-        TextField(value = loginViewModel.password,
-            onValueChange = {loginViewModel.updatePassword(it)},
-            label = { Text("Password")},
+        TextField(
+            value = loginViewModel.password,
+            onValueChange = { loginViewModel.updatePassword(it) },
+            label = { Text("Password") },
             visualTransformation = PasswordVisualTransformation(),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -53,19 +50,20 @@ fun LoginComposable (
             ),
         )
 
-        Button(onClick = {
+        Button(
+            onClick = {
                 loginViewModel.login(
                     loginViewModel,
                     onSuccess = {
                         sharedViewModel.changeUser(it)
                         loginViewModel.showError("")
                         navController.navigate("profile")
-                    }
+                    },
                 )
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondary
-            )
+                containerColor = MaterialTheme.colorScheme.secondary,
+            ),
         ) {
             Text(text = "Log In")
         }
@@ -73,4 +71,3 @@ fun LoginComposable (
         Text(text = loginViewModel.error)
     }
 }
-

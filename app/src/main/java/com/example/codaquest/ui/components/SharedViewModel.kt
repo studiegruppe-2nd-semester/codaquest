@@ -5,21 +5,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.codaquest.Models.Project
-import com.example.codaquest.Models.User
 import com.example.codaquest.interfaces.UserOperations
+import com.example.codaquest.models.Project
+import com.example.codaquest.models.User
 import com.example.codaquest.repositories.ProjectRepository
 import com.example.codaquest.repositories.UserRepository
 import com.example.codaquest.services.AccountService
 import com.example.codaquest.services.ApiService
 import kotlinx.coroutines.launch
 
-class SharedViewModel: ViewModel(), UserOperations {
+class SharedViewModel : ViewModel(), UserOperations {
     init {
         fetchUserData()
     }
 
-    private val projectRepository : ProjectRepository = ProjectRepository()
+    private val projectRepository: ProjectRepository = ProjectRepository()
 
     // ------------------------------------- KEY
     var key: String? = null
@@ -40,12 +40,10 @@ class SharedViewModel: ViewModel(), UserOperations {
         if (user?.projects != null) {
             user?.projects!!.add(project)
             changeUser(user)
-        }
-        else {
+        } else {
             changeUser(user?.copy(projects = mutableListOf(project)))
         }
     }
-
 
     private fun fetchUserData() {
         println("Trying to fetch user data")
@@ -62,7 +60,6 @@ class SharedViewModel: ViewModel(), UserOperations {
                 }
             })
 
-
             if (userUid !== null) {
                 userRepository.getUserData(userUid, onSuccess = { user ->
                     changeUser(user)
@@ -73,7 +70,7 @@ class SharedViewModel: ViewModel(), UserOperations {
 
     fun promptApi(
         projectInfo: Project,
-        onSuccess: (Project) -> Unit
+        onSuccess: (Project) -> Unit,
     ) {
         val apiService = ApiService()
         apiService.initiateApi(this)
@@ -81,19 +78,18 @@ class SharedViewModel: ViewModel(), UserOperations {
         viewModelScope.launch {
             apiService.promptApi(projectInfo, onSuccess = { onSuccess(it) })
         }
-
     }
 
     // ------------------------------------- GENERATED PROJECT
     var project by mutableStateOf(Project())
 
-    fun addProject (
+    fun addProject(
         uid: String,
-        onSuccess: (Project) -> Unit
+        onSuccess: (Project) -> Unit,
     ) {
         projectRepository.addProject(
             project.copy(uid = uid),
-            onSuccess = { project -> onSuccess(project) }
+            onSuccess = { project -> onSuccess(project) },
         )
     }
 }
