@@ -31,7 +31,6 @@ class LoginViewModel : ViewModel(), ErrorOperations {
 
     // ----------------------------------------- EMAIL
     var email: String by mutableStateOf("")
-        private set
     fun updateEmail(newValue: String) {
         email = newValue
     }
