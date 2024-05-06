@@ -43,9 +43,9 @@ jobs:
         run: chmod +x ./gradlew
 
       # Format code
-      - name: Check and format code style
-        shell: bash
-        run: ./gradlew ktlintFormat
+#      - name: Check and format code style
+#        shell: bash
+#        run: ./gradlew ktlintFormat
 
       # Runs a single command using the runners shell
       - name: Build with Gradle

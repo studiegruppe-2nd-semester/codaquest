@@ -200,44 +200,6 @@ fun HomeScreen(
                         .padding(top = 20.dp),
                 )
 
-                /*
-
-                //Text og scrollable
-                Row {
-                    Text(text = "Title: ",
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold
-                        ))
-                    Text(text = if (homeScreenViewModel.project.title != null) homeScreenViewModel.project.title.toString() else "")
-
-                }
-
-                Row {
-                    Text(text = "Description:",
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold
-                        ))
-                    Text(text = if (homeScreenViewModel.project.description != null) homeScreenViewModel.project.description.toString() else "")
-                }
-
-                Text(text = "Steps:")
-                Text(text = if (homeScreenViewModel.project.steps != null) homeScreenViewModel.project.steps.toString() else "")
-
-                Spacer(
-                    modifier = Modifier
-                        .padding(top = 30.dp)
-                )
-
-
-                Text(text = if (homeScreenViewModel.project.keywords != null) homeScreenViewModel.project.keywords.toString() else "")
-                Text(text = if (homeScreenViewModel.project.language != null) homeScreenViewModel.project.language.toString() else "")
-                Text(text = if (homeScreenViewModel.project.length != null) homeScreenViewModel.project.length.toString() else "")
-                Text(text = if (homeScreenViewModel.project.level != null) homeScreenViewModel.project.level.toString() else "")
-
-                 */
-
                 if (!sharedViewModel.project.title.isNullOrEmpty()) {
                     ProjectComposable(project = sharedViewModel.project)
 

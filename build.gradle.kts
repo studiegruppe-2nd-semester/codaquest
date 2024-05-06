@@ -18,3 +18,15 @@ tasks.register<Copy>("copyPreCommitHook") {
 tasks.build {
     dependsOn("copyPreCommitHook")
 }
+
+//tasks.register("copyPreCommitHook", Copy::class.java) {
+//    description = "Copies the git hooks from /git-hooks to the .git folder."
+//    group = "git hooks"
+//    from("$rootDir/scripts/pre-commit")
+//    into("$rootDir/.git/hooks/")
+//}
+
+//afterEvaluate {
+//    tasks.getByPath(":app:preBuild").dependsOn(":copyPreCommitHook")
+//}
+
