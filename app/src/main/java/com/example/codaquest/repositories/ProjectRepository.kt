@@ -3,7 +3,7 @@ package com.example.codaquest.repositories
 import android.content.ContentValues
 import android.util.Log
 import androidx.navigation.NavController
-import com.example.codaquest.Models.Project
+import com.example.codaquest.models.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -35,7 +35,7 @@ class ProjectRepository {
 //    }
     fun getProjects(
         uid: String,
-        onSuccess: (MutableList<Project>) -> Unit
+        onSuccess: (MutableList<Project>) -> Unit,
     ) {
         db.collection("projects")
             .whereEqualTo("uid", uid)
@@ -55,7 +55,7 @@ class ProjectRepository {
                         steps = when (val stepsData = document.data["steps"]) {
                             is List<*> -> stepsData.filterIsInstance<String>()
                             else -> emptyList()
-                        }
+                        },
                     )
 
                     projects.add(newProject)
@@ -72,58 +72,53 @@ class ProjectRepository {
         level: String,
         steps: List<String>,
         navController: NavController,
-        sharedViewModel: SharedViewModel
+        sharedViewModel: SharedViewModel,
     ) {
-    val dataMap: Map<String, String> = mapOf(
-        "title" to title
-    )
-    db.collection("projects").document().set(dataMap)
-        .addOnSuccessListener {
+        val dataMap: Map<String, String> = mapOf(
+            "title" to title,
+        )
+        db.collection("projects").document().set(dataMap)
+            .addOnSuccessListener {
+                val projects = sharedViewModel.user?.projects
 
-            val projects = sharedViewModel.user?.projects
-
-            projects?.add(
-                Project(
-                    title = title,
-                    keywords = keywords,
-                    language = language,
-                    length = length,
-                    level = level,
-                    steps = steps
+                projects?.add(
+                    Project(
+                        title = title,
+                        keywords = keywords,
+                        language = language,
+                        length = length,
+                        level = level,
+                        steps = steps,
+                    ),
                 )
-            )
 
-            sharedViewModel.changeUser(
+                sharedViewModel.changeUser(
 
-                sharedViewModel.user?.copy(
-                    projects = projects
+                    sharedViewModel.user?.copy(
+                        projects = projects,
+                    ),
                 )
-            )
-            navController.navigate("home")
-        }
-        .addOnFailureListener { _ ->
-            Log.d("","")
-        }
+                navController.navigate("home")
+            }
+            .addOnFailureListener { _ ->
+                Log.d("", "")
+            }
     }
 
     fun addProject(
         project: Project,
-        onSuccess: (Project) -> Unit
+        onSuccess: (Project) -> Unit,
     ) {
         db.collection("projects")
             .add(project)
             .addOnSuccessListener { documentReference ->
                 Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: $documentReference")
                 onSuccess(
-                    project.copy(projectId = documentReference.id)
+                    project.copy(projectId = documentReference.id),
                 )
             }
             .addOnFailureListener { e ->
                 Log.w(ContentValues.TAG, "Error adding document", e)
             }
     }
-
-
-
-
 }

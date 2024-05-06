@@ -21,36 +21,37 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.Models.OnboardingQuestionTypes
+import com.example.codaquest.models.OnboardingQuestionTypes
 import com.example.codaquest.ui.components.SharedViewModel
 
 @Composable
-fun OnboardingScreen (
+fun OnboardingScreen(
     navController: NavController,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel,
 ) {
-    val viewModel : OnboardingViewModel = viewModel()
+    val viewModel: OnboardingViewModel = viewModel()
 
-    Column(modifier = Modifier
-        .padding(0.5.dp)
-        .fillMaxSize()
+    Column(
+        modifier = Modifier
+            .padding(0.5.dp)
+            .fillMaxSize(),
     ) {
-
         // PROGRESS BAR
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.1f),
-            verticalAlignment = Alignment.CenterVertically
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.1f),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-
-            Button(modifier = Modifier
-                .padding(horizontal = 5.dp)
-                .fillMaxWidth(0.1f),
+            Button(
+                modifier = Modifier
+                    .padding(horizontal = 5.dp)
+                    .fillMaxWidth(0.1f),
                 contentPadding = PaddingValues(0.dp),
                 onClick = { navController.navigate("profile") },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent
-                )
+                    containerColor = Color.Transparent,
+                ),
             ) {
                 Text(text = "X")
             }
@@ -60,12 +61,13 @@ fun OnboardingScreen (
                 modifier = Modifier
                     .padding(horizontal = 5.dp)
                     .fillMaxWidth(0.8f),
-                color = MaterialTheme.colorScheme.primary //progress color
+                color = MaterialTheme.colorScheme.primary, // progress color
             )
 
-            Box(modifier = Modifier
-                .fillMaxWidth(),
-                contentAlignment = Alignment.Center
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     modifier = Modifier
@@ -75,10 +77,11 @@ fun OnboardingScreen (
             }
         }
 
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.5f),
-            contentAlignment = Alignment.Center
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f),
+            contentAlignment = Alignment.Center,
         ) {
             when (viewModel.questions[viewModel.currentQuestion].type) {
                 OnboardingQuestionTypes.RadioButton -> OnboardingRadioButtonComposable(viewModel = viewModel)
@@ -87,34 +90,37 @@ fun OnboardingScreen (
             }
         }
 
-        Row(modifier = Modifier
-            .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
         ) {
-
-            Button(modifier = Modifier.padding(5.dp),
+            Button(
+                modifier = Modifier.padding(5.dp),
                 onClick = { viewModel.previousQuestion() },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (viewModel.currentQuestion == 0) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary
-                )
+                    containerColor = if (viewModel.currentQuestion == 0) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary,
+                ),
             ) {
                 Text("Previous")
             }
 
-            Button(modifier = Modifier.padding(5.dp),
+            Button(
+                modifier = Modifier.padding(5.dp),
                 onClick = {
-                    sharedViewModel.user?.let {user ->
+                    sharedViewModel.user?.let { user ->
                         viewModel.nextQuestion(
                             user,
                             onSuccess = {
                                 sharedViewModel.changeUser(it)
                                 navController.navigate("profile")
-                            })
+                            },
+                        )
                     }
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                )
+                    containerColor = MaterialTheme.colorScheme.primary,
+                ),
             ) {
                 Text(viewModel.nextButton)
             }

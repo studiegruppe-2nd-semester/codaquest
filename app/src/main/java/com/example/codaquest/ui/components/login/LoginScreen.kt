@@ -18,25 +18,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.Models.LoginState
+import com.example.codaquest.models.LoginState
 import com.example.codaquest.ui.components.SharedViewModel
 
 @Composable
 fun LoginScreen(
     navController: NavController,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel,
 ) {
     val loginViewModel: LoginViewModel = viewModel()
 
-    Column(modifier = Modifier
-        .padding(5.dp)
-        .fillMaxSize()
+    Column(
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxSize(),
     ) {
-
         Button(
             onClick = { navController.navigate("home") },
             contentPadding = PaddingValues(),
-            modifier = Modifier.size(40.dp)
+            modifier = Modifier.size(40.dp),
         ) {
             Text(text = "X")
         }
@@ -45,23 +45,23 @@ fun LoginScreen(
 
         Box(modifier = Modifier.fillMaxHeight(0.6f)) {
             when (loginViewModel.state) {
-                LoginState.login -> LoginComposable(navController, sharedViewModel, loginViewModel)
-                LoginState.signup -> SignUpComposable(navController, sharedViewModel, loginViewModel)
+                LoginState.Login -> LoginComposable(navController, sharedViewModel, loginViewModel)
+                LoginState.Signup -> SignUpComposable(navController, sharedViewModel, loginViewModel)
             }
         }
 
         Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
-        Box(modifier = Modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center,
         ) {
             Button(onClick = { loginViewModel.updateState() }) {
                 Text(
                     text = loginViewModel.stateButtonText,
-                    color = Color.Black
+                    color = Color.Black,
                 )
             }
         }
-
     }
 }

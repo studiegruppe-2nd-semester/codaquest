@@ -23,18 +23,18 @@ import com.example.codaquest.ui.components.SharedViewModel
 fun SignUpComposable(
     navController: NavController,
     sharedViewModel: SharedViewModel,
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
 ) {
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp),
     ) {
-
-        TextField(value = loginViewModel.username,
-            onValueChange = { loginViewModel.username = it },
-            label = { Text("Username")},
+        TextField(
+            value = loginViewModel.username,
+            onValueChange = { loginViewModel.updateUsername(it) },
+            label = { Text("Username") },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
                 unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -53,9 +53,10 @@ fun SignUpComposable(
             ),
         )
 
-        TextField(value = loginViewModel.password,
-            onValueChange = { loginViewModel.password = it },
-            label = { Text("Password")},
+        TextField(
+            value = loginViewModel.password,
+            onValueChange = { loginViewModel.updatePassword(it) },
+            label = { Text("Password") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             colors = TextFieldDefaults.colors(
@@ -64,9 +65,10 @@ fun SignUpComposable(
             ),
         )
 
-        TextField(value = loginViewModel.passwordConfirm,
-            onValueChange = { loginViewModel.passwordConfirm = it },
-            label = { Text("Confirm password")},
+        TextField(
+            value = loginViewModel.passwordConfirm,
+            onValueChange = { loginViewModel.updatePasswordConfirm(it) },
+            label = { Text("Confirm password") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             colors = TextFieldDefaults.colors(
@@ -75,7 +77,8 @@ fun SignUpComposable(
             ),
         )
 
-        Button(onClick = {
+        Button(
+            onClick = {
                 loginViewModel.signUp(onSuccess = {
                     loginViewModel.showError("")
                     sharedViewModel.changeUser(it)
@@ -83,8 +86,8 @@ fun SignUpComposable(
                 })
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.secondary
-            )
+                containerColor = MaterialTheme.colorScheme.secondary,
+            ),
         ) {
             Text("Sign Up")
         }

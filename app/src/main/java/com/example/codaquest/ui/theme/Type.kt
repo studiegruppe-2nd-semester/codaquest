@@ -1,6 +1,5 @@
 package com.example.codaquest.ui.theme
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -12,7 +11,7 @@ import androidx.compose.ui.unit.sp
 import com.example.codaquest.R
 
 val robotoMonoFontFamily = FontFamily(
-    Font(R.font.robotomono_regular, FontWeight.Normal)
+    Font(R.font.robotomono_regular, FontWeight.Normal),
 )
 
 // Set of Material typography styles to start with
@@ -23,7 +22,7 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
-        color = Color.White
+        color = Color.White,
     ),
     // Other default text styles to override
     titleLarge = TextStyle(
@@ -33,7 +32,7 @@ val Typography = Typography(
         lineHeight = 30.sp,
         letterSpacing = 0.sp,
         textAlign = TextAlign.Center,
-        color = Color.White
+        color = Color.White,
     ),
 /*
 labelSmall = TextStyle(
@@ -46,4 +45,3 @@ letterSpacing = 0.5.sp
 */
 
 )
-
