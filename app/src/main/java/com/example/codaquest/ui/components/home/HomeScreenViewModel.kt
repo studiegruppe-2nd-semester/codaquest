@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.codaquest.Models.Project
+
 
 class HomeScreenViewModel : ViewModel() {
     // ------------------------------------- KEYWORDS
@@ -34,10 +36,10 @@ class HomeScreenViewModel : ViewModel() {
         }
     }
 
-    // ------------------------------------- LEVEL
-    var level: String by mutableStateOf("")
-        private set
-    fun updateLevel(newLevel: String) {
-        level = newLevel
-    }
+    var project: Project by mutableStateOf(Project(
+        keywords = "",
+        language  = "",
+        length = 0,
+        level = "",
+    ))
 }

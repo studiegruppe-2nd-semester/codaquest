@@ -31,7 +31,6 @@ class LoginViewModel : ViewModel(), ErrorOperations {
 
     // ----------------------------------------- EMAIL
     var email: String by mutableStateOf("")
-        private set
     fun updateEmail(newValue: String) {
         email = newValue
     }
@@ -53,17 +52,23 @@ class LoginViewModel : ViewModel(), ErrorOperations {
     // ----------------------------------------- LOGIN
     fun login(
         errorOperations: ErrorOperations,
-        onSuccess: (User) -> Unit,
+        onSuccess: (User) -> Unit
     ) {
-        if (email.isNotEmpty() && password.isNotEmpty()) {
-            accountService.login(
-                email = email,
-                password = password,
-                errorOperations = errorOperations,
-                onSuccess = { onSuccess(it) },
-            )
+        if (email.isEmpty() || password.isEmpty()) {
+            error = "Please enter email and password."
+            return
+        } else {
+            error = ""
         }
+
+        accountService.login(
+            email = email,
+            password = password,
+            errorOperations = errorOperations,
+            onSuccess = { onSuccess(it) }
+        )
     }
+
 
     // ----------------------------------------- SIGN UP
     fun signUp(onSuccess: (User) -> Unit) {
@@ -90,4 +95,5 @@ class LoginViewModel : ViewModel(), ErrorOperations {
     override fun showError(error: String) {
         this.error = error
     }
+
 }

@@ -5,4 +5,3 @@ data class User(
     val username: String?,
     var onboardingData: OnboardingData? = null,
     var projects: MutableList<Project>? = null,
-)

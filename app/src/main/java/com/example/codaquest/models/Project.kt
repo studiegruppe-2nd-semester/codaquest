@@ -1,4 +1,4 @@
-package com.example.codaquest.models
+package com.example.codaquest.Models
 
 data class Project(
     // USER ID
@@ -8,15 +8,16 @@ data class Project(
     // Svar fra chat gpt titel
     var title: String? = null,
 
-    // Indtastning
+    //Indtastning
     var keywords: String? = null,
     var language: String? = null,
     val length: Int? = null,
     val level: String? = null,
-    // This should be lvl!!!!
-// This should be lvl!!!!
-    // This should be lvl!!!!
-    // This should be lvl!!!!
+    //This should be lvl!!!!
+//This should be lvl!!!!
+    //This should be lvl!!!!
+    //This should be lvl!!!!
+
 
     // Svar fra chat gpt beskrivelse
     val description: String? = null,
@@ -24,3 +25,4 @@ data class Project(
     // Svar fra chat gpt planen
     val steps: List<String>? = null,
 )
+
