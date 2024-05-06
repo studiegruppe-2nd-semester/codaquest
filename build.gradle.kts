@@ -6,7 +6,7 @@ plugins {
     id("com.google.gms.google-services") version "4.4.1" apply false
     kotlin("jvm") version "1.3.21"
 }
-
+/*
 tasks.register<Copy>("copyPreCommitHook") {
     description = "Copy pre-commit hook from scripts to the .git/hooks directory"
     group = "git hooks"
@@ -18,6 +18,8 @@ tasks.register<Copy>("copyPreCommitHook") {
 tasks.build {
     dependsOn("copyPreCommitHook")
 }
+
+ */
 
 //tasks.register("copyPreCommitHook", Copy::class.java) {
 //    description = "Copies the git hooks from /git-hooks to the .git folder."
