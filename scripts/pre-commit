@@ -1,6 +1,21 @@
 #!/bin/bash
 
-echo "Running git pre.commit hook"
+echo "Running git pre-commit hook"
+
+
+echo "
+===================
+|  Formatting code with ktlintFormat...
+===================
+"
+
+./gradlew ktlintCheck
+
+echo "
+===================
+|  Running ktlintCheck...
+===================
+"
 
 ./gradlew ktlintCheck
 
