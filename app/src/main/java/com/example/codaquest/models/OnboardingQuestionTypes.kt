@@ -4,3 +4,4 @@ enum class OnboardingQuestionTypes {
     RadioButton,
     TextField,
     IntField,
+}
