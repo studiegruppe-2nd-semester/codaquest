@@ -1,7 +1,6 @@
 package com.example.codaquest.ui.components.home
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -17,4 +16,5 @@ class HomeScreenViewModel : ViewModel () {
         length = 0,
         level = "",
     ))
+
 }

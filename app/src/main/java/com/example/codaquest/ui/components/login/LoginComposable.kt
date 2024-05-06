@@ -21,39 +21,45 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.codaquest.ui.components.SharedViewModel
-
 @Composable
 fun LoginComposable (
     navController: NavController,
     sharedViewModel: SharedViewModel,
     loginViewModel: LoginViewModel
 ) {
-    Column (modifier = Modifier
-        .fillMaxSize(),
+    Column (
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
 
-        TextField(value = loginViewModel.email,
+        TextField(
+            value = loginViewModel.email,
             onValueChange = { loginViewModel.email = it },
             label = { Text("Email")},
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Email
+            ),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
                 unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
             ),
         )
 
-        TextField(value = loginViewModel.password,
+        TextField(
+            value = loginViewModel.password,
             onValueChange = { loginViewModel.password = it },
             label = { Text("Password")},
             visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
                 unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
             ),
         )
 
-        Button(onClick = {
+        Button(
+            onClick = {
                 loginViewModel.login(
                     loginViewModel,
                     onSuccess = {
@@ -73,4 +79,3 @@ fun LoginComposable (
         Text(text = loginViewModel.error)
     }
 }
-

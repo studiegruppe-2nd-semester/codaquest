@@ -40,15 +40,21 @@ class LoginViewModel: ViewModel(), ErrorOperations {
         errorOperations: ErrorOperations,
         onSuccess: (User) -> Unit
     ) {
-        if (email.isNotEmpty() && password.isNotEmpty()) {
-            accountService.login(
-                email = email,
-                password = password,
-                errorOperations = errorOperations,
-                onSuccess = { onSuccess(it) }
-            )
+        if (email.isEmpty() || password.isEmpty()) {
+            error = "Please enter email and password."
+            return
+        } else {
+            error = ""
         }
+
+        accountService.login(
+            email = email,
+            password = password,
+            errorOperations = errorOperations,
+            onSuccess = { onSuccess(it) }
+        )
     }
+
 
     // ----------------------------------------- SIGN UP
     fun signUp(onSuccess: (User) -> Unit) {
