@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.codaquest.interfaces.UserOperations
 import com.example.codaquest.models.Project
 import com.example.codaquest.models.User
 import com.example.codaquest.repositories.ProjectRepository
@@ -14,7 +13,7 @@ import com.example.codaquest.services.AccountService
 import com.example.codaquest.services.ApiService
 import kotlinx.coroutines.launch
 
-class SharedViewModel : ViewModel(), UserOperations {
+class SharedViewModel : ViewModel() {
     init {
         fetchUserData()
     }
@@ -23,20 +22,16 @@ class SharedViewModel : ViewModel(), UserOperations {
 
     // ------------------------------------- KEY
     var key: String? = null
-        private set
-    override fun updateKey(newKey: String) {
-        key = newKey
-    }
 
     // ------------------------------------- USER
     var user: User? by mutableStateOf(null)
         private set
-    override fun changeUser(newUser: User?) {
+    fun changeUser(newUser: User?) {
         this.user = newUser
         println("New user: $user")
     }
 
-    fun addProject(project: Project) {
+    fun saveProjectInViewModel(project: Project) {
         if (user?.projects != null) {
             user?.projects!!.add(project)
             changeUser(user)
@@ -56,7 +51,7 @@ class SharedViewModel : ViewModel(), UserOperations {
 
             userRepository.getKey(onSuccess = {
                 if (it != null) {
-                    updateKey(it)
+                    key = it
                 }
             })
 
@@ -68,7 +63,7 @@ class SharedViewModel : ViewModel(), UserOperations {
         }
     }
 
-    fun promptApi(
+    fun getProjectSuggestion(
         projectInfo: Project,
         onSuccess: (Project) -> Unit,
     ) {
@@ -76,18 +71,18 @@ class SharedViewModel : ViewModel(), UserOperations {
         apiService.initiateApi(this)
 
         viewModelScope.launch {
-            apiService.promptApi(projectInfo, onSuccess = { onSuccess(it) })
+            apiService.generateProjectSuggestion(projectInfo, onSuccess = { onSuccess(it) })
         }
     }
 
     // ------------------------------------- GENERATED PROJECT
     var project by mutableStateOf(Project())
 
-    fun addProject(
+    fun saveProject(
         uid: String,
         onSuccess: (Project) -> Unit,
     ) {
-        projectRepository.addProject(
+        projectRepository.saveUserProject(
             project.copy(uid = uid),
             onSuccess = { project -> onSuccess(project) },
         )

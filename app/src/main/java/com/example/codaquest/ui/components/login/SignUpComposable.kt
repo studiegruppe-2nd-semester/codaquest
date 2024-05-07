@@ -32,8 +32,8 @@ fun SignUpComposable(
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ) {
         TextField(
-            value = loginViewModel.username,
-            onValueChange = { loginViewModel.updateUsername(it) },
+            value = loginViewModel.loginInfo.username,
+            onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(username = it) },
             label = { Text("Username") },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -41,8 +41,8 @@ fun SignUpComposable(
             ),
         )
 
-        TextField(value = loginViewModel.email,
-            onValueChange = { loginViewModel.email = it },
+        TextField(value = loginViewModel.loginInfo.email,
+            onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(email = it) },
             label = { Text("Email")},
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Email
@@ -54,8 +54,8 @@ fun SignUpComposable(
         )
 
         TextField(
-            value = loginViewModel.password,
-            onValueChange = { loginViewModel.updatePassword(it) },
+            value = loginViewModel.loginInfo.password,
+            onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(password = it) },
             label = { Text("Password") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -66,8 +66,8 @@ fun SignUpComposable(
         )
 
         TextField(
-            value = loginViewModel.passwordConfirm,
-            onValueChange = { loginViewModel.updatePasswordConfirm(it) },
+            value = loginViewModel.loginInfo.confirmPassword,
+            onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(confirmPassword = it) },
             label = { Text("Confirm password") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

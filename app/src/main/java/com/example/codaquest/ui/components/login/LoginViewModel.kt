@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.codaquest.interfaces.ErrorOperations
+import com.example.codaquest.models.LoginInfo
 import com.example.codaquest.models.LoginState
 import com.example.codaquest.models.User
 import com.example.codaquest.services.AccountService
@@ -15,6 +16,7 @@ class LoginViewModel : ViewModel(), ErrorOperations {
 
     // ----------------------------------------- LOGIN/SIGNUP STATE
     var state: LoginState by mutableStateOf(LoginState.Login)
+        private set
     var stateButtonText by mutableStateOf("Create new account")
         private set
     fun updateState() {
@@ -23,48 +25,22 @@ class LoginViewModel : ViewModel(), ErrorOperations {
     }
 
     // ----------------------------------------- USERNAME
-    var username: String by mutableStateOf("")
-        private set
-    fun updateUsername(newValue: String) {
-        username = newValue
-    }
-
-    // ----------------------------------------- EMAIL
-    var email: String by mutableStateOf("")
-    fun updateEmail(newValue: String) {
-        email = newValue
-    }
-
-    // ----------------------------------------- PASSWORD
-    var password: String by mutableStateOf("")
-        private set
-    fun updatePassword(newValue: String) {
-        password = newValue
-    }
-
-    // ----------------------------------------- PASSWORD CONFIRM
-    var passwordConfirm: String by mutableStateOf("")
-        private set
-    fun updatePasswordConfirm(newValue: String) {
-        passwordConfirm = newValue
-    }
+    var loginInfo: LoginInfo by mutableStateOf(LoginInfo())
 
     // ----------------------------------------- LOGIN
     fun login(
-        errorOperations: ErrorOperations,
         onSuccess: (User) -> Unit
     ) {
-        if (email.isEmpty() || password.isEmpty()) {
-            error = "Please enter email and password."
+        if (loginInfo.email.isEmpty() || loginInfo.password.isEmpty()) {
+            showError("Please enter email and password")
             return
         } else {
-            error = ""
+            showError("")
         }
 
         accountService.login(
-            email = email,
-            password = password,
-            errorOperations = errorOperations,
+            loginInfo = loginInfo,
+            errorOperations = this,
             onSuccess = { onSuccess(it) }
         )
     }
@@ -72,20 +48,18 @@ class LoginViewModel : ViewModel(), ErrorOperations {
 
     // ----------------------------------------- SIGN UP
     fun signUp(onSuccess: (User) -> Unit) {
-        if (password == passwordConfirm) {
-            error = ""
+        if (loginInfo.password == loginInfo.confirmPassword) {
+            showError("")
 
-            if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
+            if (loginInfo.email.isNotEmpty() && loginInfo.username.isNotEmpty() && loginInfo.password.isNotEmpty()) {
                 accountService.signUp(
-                    email = email,
-                    username = username,
-                    password = password,
-                    this,
+                    loginInfo = loginInfo,
+                    errorOperations = this,
                     onSuccess = { onSuccess(it) },
                 )
             }
         } else {
-            error = "Confirmed password does not match"
+            showError("Confirmed password does not match")
         }
     }
 

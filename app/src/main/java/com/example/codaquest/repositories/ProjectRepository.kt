@@ -105,7 +105,7 @@ class ProjectRepository {
             }
     }
 
-    fun addProject(
+    fun saveUserProject(
         project: Project,
         onSuccess: (Project) -> Unit,
     ) {

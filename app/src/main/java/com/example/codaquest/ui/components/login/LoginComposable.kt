@@ -32,13 +32,8 @@ fun LoginComposable(
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
         TextField(
-            value = loginViewModel.email,
-            onValueChange = { loginViewModel.updateEmail(it) },
-            label = { Text("Email") },)
-
-        TextField(
-            value = loginViewModel.email,
-            onValueChange = { loginViewModel.email = it },
+            value = loginViewModel.loginInfo.email,
+            onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(email = it) },
             label = { Text("Email")},
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Email
@@ -50,8 +45,8 @@ fun LoginComposable(
         )
 
         TextField(
-            value = loginViewModel.password,
-            onValueChange = { loginViewModel.updatePassword(it) },
+            value = loginViewModel.loginInfo.password,
+            onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(password = it) },
             label = { Text("Password") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -64,7 +59,6 @@ fun LoginComposable(
         Button(
             onClick = {
                 loginViewModel.login(
-                    loginViewModel,
                     onSuccess = {
                         sharedViewModel.changeUser(it)
                         loginViewModel.showError("")

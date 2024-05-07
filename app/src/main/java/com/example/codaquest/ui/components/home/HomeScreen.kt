@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.Models.Project
+import com.example.codaquest.models.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
@@ -94,8 +94,8 @@ fun HomeScreen(
                     textAlign = TextAlign.Center,
                 )
                 TextField(
-                    value = homeScreenViewModel.keyWords,
-                    onValueChange = { homeScreenViewModel.updateKeyWords(it) },
+                    value = homeScreenViewModel.generateProjectDetails.keywords,
+                    onValueChange = { homeScreenViewModel.generateProjectDetails = homeScreenViewModel.generateProjectDetails.copy(keywords = it) },
                 )
 
                 Spacer(
@@ -120,8 +120,8 @@ fun HomeScreen(
                     textAlign = TextAlign.Center,
                 )
                 TextField(
-                    value = homeScreenViewModel.language,
-                    onValueChange = { homeScreenViewModel.updateLanguage(it) },
+                    value = homeScreenViewModel.generateProjectDetails.language,
+                    onValueChange = { homeScreenViewModel.generateProjectDetails = homeScreenViewModel.generateProjectDetails.copy(language = it) },
                 )
 
                 Spacer(
@@ -146,8 +146,8 @@ fun HomeScreen(
                 )
 
                 TextField(
-                    value = if (homeScreenViewModel.project.length == 0) "" else homeScreenViewModel.project.length.toString(),
-                    onValueChange = { homeScreenViewModel.project = homeScreenViewModel.project.copy(length = it.toIntOrNull() ?: 0) },
+                    value = if (homeScreenViewModel.generateProjectDetails.length == 0) "" else homeScreenViewModel.generateProjectDetails.length.toString(),
+                    onValueChange = { homeScreenViewModel.generateProjectDetails = homeScreenViewModel.generateProjectDetails.copy(length = it.toIntOrNull() ?: 0) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
 
                 )
@@ -174,8 +174,8 @@ fun HomeScreen(
                     textAlign = TextAlign.Center,
                 )
                 TextField(
-                    value = homeScreenViewModel.level,
-                    onValueChange = { homeScreenViewModel.updateLevel(it) },
+                    value = homeScreenViewModel.generateProjectDetails.level,
+                    onValueChange = { homeScreenViewModel.generateProjectDetails = homeScreenViewModel.generateProjectDetails.copy(level = it) },
                 )
 
                 Spacer(
@@ -184,12 +184,12 @@ fun HomeScreen(
                 )
 
                 Button(onClick = {
-                    sharedViewModel.promptApi(
+                    sharedViewModel.getProjectSuggestion(
                         Project(
-                            level = homeScreenViewModel.level,
-                            language = homeScreenViewModel.language,
-                            keywords = homeScreenViewModel.keyWords,
-                            length = homeScreenViewModel.length,
+                            level = homeScreenViewModel.generateProjectDetails.level,
+                            language = homeScreenViewModel.generateProjectDetails.language,
+                            keywords = homeScreenViewModel.generateProjectDetails.keywords,
+                            length = homeScreenViewModel.generateProjectDetails.length,
                         ),
                         onSuccess = {
                             sharedViewModel.project = it
@@ -209,9 +209,9 @@ fun HomeScreen(
 
                     Button(onClick = {
                         sharedViewModel.user?.userUid?.let { uid ->
-                            sharedViewModel.addProject(
+                            sharedViewModel.saveProject(
                                 uid,
-                                onSuccess = { project -> sharedViewModel.addProject(project) },
+                                onSuccess = { project -> sharedViewModel.saveProjectInViewModel(project) },
                             )
                             navController.navigate("profile")
                         }

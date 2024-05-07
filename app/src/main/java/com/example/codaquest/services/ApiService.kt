@@ -29,7 +29,7 @@ class ApiService {
         }!!
     }
 
-    suspend fun promptApi(
+    suspend fun generateProjectSuggestion(
         projectInfo: Project,
         onSuccess: (Project) -> Unit,
     ) {
