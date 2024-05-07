@@ -1,5 +1,8 @@
 package com.example.codaquest.models
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+
 data class Project(
     // USER ID
     var uid: String? = null,
@@ -12,7 +15,7 @@ data class Project(
     var keywords: String? = null,
     var language: String? = null,
     val length: Int? = null,
-    val level: String? = null,
+    val level : LevelType? = LevelType.Beginner,
     // This should be lvl!!!!
 // This should be lvl!!!!
     // This should be lvl!!!!

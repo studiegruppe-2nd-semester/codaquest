@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.models.Project
+import com.example.codaquest.models.stringToLevelType
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.project.ProjectComposable
@@ -171,8 +174,10 @@ fun HomeScreen(
                     text = "Which level would you like your project to be?",
                     modifier = Modifier
                         .padding(horizontal = 16.dp), // Adjust padding as needed
-                    textAlign = TextAlign.Center,
-                )
+                    textAlign = TextAlign.Center)
+
+
+
                 TextField(
                     value = homeScreenViewModel.generateProjectDetails.level,
                     onValueChange = { homeScreenViewModel.generateProjectDetails = homeScreenViewModel.generateProjectDetails.copy(level = it) },
@@ -186,7 +191,7 @@ fun HomeScreen(
                 Button(onClick = {
                     sharedViewModel.getProjectSuggestion(
                         Project(
-                            level = homeScreenViewModel.generateProjectDetails.level,
+                            level = homeScreenViewModel.generateProjectDetails.level.let { stringToLevelType(it) },
                             language = homeScreenViewModel.generateProjectDetails.language,
                             keywords = homeScreenViewModel.generateProjectDetails.keywords,
                             length = homeScreenViewModel.generateProjectDetails.length,
@@ -203,6 +208,44 @@ fun HomeScreen(
                     modifier = Modifier
                         .padding(top = 20.dp),
                 )
+
+                /*
+
+                //Text og scrollable
+                Row {
+                    Text(text = "Title: ",
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        ))
+                    Text(text = if (homeScreenViewModel.project.title != null) homeScreenViewModel.project.title.toString() else "")
+
+                }
+
+                Row {
+                    Text(text = "Description:",
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        ))
+                    Text(text = if (homeScreenViewModel.project.description != null) homeScreenViewModel.project.description.toString() else "")
+                }
+
+                Text(text = "Steps:")
+                Text(text = if (homeScreenViewModel.project.steps != null) homeScreenViewModel.project.steps.toString() else "")
+
+                Spacer(
+                    modifier = Modifier
+                        .padding(top = 30.dp)
+                )
+
+
+                Text(text = if (homeScreenViewModel.project.keywords != null) homeScreenViewModel.project.keywords.toString() else "")
+                Text(text = if (homeScreenViewModel.project.language != null) homeScreenViewModel.project.language.toString() else "")
+                Text(text = if (homeScreenViewModel.project.length != null) homeScreenViewModel.project.length.toString() else "")
+                Text(text = if (homeScreenViewModel.project.level != null) homeScreenViewModel.project.level.toString() else "")
+
+                 */
 
                 if (!sharedViewModel.project.title.isNullOrEmpty()) {
                     ProjectComposable(project = sharedViewModel.project)

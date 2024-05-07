@@ -10,23 +10,25 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import com.example.codaquest.models.LevelType
 import com.example.codaquest.models.OnboardingData
 import com.example.codaquest.models.OnboardingQuestion
 import com.example.codaquest.models.OnboardingQuestionTypes
 import com.example.codaquest.models.User
+import com.example.codaquest.models.stringToLevelType
 import com.example.codaquest.repositories.UserRepository
 
 @SuppressLint("MutableCollectionMutableState")
-class OnboardingViewModel : ViewModel() {
-    private val userRepository: UserRepository = UserRepository()
+class OnboardingViewModel : ViewModel () {
+    private val userRepository : UserRepository = UserRepository()
     var currentQuestion: Int by mutableIntStateOf(0)
         private set
 
     var nextButton: String by mutableStateOf("Next")
         private set
 
-    fun previousQuestion() {
-        if (currentQuestion > 0) {
+    fun previousQuestion () {
+        if (currentQuestion > 0 ) {
             currentQuestion--
             if (nextButton != "Next") nextButton = "Next"
         }
@@ -44,9 +46,10 @@ class OnboardingViewModel : ViewModel() {
         }
         // IF THE LAST QUESTION IS ANSWERED, ADD TO FIRESTORE
         else if ((currentQuestion == questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
+
             userRepository.addOnboardingDataToUserData(
                 OnboardingData(
-                    level = questions[0].answer.value,
+                    level = questions[0].answer.value.let { stringToLevelType(it) },
                     languages = questions[1].answer.value,
                     projectLength = questions[2].answer.value.toInt(),
                 ),

@@ -1,5 +1,6 @@
 package com.example.codaquest.services
 
+import androidx.compose.runtime.mutableStateOf
 import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
 import com.aallam.openai.api.chat.ChatMessage
@@ -8,7 +9,9 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
+import com.example.codaquest.models.LevelType
 import com.example.codaquest.models.Project
+import com.example.codaquest.models.stringToLevelType
 import com.example.codaquest.ui.components.SharedViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -81,11 +84,12 @@ class ApiService {
             List(jsonArray.length()) { i -> jsonArray.getString(i) }
         }
 
+
         val project = Project(
             title = apiResponseHashMap["title"]?.toString(),
             language = apiResponseHashMap["language"]?.toString(),
             length = apiResponseHashMap["length"]?.toString()?.toInt(),
-            level = apiResponseHashMap["level"]?.toString(),
+            level = apiResponseHashMap["level"]?.toString()?.let { stringToLevelType(it) }, // Use parsed enum value
             description = apiResponseHashMap["description"]?.toString(),
             steps = stepsList,
         )

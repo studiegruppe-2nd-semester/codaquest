@@ -3,6 +3,7 @@ package com.example.codaquest.repositories
 import android.content.ContentValues
 import android.util.Log
 import com.example.codaquest.models.OnboardingData
+import com.example.codaquest.models.stringToLevelType
 import com.example.codaquest.models.User
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -30,7 +31,7 @@ class UserRepository {
         db.collection("users").document(userUid).get()
             .addOnSuccessListener { document ->
                 val onboardingData = OnboardingData(
-                    level = document.data?.get("level")?.toString(),
+                    level = document.data?.get("level")?.toString()?.let { stringToLevelType(it) },
                     languages = document.data?.get("languages")?.toString(),
                     projectLength = document.data?.get("project-length")?.toString()?.toInt(),
                 )
@@ -41,7 +42,9 @@ class UserRepository {
                     onboardingData = onboardingData,
                 )
 
-                projectRepository.getProjects(userUid, onSuccess = { onSuccess(user.copy(projects = it)) })
+                projectRepository.getProjects(userUid) { projects ->
+                    onSuccess(user.copy(projects = projects))
+                }
 
                 Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
             }
