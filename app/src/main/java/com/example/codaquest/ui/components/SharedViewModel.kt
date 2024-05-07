@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.codaquest.models.GenerateProjectDetails
 import com.example.codaquest.models.Project
 import com.example.codaquest.models.User
 import com.example.codaquest.repositories.ProjectRepository
@@ -20,6 +21,9 @@ class SharedViewModel : ViewModel() {
 
     private val projectRepository: ProjectRepository = ProjectRepository()
 
+    var loading: Boolean = false
+    var loadingRoute: String? = null
+
     // ------------------------------------- KEY
     var key: String? = null
 
@@ -32,7 +36,7 @@ class SharedViewModel : ViewModel() {
     }
 
 
-    fun saveProjectInViewModel(project: Project) {
+    private fun saveProjectInViewModel(project: Project) {
         if (user?.projects != null) {
             user?.projects!!.add(project)
             changeUser(user)
@@ -65,7 +69,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun getProjectSuggestion(
-        projectInfo: Project,
+        projectInfo: GenerateProjectDetails,
         onSuccess: (Project) -> Unit,
     ) {
         val apiService = ApiService()
@@ -80,12 +84,35 @@ class SharedViewModel : ViewModel() {
     var project by mutableStateOf(Project())
 
     fun saveProject(
-        uid: String,
-        onSuccess: (Project) -> Unit,
+        uid: String
     ) {
         projectRepository.saveUserProject(
             project.copy(uid = uid),
-            onSuccess = { project -> onSuccess(project) },
+            onSuccess = { saveProjectInViewModel(it) },
         )
+    }
+
+    fun deleteSavedProject(
+        projectId: String,
+        uid: String,
+        loadingRoute: String
+    ) {
+        if (uid == user?.userUid) {
+            this.loading = true
+            this.loadingRoute = loadingRoute
+
+            viewModelScope.launch {
+                projectRepository.deleteSavedProject(
+                    projectId,
+                    onSuccess = {
+                        val projects: MutableList<Project>? = user!!.projects
+                        projects?.removeIf { it.projectId == projectId }
+                        changeUser(user!!.copy(projects = projects))
+
+                        loading = false
+                    }
+                )
+            }
+        }
     }
 }

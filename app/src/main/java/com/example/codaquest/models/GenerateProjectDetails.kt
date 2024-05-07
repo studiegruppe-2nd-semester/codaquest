@@ -4,5 +4,5 @@ data class GenerateProjectDetails(
     var keywords: String = "",
     var language: String = "",
     val length: Int = 0,
-    val level: String = "",
+    val level: LevelType = LevelType.Beginner,
 )

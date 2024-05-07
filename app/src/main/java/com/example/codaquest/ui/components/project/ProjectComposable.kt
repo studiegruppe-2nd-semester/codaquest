@@ -24,14 +24,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.codaquest.R
-import com.example.codaquest.data.models.FirebaseProject
 import com.example.codaquest.models.LevelType
 import com.example.codaquest.models.Project
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ProjectComposable(project: Project) {
+fun ProjectComposable(
+    project: Project,
+    onDelete: (String) -> Unit
+) {
     Column(
         modifier = Modifier
             .padding(5.dp)
@@ -54,7 +56,7 @@ fun ProjectComposable(project: Project) {
                 .fillMaxWidth()
                 .height(30.dp)
                 .padding(top = 5.dp, end = 5.dp)
-                .clickable { /* TODO delete project */ },
+                .clickable { project.projectId?.let { onDelete(it) } },
                 contentAlignment = Alignment.TopEnd
             ) {
                 Image(
@@ -120,6 +122,7 @@ fun ProjectComposablePreview() {
                     "step 3",
                 ),
             ),
+            onDelete = {}
         )
     }
 }

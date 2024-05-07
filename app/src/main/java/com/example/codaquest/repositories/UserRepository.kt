@@ -36,14 +36,22 @@ class UserRepository {
                     projectLength = document.data?.get("project-length")?.toString()?.toInt(),
                 )
 
-                val user = User(
-                    userUid = document.id,
-                    username = document.data?.get("username")?.toString(),
-                    onboardingData = onboardingData,
-                )
+//                val user = User(
+//                    userUid = document.id,
+//                    username = document.data?.get("username")?.toString(),
+//                    onboardingData = onboardingData,
+//                )
 
-                projectRepository.getProjects(userUid) { projects ->
-                    onSuccess(user.copy(projects = projects))
+                projectRepository.fetchProjects(userUid) { projects ->
+                    onSuccess(
+                        User(
+                            userUid = document.id,
+                            username = document.data?.get("username")?.toString(),
+                            onboardingData = onboardingData,
+                            projects = projects
+                        )
+
+                    )
                 }
 
                 Log.d(ContentValues.TAG, "${document.id} => ${document.data}")

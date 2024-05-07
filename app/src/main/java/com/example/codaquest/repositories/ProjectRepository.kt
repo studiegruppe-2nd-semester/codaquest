@@ -12,29 +12,7 @@ import com.google.firebase.firestore.firestore
 class ProjectRepository {
     private val db = Firebase.firestore
 
-//    fun getProjectData(
-//        projectID: String,
-//        navController: NavController?,
-//        sharedViewModel: SharedViewModel
-//    ) {
-//        db.collection("projects").document(projectID).get()
-//            .addOnSuccessListener { document ->
-//
-//                val projectData = Project(
-//                    title = document.data?.get("title")?.toString(),
-//                    keywords = document.data?.get("keywords")?.toString(),
-//                    language = document.data?.get("language")?.toString(),
-//                    length = document.data?.get("length")?.toString()?.toInt(),
-//                    level = document.data?.get("level")?.toString(),
-//                    description = document.data?.get("description")?.toString(),
-//                    steps = when (val stepsData = document.data?.get("steps")) {
-//                        is List<*> -> stepsData.filterIsInstance<String>()
-//                        else -> emptyList()
-//                    }
-//                )
-//            }
-//    }
-    fun getProjects(
+    fun fetchProjects(
         uid: String,
         onSuccess: (MutableList<Project>) -> Unit
     ) {
@@ -47,11 +25,11 @@ class ProjectRepository {
                 documents.forEach { document ->
                     val newProject = Project(
                         projectId = document.id,
+                        uid = document.data["uid"]?.toString(),
                         title = document.data["title"]?.toString(),
-                        keywords = document.data["keywords"]?.toString(),
                         language = document.data["language"]?.toString(),
                         length = document.data["length"]?.toString()?.toInt(),
-                        level = document.data.get("level")?.toString()?.let { stringToLevelType(it) },
+                        level = document.data["level"]?.toString()?.let { stringToLevelType(it) },
                         description = document.data["description"]?.toString(),
                         steps = when (val stepsData = document.data["steps"]) {
                             is List<*> -> stepsData.filterIsInstance<String>()
@@ -67,7 +45,6 @@ class ProjectRepository {
 
     fun addProjectData(
         title: String,
-        keywords: String,
         language: String,
         length: Int,
         level: String,
@@ -86,7 +63,6 @@ class ProjectRepository {
             projects?.add(
                 Project(
                     title = title,
-                    keywords = keywords,
                     language = language,
                     length = length,
                     level = stringToLevelType(level),
@@ -124,7 +100,16 @@ class ProjectRepository {
             }
     }
 
-
+    fun deleteSavedProject(
+        projectId: String,
+        onSuccess: () -> Unit
+    ) {
+        db.collection("projects").document(projectId)
+            .delete()
+            .addOnSuccessListener {
+                onSuccess()
+            }
+    }
 
 
 }

@@ -1,6 +1,5 @@
 package com.example.codaquest.services
 
-import androidx.compose.runtime.mutableStateOf
 import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
 import com.aallam.openai.api.chat.ChatMessage
@@ -9,7 +8,7 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
-import com.example.codaquest.models.LevelType
+import com.example.codaquest.models.GenerateProjectDetails
 import com.example.codaquest.models.Project
 import com.example.codaquest.models.stringToLevelType
 import com.example.codaquest.ui.components.SharedViewModel
@@ -33,7 +32,7 @@ class ApiService {
     }
 
     suspend fun generateProjectSuggestion(
-        projectInfo: Project,
+        projectInfo: GenerateProjectDetails,
         onSuccess: (Project) -> Unit,
     ) {
         val length = if (projectInfo.length == 0) "a number you choose of" else projectInfo.length

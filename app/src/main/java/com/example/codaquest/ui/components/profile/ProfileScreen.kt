@@ -131,9 +131,24 @@ fun ProfileScreen(
 //                    }
                 }
             }
+
             if (sharedViewModel.user?.projects?.isNotEmpty() == true) {
-                items(sharedViewModel.user?.projects!!) { item ->
-                    ProjectComposable(project = item)
+                items(sharedViewModel.user?.projects!!, key = { project ->
+                    project.projectId.toString() // Use the projectId as a stable key
+                }) { item ->
+                    ProjectComposable(
+                        project = item,
+                        onDelete = { projectId -> item.uid?.let { uid ->
+                            sharedViewModel.deleteSavedProject(
+                                projectId,
+                                uid,
+                                "profile"
+                            )
+                            if (sharedViewModel.loading) {
+                                navController.navigate("loading")
+                            }
+                        } }
+                    )
                 }
             } else {
                 item {
