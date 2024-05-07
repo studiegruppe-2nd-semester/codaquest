@@ -45,7 +45,7 @@ fun HomeScreen(
         LazyColumn(
             modifier = Modifier
                 .padding(5.dp)
-                .padding(bottom = 70.dp)
+                .padding(bottom = 65.dp)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -223,6 +223,6 @@ fun HomeScreen(
             // Your code ends here
         }
 
-        NavBar(navController, sharedViewModel)
+        NavBar("home", navController, sharedViewModel)
     }
 }

@@ -1,7 +1,6 @@
 package com.example.codaquest.ui.components.navbar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -9,19 +8,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.codaquest.R
+import com.example.codaquest.models.User
 import com.example.codaquest.ui.components.SharedViewModel
+import com.example.codaquest.ui.components.common.NavBarOption
 
 @Composable
 fun NavBar(
+    currentScreen: String,
     navController: NavController,
     sharedViewModel: SharedViewModel,
 ) {
@@ -29,39 +28,50 @@ fun NavBar(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.secondary)
             .fillMaxWidth()
-            .height(70.dp),
+            .height(65.dp)
     ) {
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                modifier = Modifier
-                    .clickable { navController.navigate("home") },
-                text = "Home",
-                fontSize = 20.sp,
-                color = Color.White,
-            )
+            NavBarOption(
+                backgroundColor = chooseBackgroundColor(screen = "home", currentScreen = currentScreen),
+                contentDescription = "home icon",
+                getIcon("home"),
+                onClick = { navController.navigate("home") })
 
-            VerticalDivider(
-                thickness = 2.dp,
-                color = Color.Black,
-            )
-
-            Text(
-                modifier = Modifier
-                    .clickable {
-                        if (sharedViewModel.user != null) {
-                            navController.navigate("profile")
-                        } else {
-                            navController.navigate("login")
-                        }
-                    },
-                text = "Profile",
-                fontSize = 20.sp,
-                color = Color.White,
-            )
+            NavBarOption(
+                backgroundColor = chooseBackgroundColor(screen = "profile", currentScreen = currentScreen),
+                contentDescription = "${profileOrLogin(sharedViewModel.user)} icon",
+                getIcon(profileOrLogin(sharedViewModel.user)),
+                onClick = { navController.navigate(profileOrLogin(sharedViewModel.user)) })
         }
+    }
+}
+
+fun profileOrLogin(user: User?): String {
+    return if (user != null) {
+        "profile"
+    } else {
+        "login"
+    }
+}
+
+fun getIcon(name: String): Int {
+    return when (name) {
+        "home" -> R.drawable.ic_home
+        "profile" -> R.drawable.ic_profile
+        "login" -> R.drawable.ic_profile
+        else -> R.drawable.ic_reload
+    }
+}
+
+@Composable
+fun chooseBackgroundColor(screen: String, currentScreen: String): Color {
+    return if (currentScreen == screen) {
+        MaterialTheme.colorScheme.primary
+    } else {
+        MaterialTheme.colorScheme.secondary
     }
 }

@@ -41,7 +41,7 @@ fun ProfileScreen(
         LazyColumn(
             modifier = Modifier
                 .padding(5.dp)
-                .padding(bottom = 70.dp),
+                .padding(bottom = 65.dp),
 //            .fillMaxSize()
         ) {
             item {
@@ -49,15 +49,16 @@ fun ProfileScreen(
                     modifier = Modifier
                         .padding(top = 10.dp)
                         .fillMaxWidth()
-                        .height(50.dp),
+                        .height(45.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    Text(
-//                    text = "Settings" --- todo
-                        text = "",
-                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_settings),
+                        contentDescription = "settings icon")
 
-                    Text(
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_logout),
+                        contentDescription = "settings icon",
                         modifier = Modifier
                             .clickable {
                                 viewModel.logout(
@@ -68,8 +69,20 @@ fun ProfileScreen(
                                     },
                                 )
                             },
-                        text = "Logout",
-                    )
+                        )
+//                    Text(
+//                        modifier = Modifier
+//                            .clickable {
+//                                viewModel.logout(
+//                                    onSuccess = {
+//                                        sharedViewModel.changeUser(null)
+//                                        sharedViewModel.project = Project()
+//                                        navController.navigate("home")
+//                                    },
+//                                )
+//                            },
+//                        text = "Logout",
+//                    )
                 }
 
                 Column(
@@ -131,6 +144,6 @@ fun ProfileScreen(
     }
 
     Box(contentAlignment = Alignment.BottomCenter) {
-        NavBar(navController, sharedViewModel)
+        NavBar("profile", navController, sharedViewModel)
     }
 }

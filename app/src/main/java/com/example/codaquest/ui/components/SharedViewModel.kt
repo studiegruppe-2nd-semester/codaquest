@@ -31,6 +31,7 @@ class SharedViewModel : ViewModel() {
         println("New user: $user")
     }
 
+
     fun saveProjectInViewModel(project: Project) {
         if (user?.projects != null) {
             user?.projects!!.add(project)
