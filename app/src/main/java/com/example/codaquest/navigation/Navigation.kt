@@ -19,7 +19,7 @@ fun SetupNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = "profile",
+        startDestination = "home",
     ) {
         composable("home") {
             HomeScreen(

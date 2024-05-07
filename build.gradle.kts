@@ -4,7 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     // Add the dependency for the Google services Gradle plugin
     id("com.google.gms.google-services") version "4.4.1" apply false
-    kotlin("jvm") version "1.3.21"
+//    kotlin("jvm") version "1.3.21"
 }
 /*
 tasks.register<Copy>("copyPreCommitHook") {

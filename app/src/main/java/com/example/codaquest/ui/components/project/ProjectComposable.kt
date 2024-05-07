@@ -1,25 +1,30 @@
 package com.example.codaquest.ui.components.project
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.codaquest.R
+import com.example.codaquest.data.models.FirebaseProject
 import com.example.codaquest.models.LevelType
 import com.example.codaquest.models.Project
 import com.example.codaquest.ui.theme.CodaQuestTheme
@@ -34,18 +39,31 @@ fun ProjectComposable(project: Project) {
             .clip(shape = RoundedCornerShape(20.dp))
             .background(color = MaterialTheme.colorScheme.secondary)
             .padding(15.dp, 10.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        project.title?.let {
-            Text(
-                text = it,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.fillMaxWidth(),
-            )
+        Box(modifier = Modifier.fillMaxWidth()) {
+            project.title?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(30.dp)
+                .padding(top = 5.dp, end = 5.dp)
+                .clickable { /* TODO delete project */ },
+                contentAlignment = Alignment.TopEnd
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_trashcan),
+                    contentDescription = "trashcan icon")
+            }
         }
 
         FlowRow(
-            modifier = Modifier
-                .padding(vertical = 5.dp),
             verticalArrangement = Arrangement.spacedBy(7.dp),
         ) {
             val list = listOf(
@@ -88,13 +106,10 @@ fun ProjectComposable(project: Project) {
 @Preview(showBackground = true)
 @Composable
 fun ProjectComposablePreview() {
-    val levelState = remember { mutableStateOf("Beginner") }
-
     CodaQuestTheme {
         ProjectComposable(
             Project(
                 title = "Pizza Lover",
-                keywords = "pizza",
                 language = "Kotlin",
                 length = 5,
                 level = LevelType.Beginner,

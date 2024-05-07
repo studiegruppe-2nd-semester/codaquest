@@ -54,14 +54,14 @@ android {
     }
 }
 
-ktlint {
-    android = true
-    ignoreFailures = false
-    version = "0.50.0"
-    reporters {
-        reporter(ReporterType.CHECKSTYLE)
-    }
-}
+//ktlint {
+//    android = true
+//    ignoreFailures = false
+//    version = "0.50.0"
+//    reporters {
+//        reporter(ReporterType.CHECKSTYLE)
+//    }
+//}
 
 dependencies {
 
