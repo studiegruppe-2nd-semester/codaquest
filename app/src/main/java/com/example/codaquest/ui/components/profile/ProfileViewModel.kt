@@ -17,7 +17,7 @@ class ProfileViewModel : ViewModel() {
     val onboardingAnswerTitles: Map<String, String> = mapOf(
         "level" to "Level in coding:",
         "languages" to "Known coding languages:",
-        "project-length" to "Preferred project length (in hours):"
+        "project-length" to "Preferred project length (in hours):",
     )
 
     var editingOnboardingAnswers: Boolean by mutableStateOf(false)
@@ -55,7 +55,7 @@ class ProfileViewModel : ViewModel() {
 
     fun saveOnboardingAnswers(
         user: User,
-        onSuccess: (User) -> Unit
+        onSuccess: (User) -> Unit,
     ) {
         userRepository.addOnboardingDataToUserData(
             OnboardingData(

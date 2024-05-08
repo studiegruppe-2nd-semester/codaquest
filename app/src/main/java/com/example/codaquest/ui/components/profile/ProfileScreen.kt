@@ -28,7 +28,6 @@ import androidx.navigation.NavController
 import com.example.codaquest.R
 import com.example.codaquest.models.OnboardingData
 import com.example.codaquest.models.Project
-import com.example.codaquest.models.stringToLevelType
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
 
@@ -42,7 +41,7 @@ fun ProfileScreen(
     sharedViewModel.user?.onboardingData?.let {
         addOnboardingDataToProfileViewModel(
             it,
-            profileViewModel
+            profileViewModel,
         )
     }
 
@@ -80,19 +79,6 @@ fun ProfileScreen(
                                 )
                             },
                     )
-//                    Text(
-//                        modifier = Modifier
-//                            .clickable {
-//                                viewModel.logout(
-//                                    onSuccess = {
-//                                        sharedViewModel.changeUser(null)
-//                                        sharedViewModel.project = Project()
-//                                        navController.navigate("home")
-//                                    },
-//                                )
-//                            },
-//                        text = "Logout",
-//                    )
                 }
 
                 Column(
@@ -119,14 +105,16 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.height(50.dp))
 
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp)
-                ) {
-                    Row(modifier = Modifier
+                Column(
+                    modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        .padding(horizontal = 10.dp),
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
                         Text(
                             text = "Onboarding answers",
@@ -140,12 +128,13 @@ fun ProfileScreen(
                             contentDescription = "pencil icon",
                             modifier = Modifier.clickable {
                                 profileViewModel.toggleEditingOnboardingAnswers()
-                            })
+                            },
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    // TODO Onboarding answers
+                    // Ane
                     profileViewModel.onboardingAnswerTitles.forEach { answer ->
 
                         Text(text = answer.value)
@@ -160,21 +149,24 @@ fun ProfileScreen(
                                 },
                                 onValueChange = { newValue ->
                                     profileViewModel.editOnboardingAnswers(answer.key, newValue)
-                                })
+                                },
+                            )
 
                             false -> Text(text = findOnboardingData(answer.key, sharedViewModel.user?.onboardingData))
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
                     }
-                    
+
                     if (profileViewModel.editingOnboardingAnswers) {
                         Button(onClick = {
-                            sharedViewModel.user?.let {user -> profileViewModel.saveOnboardingAnswers(
-                                user,
-                                onSuccess = {updatedUser ->
-                                    sharedViewModel.changeUser(updatedUser)
-                                })
+                            sharedViewModel.user?.let { user ->
+                                profileViewModel.saveOnboardingAnswers(
+                                    user,
+                                    onSuccess = { updatedUser ->
+                                        sharedViewModel.changeUser(updatedUser)
+                                    },
+                                )
                             }
                         }) {
                             Text(text = "Save changes")
@@ -192,9 +184,9 @@ fun ProfileScreen(
 
 fun findOnboardingData(name: String, onboardingData: OnboardingData?): String {
     return when (name) {
-        "level" -> "${onboardingData?.level  ?: "No saved data"}"
+        "level" -> "${onboardingData?.level ?: "No saved data"}"
         "languages" -> onboardingData?.languages ?: "No saved data"
-        "project-length" -> "${onboardingData?.projectLength  ?: "No saved data"}"
+        "project-length" -> "${onboardingData?.projectLength ?: "No saved data"}"
         else -> "No saved data"
     }
 }
