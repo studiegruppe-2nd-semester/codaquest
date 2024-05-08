@@ -160,7 +160,6 @@ fun ProfileScreen(
             }
         }
     }
-
     Box(contentAlignment = Alignment.BottomCenter) {
         NavBar("profile", navController, sharedViewModel)
     }
