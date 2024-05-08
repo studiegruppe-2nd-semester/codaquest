@@ -15,7 +15,7 @@ echo "
 ===================
 "
 
-./gradlew ktlintCheck
+./gradlew ktlintFormat
 
 echo "
 ===================
