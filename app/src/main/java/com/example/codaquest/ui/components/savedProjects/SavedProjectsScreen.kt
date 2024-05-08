@@ -24,7 +24,7 @@ import com.example.codaquest.ui.components.navbar.NavBar
 @Composable
 fun SavedProjectsScreen(
     navController: NavController,
-    sharedViewModel: SharedViewModel
+    sharedViewModel: SharedViewModel,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -38,7 +38,8 @@ fun SavedProjectsScreen(
                 Text(
                     text = amountOfProjectsSavedText(sharedViewModel.user?.projects!!.size),
                     modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center)
+                    textAlign = TextAlign.Center,
+                )
 
                 Spacer(modifier = Modifier.height(20.dp))
             }
@@ -62,7 +63,7 @@ fun SavedProjectsScreen(
                             }
                         },
                     )
-                    
+
                     Spacer(modifier = Modifier.height(20.dp))
                 }
             } else {
@@ -81,8 +82,7 @@ fun SavedProjectsScreen(
 fun amountOfProjectsSavedText(amount: Int): String {
     return if (amount == 1) {
         "$amount project saved"
-    }
-    else {
+    } else {
         "$amount projects saved"
     }
 }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.codaquest.R
@@ -73,8 +72,7 @@ fun getIcon(screen: String, currentScreen: String): Int {
             "saved-projects" -> R.drawable.ic_bookmark_selected
             else -> R.drawable.ic_reload
         }
-    }
-    else {
+    } else {
         return when (screen) {
             "home" -> R.drawable.ic_home
             "profile" -> R.drawable.ic_profile
