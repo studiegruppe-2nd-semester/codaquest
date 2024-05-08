@@ -15,10 +15,3 @@ fun stringToLevelType(levelString: String): LevelType {
         else -> LevelType.Beginner // Handle the default case appropriately
     }
 }
-
-
-
-
-
-
-
