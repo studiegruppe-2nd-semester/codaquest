@@ -1,6 +1,6 @@
 package com.example.codaquest.models
 
-//Hej jeg er sej
+// Hej jeg er sej
 data class Project(
     var uid: String? = null,
     var projectId: String? = null,
@@ -15,9 +15,3 @@ data class Project(
 
     val steps: List<String>? = null,
 )
-
-
-
-
-
-
