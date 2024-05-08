@@ -41,7 +41,7 @@ class AccountService {
                         user.uid,
                         onSuccess = { newUser ->
                             onSuccess(newUser)
-                        }
+                        },
                     )
                 }
             }

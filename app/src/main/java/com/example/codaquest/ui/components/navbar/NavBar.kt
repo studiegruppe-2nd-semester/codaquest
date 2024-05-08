@@ -28,7 +28,7 @@ fun NavBar(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.secondary)
             .fillMaxWidth()
-            .height(65.dp)
+            .height(65.dp),
     ) {
         Row(
             modifier = Modifier
@@ -39,13 +39,15 @@ fun NavBar(
                 backgroundColor = chooseBackgroundColor(screen = "home", currentScreen = currentScreen),
                 contentDescription = "home icon",
                 getIcon("home"),
-                onClick = { navController.navigate("home") })
+                onClick = { navController.navigate("home") },
+            )
 
             NavBarOption(
                 backgroundColor = chooseBackgroundColor(screen = "profile", currentScreen = currentScreen),
                 contentDescription = "${profileOrLogin(sharedViewModel.user)} icon",
                 getIcon(profileOrLogin(sharedViewModel.user)),
-                onClick = { navController.navigate(profileOrLogin(sharedViewModel.user)) })
+                onClick = { navController.navigate(profileOrLogin(sharedViewModel.user)) },
+            )
         }
     }
 }

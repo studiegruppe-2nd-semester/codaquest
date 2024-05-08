@@ -23,20 +23,20 @@ import com.example.codaquest.ui.components.SharedViewModel
 fun LoginComposable(
     navController: NavController,
     sharedViewModel: SharedViewModel,
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(15.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp),
     ) {
         TextField(
             value = loginViewModel.loginInfo.email,
             onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(email = it) },
-            label = { Text("Email")},
+            label = { Text("Email") },
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Email
+                keyboardType = KeyboardType.Email,
             ),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -76,4 +76,3 @@ fun LoginComposable(
         Text(text = loginViewModel.error)
     }
 }
-

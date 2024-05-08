@@ -3,8 +3,8 @@ package com.example.codaquest.repositories
 import android.content.ContentValues
 import android.util.Log
 import com.example.codaquest.models.OnboardingData
-import com.example.codaquest.models.stringToLevelType
 import com.example.codaquest.models.User
+import com.example.codaquest.models.stringToLevelType
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -48,8 +48,8 @@ class UserRepository {
                             userUid = document.id,
                             username = document.data?.get("username")?.toString(),
                             onboardingData = onboardingData,
-                            projects = projects
-                        )
+                            projects = projects,
+                        ),
 
                     )
                 }

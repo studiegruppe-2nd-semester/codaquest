@@ -83,7 +83,6 @@ class ApiService {
             List(jsonArray.length()) { i -> jsonArray.getString(i) }
         }
 
-
         val project = Project(
             title = apiResponseHashMap["title"]?.toString(),
             language = apiResponseHashMap["language"]?.toString(),

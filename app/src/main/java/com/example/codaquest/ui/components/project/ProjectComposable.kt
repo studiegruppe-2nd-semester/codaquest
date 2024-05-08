@@ -32,7 +32,7 @@ import com.example.codaquest.ui.theme.CodaQuestTheme
 @Composable
 fun ProjectComposable(
     project: Project,
-    onDelete: (String) -> Unit
+    onDelete: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -41,7 +41,7 @@ fun ProjectComposable(
             .clip(shape = RoundedCornerShape(20.dp))
             .background(color = MaterialTheme.colorScheme.secondary)
             .padding(15.dp, 10.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             project.title?.let {
@@ -52,16 +52,18 @@ fun ProjectComposable(
                 )
             }
 
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(30.dp)
-                .padding(top = 5.dp, end = 5.dp)
-                .clickable { project.projectId?.let { onDelete(it) } },
-                contentAlignment = Alignment.TopEnd
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(30.dp)
+                    .padding(top = 5.dp, end = 5.dp)
+                    .clickable { project.projectId?.let { onDelete(it) } },
+                contentAlignment = Alignment.TopEnd,
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_trashcan),
-                    contentDescription = "trashcan icon")
+                    contentDescription = "trashcan icon",
+                )
             }
         }
 
@@ -122,7 +124,7 @@ fun ProjectComposablePreview() {
                     "step 3",
                 ),
             ),
-            onDelete = {}
+            onDelete = {},
         )
     }
 }

@@ -148,7 +148,7 @@ fun HomeScreen(
                 TextField(
                     value = if (homeScreenViewModel.generateProjectDetails.length == 0) "" else homeScreenViewModel.generateProjectDetails.length.toString(),
                     onValueChange = { homeScreenViewModel.generateProjectDetails = homeScreenViewModel.generateProjectDetails.copy(length = it.toIntOrNull() ?: 0) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
 
                 )
 
@@ -171,9 +171,8 @@ fun HomeScreen(
                     text = "Which level would you like your project to be?",
                     modifier = Modifier
                         .padding(horizontal = 16.dp), // Adjust padding as needed
-                    textAlign = TextAlign.Center)
-
-
+                    textAlign = TextAlign.Center,
+                )
 
                 TextField(
                     value = homeScreenViewModel.generateProjectDetails.level.toString(),
@@ -204,7 +203,7 @@ fun HomeScreen(
                 if (!sharedViewModel.project.title.isNullOrEmpty()) {
                     ProjectComposable(
                         project = sharedViewModel.project,
-                        onDelete = {  }
+                        onDelete = { },
                     )
 
                     Button(onClick = {

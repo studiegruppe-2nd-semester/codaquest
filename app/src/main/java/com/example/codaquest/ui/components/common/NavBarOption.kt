@@ -21,15 +21,16 @@ fun RowScope.NavBarOption(
     painterResourceId: Int,
     onClick: () -> Unit,
 ) {
-    Box(modifier = Modifier
-        .background(backgroundColor)
-        .fillMaxHeight()
-        .weight(1f)
-        .padding(5.dp)
-        .clickable {
-            onClick()
-        },
-        contentAlignment = Alignment.Center
+    Box(
+        modifier = Modifier
+            .background(backgroundColor)
+            .fillMaxHeight()
+            .weight(1f)
+            .padding(5.dp)
+            .clickable {
+                onClick()
+            },
+        contentAlignment = Alignment.Center,
     ) {
 //        Text(
 //            text = contentDescription,
@@ -39,6 +40,7 @@ fun RowScope.NavBarOption(
 //        )
         Image(
             painter = painterResource(id = painterResourceId),
-            contentDescription = contentDescription)
+            contentDescription = contentDescription,
+        )
     }
 }

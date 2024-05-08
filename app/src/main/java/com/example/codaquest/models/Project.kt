@@ -8,10 +8,9 @@ data class Project(
 
     var language: String? = null,
     val length: Int? = null,
-    val level : LevelType? = LevelType.Beginner,
+    val level: LevelType? = LevelType.Beginner,
 
     val description: String? = null,
 
     val steps: List<String>? = null,
 )
-

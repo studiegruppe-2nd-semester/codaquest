@@ -7,8 +7,5 @@ data class OnboardingData(
     val projectLength: Int? = null,
 )
 
-
 // This is a function that makes it possible for us to make the
 // code ".toEnum<Level>()" in UserRepository and Onboarding viewmodel.
-
-

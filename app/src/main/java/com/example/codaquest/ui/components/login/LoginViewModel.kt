@@ -29,7 +29,7 @@ class LoginViewModel : ViewModel(), ErrorOperations {
 
     // ----------------------------------------- LOGIN
     fun login(
-        onSuccess: (User) -> Unit
+        onSuccess: (User) -> Unit,
     ) {
         if (loginInfo.email.isEmpty() || loginInfo.password.isEmpty()) {
             showError("Please enter email and password")
@@ -41,10 +41,9 @@ class LoginViewModel : ViewModel(), ErrorOperations {
         accountService.login(
             loginInfo = loginInfo,
             errorOperations = this,
-            onSuccess = { onSuccess(it) }
+            onSuccess = { onSuccess(it) },
         )
     }
-
 
     // ----------------------------------------- SIGN UP
     fun signUp(onSuccess: (User) -> Unit) {
@@ -69,5 +68,4 @@ class LoginViewModel : ViewModel(), ErrorOperations {
     override fun showError(error: String) {
         this.error = error
     }
-
 }

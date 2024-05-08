@@ -54,7 +54,8 @@ fun ProfileScreen(
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_settings),
-                        contentDescription = "settings icon")
+                        contentDescription = "settings icon",
+                    )
 
                     Image(
                         painter = painterResource(id = R.drawable.ic_logout),
@@ -69,7 +70,7 @@ fun ProfileScreen(
                                     },
                                 )
                             },
-                        )
+                    )
 //                    Text(
 //                        modifier = Modifier
 //                            .clickable {
@@ -138,16 +139,18 @@ fun ProfileScreen(
                 }) { item ->
                     ProjectComposable(
                         project = item,
-                        onDelete = { projectId -> item.uid?.let { uid ->
-                            sharedViewModel.deleteSavedProject(
-                                projectId,
-                                uid,
-                                "profile"
-                            )
-                            if (sharedViewModel.loading) {
-                                navController.navigate("loading")
+                        onDelete = { projectId ->
+                            item.uid?.let { uid ->
+                                sharedViewModel.deleteSavedProject(
+                                    projectId,
+                                    uid,
+                                    "profile",
+                                )
+                                if (sharedViewModel.loading) {
+                                    navController.navigate("loading")
+                                }
                             }
-                        } }
+                        },
                     )
                 }
             } else {

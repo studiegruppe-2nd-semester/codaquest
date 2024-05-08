@@ -3,12 +3,10 @@ package com.example.codaquest.models
 enum class LevelType {
     Beginner,
     Intermediate,
-    Advanced
+    Advanced,
 }
 
-
-
-//This function we use to  convert a string to enum class.
+// This function we use to  convert a string to enum class.
 fun stringToLevelType(levelString: String): LevelType {
     return when (levelString) {
         "Beginner" -> LevelType.Beginner

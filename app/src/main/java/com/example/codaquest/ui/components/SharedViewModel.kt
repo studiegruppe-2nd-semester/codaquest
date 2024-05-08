@@ -35,7 +35,6 @@ class SharedViewModel : ViewModel() {
         println("New user: $user")
     }
 
-
     private fun saveProjectInViewModel(project: Project) {
         if (user?.projects != null) {
             user?.projects!!.add(project)
@@ -84,7 +83,7 @@ class SharedViewModel : ViewModel() {
     var project by mutableStateOf(Project())
 
     fun saveProject(
-        uid: String
+        uid: String,
     ) {
         projectRepository.saveUserProject(
             project.copy(uid = uid),
@@ -95,7 +94,7 @@ class SharedViewModel : ViewModel() {
     fun deleteSavedProject(
         projectId: String,
         uid: String,
-        loadingRoute: String
+        loadingRoute: String,
     ) {
         if (uid == user?.userUid) {
             this.loading = true
@@ -110,7 +109,7 @@ class SharedViewModel : ViewModel() {
                         changeUser(user!!.copy(projects = projects))
 
                         loading = false
-                    }
+                    },
                 )
             }
         }

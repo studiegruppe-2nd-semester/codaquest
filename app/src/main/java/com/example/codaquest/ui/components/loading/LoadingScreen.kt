@@ -14,9 +14,10 @@ fun LoadingScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
 ) {
-    Box(modifier = Modifier
-        .fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center,
     ) {
         Text(text = "LOADING")
     }

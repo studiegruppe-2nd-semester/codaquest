@@ -41,11 +41,12 @@ fun SignUpComposable(
             ),
         )
 
-        TextField(value = loginViewModel.loginInfo.email,
+        TextField(
+            value = loginViewModel.loginInfo.email,
             onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(email = it) },
-            label = { Text("Email")},
+            label = { Text("Email") },
             keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Email
+                keyboardType = KeyboardType.Email,
             ),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,
