@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import com.example.codaquest.models.stringToLevelType
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
-import com.example.codaquest.ui.components.project.ProjectComposable
+import com.example.codaquest.ui.components.common.ProjectComposable
 
 @Composable
 fun HomeScreen(
@@ -209,7 +209,7 @@ fun HomeScreen(
                     Button(onClick = {
                         sharedViewModel.user?.userUid?.let { uid ->
                             sharedViewModel.saveProject(uid)
-                            navController.navigate("profile")
+                            navController.navigate("saved-projects")
                         }
                     }) {
                         Text(text = "Save project")

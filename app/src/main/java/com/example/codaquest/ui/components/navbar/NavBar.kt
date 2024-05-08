@@ -36,16 +36,20 @@ fun NavBar(
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             NavBarOption(
-                backgroundColor = chooseBackgroundColor(screen = "home", currentScreen = currentScreen),
                 contentDescription = "home icon",
-                getIcon("home"),
+                getIcon("home", currentScreen),
                 onClick = { navController.navigate("home") },
             )
 
             NavBarOption(
-                backgroundColor = chooseBackgroundColor(screen = "profile", currentScreen = currentScreen),
+                contentDescription = "bookmark icon",
+                getIcon("saved-projects", currentScreen),
+                onClick = { navController.navigate("saved-projects") },
+            )
+
+            NavBarOption(
                 contentDescription = "${profileOrLogin(sharedViewModel.user)} icon",
-                getIcon(profileOrLogin(sharedViewModel.user)),
+                getIcon(profileOrLogin(sharedViewModel.user), currentScreen),
                 onClick = { navController.navigate(profileOrLogin(sharedViewModel.user)) },
             )
         }
@@ -60,20 +64,23 @@ fun profileOrLogin(user: User?): String {
     }
 }
 
-fun getIcon(name: String): Int {
-    return when (name) {
-        "home" -> R.drawable.ic_home
-        "profile" -> R.drawable.ic_profile
-        "login" -> R.drawable.ic_profile
-        else -> R.drawable.ic_reload
+fun getIcon(screen: String, currentScreen: String): Int {
+    if (currentScreen == screen) {
+        return when (screen) {
+            "home" -> R.drawable.ic_home_selected
+            "profile" -> R.drawable.ic_profile_selected
+            "login" -> R.drawable.ic_profile_selected
+            "saved-projects" -> R.drawable.ic_bookmark_selected
+            else -> R.drawable.ic_reload
+        }
     }
-}
-
-@Composable
-fun chooseBackgroundColor(screen: String, currentScreen: String): Color {
-    return if (currentScreen == screen) {
-        MaterialTheme.colorScheme.primary
-    } else {
-        MaterialTheme.colorScheme.secondary
+    else {
+        return when (screen) {
+            "home" -> R.drawable.ic_home
+            "profile" -> R.drawable.ic_profile
+            "login" -> R.drawable.ic_profile
+            "saved-projects" -> R.drawable.ic_bookmark
+            else -> R.drawable.ic_reload
+        }
     }
 }

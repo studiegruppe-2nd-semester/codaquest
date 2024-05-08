@@ -16,14 +16,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun RowScope.NavBarOption(
-    backgroundColor: Color,
     contentDescription: String,
     painterResourceId: Int,
     onClick: () -> Unit,
 ) {
     Box(
         modifier = Modifier
-            .background(backgroundColor)
             .fillMaxHeight()
             .weight(1f)
             .padding(5.dp)

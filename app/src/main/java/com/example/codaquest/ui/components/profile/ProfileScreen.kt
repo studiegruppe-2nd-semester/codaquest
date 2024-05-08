@@ -28,7 +28,7 @@ import com.example.codaquest.R
 import com.example.codaquest.models.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
-import com.example.codaquest.ui.components.project.ProjectComposable
+import com.example.codaquest.ui.components.common.ProjectComposable
 
 @Composable
 fun ProfileScreen(
@@ -112,7 +112,7 @@ fun ProfileScreen(
 
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        text = "Saved projects",
+                        text = "Onboarding answers",
                         style = MaterialTheme.typography.titleLarge,
                         fontSize = 30.sp,
                         modifier = Modifier.fillMaxWidth(),
@@ -120,42 +120,7 @@ fun ProfileScreen(
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-//                    if (viewModel.projects.isNotEmpty()) {
-//                        LazyColumn {
-//                            items(viewModel.projects) { item ->
-//                                ProjectComposable(project = item)
-//                            }
-//                        }
-//                    }
-//                    else {
-//                        Text(text = "No saved projects found")
-//                    }
-                }
-            }
-
-            if (sharedViewModel.user?.projects?.isNotEmpty() == true) {
-                items(sharedViewModel.user?.projects!!, key = { project ->
-                    project.projectId.toString() // Use the projectId as a stable key
-                }) { item ->
-                    ProjectComposable(
-                        project = item,
-                        onDelete = { projectId ->
-                            item.uid?.let { uid ->
-                                sharedViewModel.deleteSavedProject(
-                                    projectId,
-                                    uid,
-                                    "profile",
-                                )
-                                if (sharedViewModel.loading) {
-                                    navController.navigate("loading")
-                                }
-                            }
-                        },
-                    )
-                }
-            } else {
-                item {
-                    Text(text = "No saved projects found")
+                    // TODO Onboarding answers
                 }
             }
         }

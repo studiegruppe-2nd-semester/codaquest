@@ -11,6 +11,7 @@ import com.example.codaquest.ui.components.loading.LoadingScreen
 import com.example.codaquest.ui.components.login.LoginScreen
 import com.example.codaquest.ui.components.onboarding.OnboardingScreen
 import com.example.codaquest.ui.components.profile.ProfileScreen
+import com.example.codaquest.ui.components.savedProjects.SavedProjectsScreen
 
 @Composable
 fun SetupNavHost(
@@ -49,6 +50,14 @@ fun SetupNavHost(
                 sharedViewModel = sharedViewModel,
             )
         }
+
+        composable("saved-projects") {
+            SavedProjectsScreen(
+                navController = navController,
+                sharedViewModel = sharedViewModel,
+            )
+        }
+
         composable("loading") {
             LoadingScreen(
                 navController = navController,

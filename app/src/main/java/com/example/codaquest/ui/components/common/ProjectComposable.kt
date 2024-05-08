@@ -1,4 +1,4 @@
-package com.example.codaquest.ui.components.project
+package com.example.codaquest.ui.components.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,7 +48,7 @@ fun ProjectComposable(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(end = 30.dp),
                 )
             }
 
@@ -56,13 +56,13 @@ fun ProjectComposable(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(30.dp)
-                    .padding(top = 5.dp, end = 5.dp)
-                    .clickable { project.projectId?.let { onDelete(it) } },
+                    .padding(top = 5.dp),
                 contentAlignment = Alignment.TopEnd,
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_trashcan),
                     contentDescription = "trashcan icon",
+                    modifier = Modifier.clickable { project.projectId?.let { onDelete(it) } },
                 )
             }
         }
