@@ -1,5 +1,6 @@
 package com.example.codaquest.models
 
+// Hej jeg er sej
 data class Project(
     var uid: String? = null,
     var projectId: String? = null,
