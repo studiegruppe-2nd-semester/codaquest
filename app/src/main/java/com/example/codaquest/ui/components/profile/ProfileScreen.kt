@@ -13,9 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,17 +26,24 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
+import com.example.codaquest.models.OnboardingData
 import com.example.codaquest.models.Project
 import com.example.codaquest.ui.components.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
-import com.example.codaquest.ui.components.project.ProjectComposable
 
 @Composable
 fun ProfileScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
 ) {
-    val viewModel: ProfileViewModel = viewModel()
+    val profileViewModel: ProfileViewModel = viewModel()
+
+    sharedViewModel.user?.onboardingData?.let {
+        addOnboardingDataToProfileViewModel(
+            it,
+            profileViewModel,
+        )
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -62,7 +70,7 @@ fun ProfileScreen(
                         contentDescription = "settings icon",
                         modifier = Modifier
                             .clickable {
-                                viewModel.logout(
+                                profileViewModel.logout(
                                     onSuccess = {
                                         sharedViewModel.changeUser(null)
                                         sharedViewModel.project = Project()
@@ -71,19 +79,6 @@ fun ProfileScreen(
                                 )
                             },
                     )
-//                    Text(
-//                        modifier = Modifier
-//                            .clickable {
-//                                viewModel.logout(
-//                                    onSuccess = {
-//                                        sharedViewModel.changeUser(null)
-//                                        sharedViewModel.project = Project()
-//                                        navController.navigate("home")
-//                                    },
-//                                )
-//                            },
-//                        text = "Logout",
-//                    )
                 }
 
                 Column(
@@ -110,52 +105,73 @@ fun ProfileScreen(
 
                 Spacer(modifier = Modifier.height(50.dp))
 
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = "Saved projects",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontSize = 30.sp,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp),
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    ) {
+                        Text(
+                            text = "Onboarding answers",
+//                        style = MaterialTheme.typography.titleLarge,
+                            fontSize = 30.sp,
+//                            modifier = Modifier.fillMaxWidth(),
+                        )
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_edit),
+                            contentDescription = "pencil icon",
+                            modifier = Modifier.clickable {
+                                profileViewModel.toggleEditingOnboardingAnswers()
+                            },
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-//                    if (viewModel.projects.isNotEmpty()) {
-//                        LazyColumn {
-//                            items(viewModel.projects) { item ->
-//                                ProjectComposable(project = item)
-//                            }
-//                        }
-//                    }
-//                    else {
-//                        Text(text = "No saved projects found")
-//                    }
-                }
-            }
+                    // Ane
+                    profileViewModel.onboardingAnswerTitles.forEach { answer ->
 
-            if (sharedViewModel.user?.projects?.isNotEmpty() == true) {
-                items(sharedViewModel.user?.projects!!, key = { project ->
-                    project.projectId.toString() // Use the projectId as a stable key
-                }) { item ->
-                    ProjectComposable(
-                        project = item,
-                        onDelete = { projectId ->
-                            item.uid?.let { uid ->
-                                sharedViewModel.deleteSavedProject(
-                                    projectId,
-                                    uid,
-                                    "profile",
+                        Text(text = answer.value)
+
+                        when (profileViewModel.editingOnboardingAnswers) {
+                            true -> TextField(
+                                value = when (answer.key) {
+                                    "level" -> profileViewModel.level
+                                    "languages" -> profileViewModel.languages
+                                    "project-length" -> profileViewModel.projectLength
+                                    else -> ""
+                                },
+                                onValueChange = { newValue ->
+                                    profileViewModel.editOnboardingAnswers(answer.key, newValue)
+                                },
+                            )
+
+                            false -> Text(text = findOnboardingData(answer.key, sharedViewModel.user?.onboardingData))
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
+
+                    if (profileViewModel.editingOnboardingAnswers) {
+                        Button(onClick = {
+                            sharedViewModel.user?.let { user ->
+                                profileViewModel.saveOnboardingAnswers(
+                                    user,
+                                    onSuccess = { updatedUser ->
+                                        sharedViewModel.changeUser(updatedUser)
+                                    },
                                 )
-                                if (sharedViewModel.loading) {
-                                    navController.navigate("loading")
-                                }
                             }
-                        },
-                    )
-                }
-            } else {
-                item {
-                    Text(text = "No saved projects found")
+                        }) {
+                            Text(text = "Save changes")
+                        }
+                    }
                 }
             }
         }
@@ -164,4 +180,19 @@ fun ProfileScreen(
     Box(contentAlignment = Alignment.BottomCenter) {
         NavBar("profile", navController, sharedViewModel)
     }
+}
+
+fun findOnboardingData(name: String, onboardingData: OnboardingData?): String {
+    return when (name) {
+        "level" -> "${onboardingData?.level ?: "No saved data"}"
+        "languages" -> onboardingData?.languages ?: "No saved data"
+        "project-length" -> "${onboardingData?.projectLength ?: "No saved data"}"
+        else -> "No saved data"
+    }
+}
+
+fun addOnboardingDataToProfileViewModel(onboardingData: OnboardingData, profileViewModel: ProfileViewModel) {
+    profileViewModel.level = (onboardingData.level ?: "").toString()
+    profileViewModel.languages = onboardingData.languages ?: ""
+    profileViewModel.projectLength = (onboardingData.projectLength ?: "").toString()
 }
