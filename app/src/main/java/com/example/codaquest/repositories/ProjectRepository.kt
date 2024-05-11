@@ -20,10 +20,8 @@ class ProjectRepository {
             .whereEqualTo("uid", uid)
             .get()
             .addOnSuccessListener { documents ->
-                val projects = mutableListOf<Project>()
-
-                documents.forEach { document ->
-                    val newProject = Project(
+                val projects: MutableList<Project> = documents.map { document ->
+                    Project(
                         projectId = document.id,
                         uid = document.data["uid"]?.toString(),
                         title = document.data["title"]?.toString(),
@@ -34,11 +32,10 @@ class ProjectRepository {
                         steps = when (val stepsData = document.data["steps"]) {
                             is List<*> -> stepsData.filterIsInstance<String>()
                             else -> emptyList()
-                        },
+                        }
                     )
+                }.toMutableList()
 
-                    projects.add(newProject)
-                }
                 onSuccess(projects)
             }
     }
