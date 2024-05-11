@@ -1,6 +1,8 @@
 package com.example.codaquest.models
 
-// Hej jeg er sej
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Project(
     var uid: String? = null,
     var projectId: String? = null,

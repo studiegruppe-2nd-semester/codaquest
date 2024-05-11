@@ -6,6 +6,7 @@ plugins {
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
     id("org.jlleitschuh.gradle.ktlint") version "11.5.0"
+    kotlin("plugin.serialization") version "1.9.24"
 }
 
 android {
@@ -98,4 +99,6 @@ dependencies {
 
     implementation("com.aallam.openai:openai-client:3.7.1")
     implementation("io.ktor:ktor-client-android:2.3.10")
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }

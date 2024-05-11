@@ -10,12 +10,11 @@ import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
 import com.example.codaquest.models.GenerateProjectDetails
 import com.example.codaquest.models.Project
-import com.example.codaquest.models.stringToLevelType
 import com.example.codaquest.ui.components.SharedViewModel
-import org.json.JSONArray
-import org.json.JSONObject
+import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.seconds
 
+// Nathasja og Ane
 class ApiService {
     private lateinit var openAI: OpenAI
 
@@ -34,6 +33,7 @@ class ApiService {
     suspend fun generateProjectSuggestion(
         projectInfo: GenerateProjectDetails,
         onSuccess: (Project) -> Unit,
+        onError: (String) -> Unit,
     ) {
         val length = if (projectInfo.length == 0) "a number you choose of" else projectInfo.length
 
@@ -45,7 +45,7 @@ class ApiService {
                     role = ChatRole.System,
                     content = "You are a coding project generator. Your job is to come up with interesting projects in a chosen coding language and to give the user a project title,  project description along with steps to guide the user through the project, please make detailed steps. The project could be an app or a website, you will decide whats possible to make with the given coding language. So e.g JavaScript is typical used for website and Kotlin is typical used for apps, and if it's frontend, backend or fullstack the keywords match best with. \n" +
                         "\n" +
-                        "I want the response formatted as a JSON file with title (string), description (string), steps (list of string), level (int), language (string), length (int)",
+                        "I want the response formatted as a JSON file with title (string), description (string), steps (list of string), level (must be either Beginner, Intermediate or Advanced), language (string), length (int)",
                 ),
                 ChatMessage(
                     role = ChatRole.User,
@@ -54,18 +54,24 @@ class ApiService {
             ),
         )
         val completion: ChatCompletion = openAI.chatCompletion(chatCompletionRequest)
-        // HERE YOU ONLY GET THE MESSAGE CONTENT THAT THE AI ANSWERED
-//        println("COMPLETION: $completion")
-//        println("COMPLETION: ${completion.choices[0].message.content}")
-
         val apiResponse = completion.choices[0].message.content
-        val respondJson = apiResponse?.let { JSONObject(it) }
 
-        if (respondJson != null) {
-            onSuccess(getJsonIntoHashMap(respondJson))
+        try {
+            val project = apiResponse?.let { Json.decodeFromString<Project>(it) }
+            // Process the decoded project object here
+            println("Project: $project")
+
+            if (project != null) {
+                onSuccess(project)
+            }
+        } catch (e: Exception) {
+            // Handle the exception (e.g., log an error message or provide user feedback)
+            e.printStackTrace()
+            onError("Something went wrong.\nPlease generate new project")
         }
     }
 
+    /*
     private fun getJsonIntoHashMap(apiResponse: JSONObject?): Project {
         val apiResponseHashMap = hashMapOf<String, Any>()
 
@@ -98,4 +104,5 @@ class ApiService {
 
         return project
     }
+     */
 }

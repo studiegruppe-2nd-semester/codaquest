@@ -69,24 +69,28 @@ class SharedViewModel : ViewModel() {
 
     fun getProjectSuggestion(
         projectInfo: GenerateProjectDetails,
-        onSuccess: (Project) -> Unit,
+        onError: (String) -> Unit,
     ) {
         val apiService = ApiService()
         apiService.initiateApi(this)
 
         viewModelScope.launch {
-            apiService.generateProjectSuggestion(projectInfo, onSuccess = { onSuccess(it) })
+            apiService.generateProjectSuggestion(
+                projectInfo,
+                onSuccess = { generatedProject = it },
+                onError = { error -> onError(error) },
+            )
         }
     }
 
     // ------------------------------------- GENERATED PROJECT
-    var project by mutableStateOf(Project())
+    var generatedProject by mutableStateOf(Project())
 
     fun saveProject(
         uid: String,
     ) {
         projectRepository.saveUserProject(
-            project.copy(uid = uid),
+            generatedProject.copy(uid = uid),
             onSuccess = { saveProjectInViewModel(it) },
         )
     }
