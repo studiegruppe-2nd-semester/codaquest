@@ -9,6 +9,8 @@ import com.example.codaquest.models.LoginInfo
 import com.example.codaquest.models.LoginState
 import com.example.codaquest.models.User
 import com.example.codaquest.services.AccountService
+import com.example.codaquest.util.LoginSignupUtil
+import com.example.codaquest.util.ValidationResult
 
 class LoginViewModel : ViewModel(), ErrorOperations {
     // ----------------------------------------- ACCOUNT SERVICE
@@ -31,18 +33,26 @@ class LoginViewModel : ViewModel(), ErrorOperations {
     fun login(
         onSuccess: (User) -> Unit,
     ) {
-        if (loginInfo.email.isEmpty() || loginInfo.password.isEmpty()) {
-            showError("Please enter email and password")
-            return
-        } else {
-            showError("")
-        }
+        showError("")
 
-        accountService.login(
-            loginInfo = loginInfo,
-            errorOperations = this,
-            onSuccess = { onSuccess(it) },
-        )
+//        if (loginInfo.email.isEmpty() || loginInfo.password.isEmpty()) {
+//            showError("Please enter email and password")
+//            return
+//        } else {
+//            showError("")
+//        }
+
+        val validateLogin: ValidationResult = LoginSignupUtil.validateLogin(loginInfo)
+
+        if (validateLogin is ValidationResult.Error) {
+            showError(validateLogin.message)
+        } else {
+            accountService.login(
+                loginInfo = loginInfo,
+                errorOperations = this,
+                onSuccess = { onSuccess(it) },
+            )
+        }
     }
 
     // ----------------------------------------- SIGN UP
