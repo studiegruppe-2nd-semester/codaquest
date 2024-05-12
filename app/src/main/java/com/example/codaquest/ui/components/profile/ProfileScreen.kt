@@ -73,7 +73,7 @@ fun ProfileScreen(
                                 profileViewModel.logout(
                                     onSuccess = {
                                         sharedViewModel.changeUser(null)
-                                        sharedViewModel.project = Project()
+                                        sharedViewModel.generatedProject = Project()
                                         navController.navigate("home")
                                     },
                                 )

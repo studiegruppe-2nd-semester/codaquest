@@ -187,9 +187,7 @@ fun HomeScreen(
                 Button(onClick = {
                     sharedViewModel.getProjectSuggestion(
                         homeScreenViewModel.generateProjectDetails,
-                        onSuccess = {
-                            sharedViewModel.project = it
-                        },
+                        onError = { error -> homeScreenViewModel.showError(error) },
                     )
                 }) {
                     Text(text = "Generate Project")
@@ -200,9 +198,9 @@ fun HomeScreen(
                         .padding(top = 20.dp),
                 )
 
-                if (!sharedViewModel.project.title.isNullOrEmpty()) {
+                if (!sharedViewModel.generatedProject.title.isNullOrEmpty()) {
                     ProjectComposable(
-                        project = sharedViewModel.project,
+                        project = sharedViewModel.generatedProject,
                         onDelete = { },
                     )
 
