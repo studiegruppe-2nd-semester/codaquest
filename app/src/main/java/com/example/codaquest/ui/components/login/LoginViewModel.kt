@@ -63,8 +63,8 @@ class LoginViewModel : ViewModel(), ErrorOperations {
     }
 
     // ----------------------------------------- ERROR
-    var error: String by mutableStateOf("")
-        private set
+    override var error: String by mutableStateOf("")
+
     override fun showError(error: String) {
         this.error = error
     }

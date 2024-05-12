@@ -32,7 +32,7 @@ class ProjectRepository {
                         steps = when (val stepsData = document.data["steps"]) {
                             is List<*> -> stepsData.filterIsInstance<String>()
                             else -> emptyList()
-                        }
+                        },
                     )
                 }.toMutableList()
 

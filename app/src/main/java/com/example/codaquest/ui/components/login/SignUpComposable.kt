@@ -3,21 +3,19 @@ package com.example.codaquest.ui.components.login
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.codaquest.ui.components.SharedViewModel
+import com.example.codaquest.ui.components.common.CustomTextField
 
 @Composable
 fun SignUpComposable(
@@ -31,51 +29,36 @@ fun SignUpComposable(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ) {
-        TextField(
+        CustomTextField(
             value = loginViewModel.loginInfo.username,
             onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(username = it) },
-            label = { Text("Username") },
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            label = "Username",
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next,
         )
 
-        TextField(
+        CustomTextField(
             value = loginViewModel.loginInfo.email,
             onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(email = it) },
-            label = { Text("Email") },
-            keyboardOptions = KeyboardOptions.Default.copy(
-                keyboardType = KeyboardType.Email,
-            ),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            label = "Email",
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next,
         )
 
-        TextField(
+        CustomTextField(
             value = loginViewModel.loginInfo.password,
             onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(password = it) },
-            label = { Text("Password") },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            label = "Password",
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Next,
         )
 
-        TextField(
+        CustomTextField(
             value = loginViewModel.loginInfo.confirmPassword,
             onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(confirmPassword = it) },
-            label = { Text("Confirm password") },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-            ),
+            label = "Confirm password",
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done,
         )
 
         Button(

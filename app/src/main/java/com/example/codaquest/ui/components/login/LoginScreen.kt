@@ -30,7 +30,7 @@ fun LoginScreen(
 
     Column(
         modifier = Modifier
-            .padding(5.dp)
+            .padding(10.dp)
             .fillMaxSize(),
     ) {
         Button(

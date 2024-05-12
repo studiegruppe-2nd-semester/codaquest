@@ -13,7 +13,7 @@ class HomeScreenViewModel : ViewModel(), ErrorOperations {
     // __________________________ DROPDOWN MENU //Skal først bruges når jeg har checket med et normalt checkfelt angående enum class...
     var isExpanded by mutableStateOf(false)
 
-    var error: String by mutableStateOf("")
+    override var error: String by mutableStateOf("")
     override fun showError(error: String) {
         this.error = error
         println("Error: $error")
