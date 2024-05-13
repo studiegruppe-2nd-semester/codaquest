@@ -13,10 +13,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.codaquest.R
+import com.example.codaquest.ui.components.SharedViewModel
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    navController: NavController,
+    sharedViewModel: SharedViewModel
+) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -38,8 +43,10 @@ fun SettingsScreen() {
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun SettingsScreenPreview() {
     SettingsScreen()
 }
+*/
