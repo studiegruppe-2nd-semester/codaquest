@@ -30,9 +30,10 @@ fun SettingsScreen(
             .fillMaxSize()
             .padding(10.dp),
     ) {
-        Row(modifier = Modifier,
-            horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
+        Row(
+            modifier = Modifier,
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_back_arrow),
                 contentDescription = "back arrow icon",
@@ -43,9 +44,8 @@ fun SettingsScreen(
                 text = "Setting",
                 fontSize = 25.sp,
                 modifier = Modifier
-                    .padding(top = 15.dp)
+                    .padding(top = 15.dp),
             )
-
         }
 
         Box(modifier = Modifier.padding(top = 15.dp)) {
@@ -53,7 +53,6 @@ fun SettingsScreen(
                 text = "Account setting",
                 fontSize = 25.sp,
             )
-
         }
     }
 }
