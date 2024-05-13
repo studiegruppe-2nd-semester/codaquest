@@ -64,6 +64,5 @@ fun SetupNavHost(
                 sharedViewModel = sharedViewModel,
             )
         }
-
     }
 }
