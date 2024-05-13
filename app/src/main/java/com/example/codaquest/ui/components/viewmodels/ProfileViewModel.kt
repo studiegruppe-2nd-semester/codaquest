@@ -4,11 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.codaquest.data.repositories.UserRepository
+import com.example.codaquest.data.services.AccountService
 import com.example.codaquest.domain.models.OnboardingData
 import com.example.codaquest.domain.models.User
 import com.example.codaquest.domain.models.stringToLevelType
-import com.example.codaquest.data.repositories.UserRepository
-import com.example.codaquest.data.services.AccountService
 
 class ProfileViewModel : ViewModel() {
     private val accountService = AccountService()

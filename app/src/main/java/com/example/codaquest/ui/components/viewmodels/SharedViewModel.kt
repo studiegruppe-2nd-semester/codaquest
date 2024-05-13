@@ -5,13 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.codaquest.domain.models.GenerateProjectDetails
-import com.example.codaquest.domain.models.Project
-import com.example.codaquest.domain.models.User
 import com.example.codaquest.data.repositories.ProjectRepository
 import com.example.codaquest.data.repositories.UserRepository
 import com.example.codaquest.data.services.AccountService
 import com.example.codaquest.data.services.ApiService
+import com.example.codaquest.domain.models.GenerateProjectDetails
+import com.example.codaquest.domain.models.Project
+import com.example.codaquest.domain.models.User
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
