@@ -5,13 +5,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 import com.example.codaquest.ui.components.home.HomeScreen
 import com.example.codaquest.ui.components.loading.LoadingScreen
 import com.example.codaquest.ui.components.login.LoginScreen
 import com.example.codaquest.ui.components.onboarding.OnboardingScreen
 import com.example.codaquest.ui.components.profile.ProfileScreen
 import com.example.codaquest.ui.components.savedProjects.SavedProjectsScreen
+import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 @Composable
 fun SetupNavHost(
