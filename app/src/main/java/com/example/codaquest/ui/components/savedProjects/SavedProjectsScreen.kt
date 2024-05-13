@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.codaquest.ui.components.SharedViewModel
+import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 import com.example.codaquest.ui.components.common.ProjectComposable
 import com.example.codaquest.ui.components.common.TextTitle
 import com.example.codaquest.ui.components.navbar.NavBar

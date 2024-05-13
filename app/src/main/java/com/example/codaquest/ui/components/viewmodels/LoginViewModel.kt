@@ -1,4 +1,4 @@
-package com.example.codaquest.ui.components.login
+package com.example.codaquest.ui.components.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
