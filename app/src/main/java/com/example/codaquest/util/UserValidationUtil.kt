@@ -10,19 +10,20 @@ object UserValidationUtil {
         // ------------------------------------- EMAIL
         val emailValidationResult: ValidationResult = emailValidation(loginInfo.email)
 
-        if(emailValidationResult is ValidationResult.Error) {
+        if (emailValidationResult is ValidationResult.Error) {
             return ValidationResult.Error(emailValidationResult.message)
         }
 
         // ------------------------------------- PASSWORD
         val passwordValidationResult: ValidationResult = passwordValidation(loginInfo.password)
 
-        if(passwordValidationResult is ValidationResult.Error) {
+        if (passwordValidationResult is ValidationResult.Error) {
             return ValidationResult.Error(passwordValidationResult.message)
         }
 
         return ValidationResult.Success
     }
+
     // ------------------------------------------- VALIDATE SIGNUP
     fun validateSignUp(
         loginInfo: LoginInfo,
@@ -46,7 +47,7 @@ object UserValidationUtil {
 
         val passwordValidationResult: ValidationResult = passwordValidation(loginInfo.password)
 
-        if(passwordValidationResult is ValidationResult.Error) {
+        if (passwordValidationResult is ValidationResult.Error) {
             return ValidationResult.Error(passwordValidationResult.message)
         }
 

@@ -35,6 +35,7 @@ class UserValidationUtilTest {
 //        assertTrue(result is ValidationResult.Error)
         assertEquals("Wrong email format", (result as ValidationResult.Error).message)
     }
+
     @Test
     fun `wrong email format returns error 2`() {
         val result = UserValidationUtil.validateLogin(
@@ -45,6 +46,7 @@ class UserValidationUtilTest {
         )
         assertEquals("Wrong email format", (result as ValidationResult.Error).message)
     }
+
     @Test
     fun `wrong email format returns error 3`() {
         val result = UserValidationUtil.validateLogin(
@@ -56,6 +58,7 @@ class UserValidationUtilTest {
 //        assertTrue(result is ValidationResult.Error)
         assertEquals("Wrong email format", (result as ValidationResult.Error).message)
     }
+
     @Test
     fun `wrong email format returns error 4`() {
         val result = UserValidationUtil.validateLogin(
@@ -67,6 +70,7 @@ class UserValidationUtilTest {
 //        assertTrue(result is ValidationResult.Error)
         assertEquals("Wrong email format", (result as ValidationResult.Error).message)
     }
+
     @Test
     fun `valid email format returns success`() {
         val result = UserValidationUtil.validateLogin(
@@ -77,6 +81,7 @@ class UserValidationUtilTest {
         )
         assertTrue(result is ValidationResult.Success)
     }
+
     // ------------------------------------- PASSWORD
     @Test
     fun `empty password returns error`() {
@@ -88,6 +93,7 @@ class UserValidationUtilTest {
         )
         assertTrue(result is ValidationResult.Error)
     }
+
     @Test
     fun `too short password returns error`() {
         val result = UserValidationUtil.validateLogin(
@@ -98,6 +104,7 @@ class UserValidationUtilTest {
         )
         assertTrue(result is ValidationResult.Error)
     }
+
     @Test
     fun `valid password returns success`() {
         val result = UserValidationUtil.validateLogin(
