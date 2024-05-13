@@ -2,10 +2,8 @@ package com.example.codaquest.repositories
 
 import android.content.ContentValues
 import android.util.Log
-import androidx.navigation.NavController
 import com.example.codaquest.models.Project
 import com.example.codaquest.models.stringToLevelType
-import com.example.codaquest.ui.components.SharedViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
@@ -37,45 +35,6 @@ class ProjectRepository {
                 }.toMutableList()
 
                 onSuccess(projects)
-            }
-    }
-
-    fun addProjectData(
-        title: String,
-        language: String,
-        length: Int,
-        level: String,
-        steps: List<String>,
-        navController: NavController,
-        sharedViewModel: SharedViewModel,
-    ) {
-        val dataMap: Map<String, String> = mapOf(
-            "title" to title,
-        )
-        db.collection("projects").document().set(dataMap)
-            .addOnSuccessListener {
-                val projects = sharedViewModel.user?.projects
-
-                projects?.add(
-                    Project(
-                        title = title,
-                        language = language,
-                        length = length,
-                        level = stringToLevelType(level),
-                        steps = steps,
-                    ),
-                )
-
-                sharedViewModel.changeUser(
-
-                    sharedViewModel.user?.copy(
-                        projects = projects,
-                    ),
-                )
-                navController.navigate("home")
-            }
-            .addOnFailureListener { _ ->
-                Log.d("", "")
             }
     }
 
