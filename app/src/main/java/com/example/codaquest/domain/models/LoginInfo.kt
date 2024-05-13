@@ -1,4 +1,4 @@
-package com.example.codaquest.models
+package com.example.codaquest.domain.models
 
 data class LoginInfo(
     var email: String = "",

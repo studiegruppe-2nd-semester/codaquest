@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.models.stringToLevelType
-import com.example.codaquest.ui.components.viewmodels.SharedViewModel
+import com.example.codaquest.domain.models.stringToLevelType
 import com.example.codaquest.ui.components.common.ProjectComposable
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.HomeScreenViewModel
+import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 @Composable
 fun HomeScreen(

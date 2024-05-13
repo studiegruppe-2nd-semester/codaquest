@@ -1,9 +1,9 @@
-package com.example.codaquest.services
+package com.example.codaquest.data.services
 
-import com.example.codaquest.interfaces.ErrorOperations
-import com.example.codaquest.models.LoginInfo
-import com.example.codaquest.models.User
-import com.example.codaquest.repositories.UserRepository
+import com.example.codaquest.domain.interfaces.ErrorOperations
+import com.example.codaquest.domain.models.LoginInfo
+import com.example.codaquest.domain.models.User
+import com.example.codaquest.data.repositories.UserRepository
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth

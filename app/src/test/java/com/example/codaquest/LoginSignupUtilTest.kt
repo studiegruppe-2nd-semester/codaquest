@@ -1,6 +1,6 @@
 package com.example.codaquest
 
-import com.example.codaquest.models.LoginInfo
+import com.example.codaquest.domain.models.LoginInfo
 import com.example.codaquest.util.LoginSignupUtil
 import com.example.codaquest.util.ValidationResult
 import org.junit.Assert.assertTrue

@@ -1,4 +1,4 @@
-package com.example.codaquest.services
+package com.example.codaquest.data.services
 
 import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
@@ -8,8 +8,8 @@ import com.aallam.openai.api.chat.ChatRole
 import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
-import com.example.codaquest.models.GenerateProjectDetails
-import com.example.codaquest.models.Project
+import com.example.codaquest.domain.models.GenerateProjectDetails
+import com.example.codaquest.domain.models.Project
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.seconds
