@@ -114,11 +114,10 @@ fun ProfileScreen(
                                 ) {
                                     Text("Cancel")
                                 }
-                            }
+                            },
                         )
                     }
                 }
-
 
                 Column(
                     modifier = Modifier
@@ -220,7 +219,6 @@ fun ProfileScreen(
         NavBar("profile", navController, sharedViewModel)
     }
 }
-
 
 fun findOnboardingData(name: String, onboardingData: OnboardingData?): String {
     return when (name) {
