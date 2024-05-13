@@ -69,7 +69,8 @@ fun SetupNavHost(
         composable("settings") {
             SettingsScreen(
                 navController = navController,
-                sharedViewModel = sharedViewModel)
+                sharedViewModel = sharedViewModel,
+            )
         }
     }
 }

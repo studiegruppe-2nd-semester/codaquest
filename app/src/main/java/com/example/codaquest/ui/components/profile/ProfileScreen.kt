@@ -66,7 +66,7 @@ fun ProfileScreen(
                         modifier = Modifier
                             .clickable {
                                 navController.navigate("settings")
-                            }
+                            },
                     )
 
                     Image(
