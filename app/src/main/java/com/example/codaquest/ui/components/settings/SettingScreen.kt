@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.codaquest.R
-import com.example.codaquest.ui.components.SharedViewModel
+import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 @Composable
 fun SettingsScreen(
