@@ -21,7 +21,6 @@ android {
         versionName = "1.0"
         multiDexEnabled = true
 
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
