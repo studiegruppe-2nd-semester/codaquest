@@ -1,10 +1,10 @@
-package com.example.codaquest.repositories
+package com.example.codaquest.data.repositories
 
 import android.content.ContentValues
 import android.util.Log
-import com.example.codaquest.models.OnboardingData
-import com.example.codaquest.models.User
-import com.example.codaquest.models.stringToLevelType
+import com.example.codaquest.domain.models.OnboardingData
+import com.example.codaquest.domain.models.User
+import com.example.codaquest.domain.models.stringToLevelType
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 

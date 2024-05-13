@@ -24,8 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.codaquest.R
-import com.example.codaquest.models.LevelType
-import com.example.codaquest.models.Project
+import com.example.codaquest.domain.models.LevelType
+import com.example.codaquest.domain.models.Project
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @OptIn(ExperimentalLayoutApi::class)

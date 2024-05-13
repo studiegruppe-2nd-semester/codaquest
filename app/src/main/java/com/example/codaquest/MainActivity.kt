@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.codaquest.navigation.SetupNavHost
+import com.example.codaquest.ui.navigation.SetupNavHost
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 class MainActivity : ComponentActivity() {

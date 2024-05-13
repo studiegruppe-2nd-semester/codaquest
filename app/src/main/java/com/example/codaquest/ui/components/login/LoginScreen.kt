@@ -18,8 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.models.LoginState
-import com.example.codaquest.ui.components.SharedViewModel
+import com.example.codaquest.domain.models.LoginState
+import com.example.codaquest.ui.components.viewmodels.LoginViewModel
+import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 @Composable
 fun LoginScreen(

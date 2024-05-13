@@ -13,11 +13,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,10 +31,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
-import com.example.codaquest.models.OnboardingData
-import com.example.codaquest.models.Project
-import com.example.codaquest.ui.components.SharedViewModel
+import com.example.codaquest.domain.models.OnboardingData
+import com.example.codaquest.domain.models.Project
 import com.example.codaquest.ui.components.navbar.NavBar
+import com.example.codaquest.ui.components.viewmodels.ProfileViewModel
+import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 @Composable
 fun ProfileScreen(
@@ -37,6 +43,7 @@ fun ProfileScreen(
     sharedViewModel: SharedViewModel,
 ) {
     val profileViewModel: ProfileViewModel = viewModel()
+    var showDialog by remember { mutableStateOf(false) }
 
     sharedViewModel.user?.onboardingData?.let {
         addOnboardingDataToProfileViewModel(
@@ -69,20 +76,52 @@ fun ProfileScreen(
                             },
                     )
 
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_logout),
-                        contentDescription = "settings icon",
-                        modifier = Modifier
-                            .clickable {
-                                profileViewModel.logout(
-                                    onSuccess = {
-                                        sharedViewModel.changeUser(null)
-                                        sharedViewModel.generatedProject = Project()
-                                        navController.navigate("home")
+                    Spacer(modifier = Modifier.height(50.dp))
+
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_logout),
+                            contentDescription = "logout icon",
+                            modifier = Modifier
+                                .clickable {
+                                    profileViewModel.logout(
+                                        onSuccess = {
+                                            showDialog = true
+                                        },
+                                    )
+                                },
+                        )
+                    }
+                    if (showDialog) {
+                        AlertDialog(
+                            onDismissRequest = { showDialog = false },
+                            title = { Text("Logout") },
+                            text = { Text("Are you sure you want to log out?") },
+                            confirmButton = {
+                                Button(
+                                    onClick = {
+                                        profileViewModel.logout(
+                                            onSuccess = {
+                                                sharedViewModel.changeUser(null)
+                                                sharedViewModel.generatedProject = Project()
+                                                navController.navigate("home")
+                                                showDialog = false
+                                            },
+                                        )
                                     },
-                                )
+                                ) {
+                                    Text("Logout")
+                                }
                             },
-                    )
+                            dismissButton = {
+                                Button(
+                                    onClick = { showDialog = false },
+                                ) {
+                                    Text("Cancel")
+                                }
+                            },
+                        )
+                    }
                 }
 
                 Column(

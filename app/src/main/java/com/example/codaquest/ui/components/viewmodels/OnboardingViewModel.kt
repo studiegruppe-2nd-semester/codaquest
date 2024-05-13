@@ -1,4 +1,4 @@
-package com.example.codaquest.ui.components.onboarding
+package com.example.codaquest.ui.components.viewmodels
 
 import android.annotation.SuppressLint
 import androidx.compose.material3.MaterialTheme
@@ -10,12 +10,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.example.codaquest.models.OnboardingData
-import com.example.codaquest.models.OnboardingQuestion
-import com.example.codaquest.models.OnboardingQuestionTypes
-import com.example.codaquest.models.User
-import com.example.codaquest.models.stringToLevelType
-import com.example.codaquest.repositories.UserRepository
+import com.example.codaquest.data.repositories.UserRepository
+import com.example.codaquest.domain.models.OnboardingData
+import com.example.codaquest.domain.models.OnboardingQuestion
+import com.example.codaquest.domain.models.OnboardingQuestionTypes
+import com.example.codaquest.domain.models.User
+import com.example.codaquest.domain.models.stringToLevelType
 
 @SuppressLint("MutableCollectionMutableState")
 class OnboardingViewModel : ViewModel() {
