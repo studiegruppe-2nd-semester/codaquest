@@ -1,4 +1,4 @@
-package com.example.codaquest.ui.components.onboarding
+package com.example.codaquest.ui.components.viewmodels
 
 import android.annotation.SuppressLint
 import androidx.compose.material3.MaterialTheme

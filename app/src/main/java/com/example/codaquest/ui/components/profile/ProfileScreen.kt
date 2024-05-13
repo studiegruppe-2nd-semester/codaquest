@@ -33,8 +33,9 @@ import androidx.navigation.NavController
 import com.example.codaquest.R
 import com.example.codaquest.models.OnboardingData
 import com.example.codaquest.models.Project
-import com.example.codaquest.ui.components.SharedViewModel
+import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 import com.example.codaquest.ui.components.navbar.NavBar
+import com.example.codaquest.ui.components.viewmodels.ProfileViewModel
 
 @Composable
 fun ProfileScreen(

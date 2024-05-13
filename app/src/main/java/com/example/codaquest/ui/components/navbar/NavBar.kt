@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.codaquest.R
 import com.example.codaquest.models.User
-import com.example.codaquest.ui.components.SharedViewModel
+import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 import com.example.codaquest.ui.components.common.NavBarOption
 
 @Composable
