@@ -14,6 +14,8 @@ class ProfileViewModel : ViewModel() {
     private val accountService = AccountService()
     private val userRepository: UserRepository = UserRepository()
 
+    var showDialog by mutableStateOf(false)
+
     val onboardingAnswerTitles: Map<String, String> = mapOf(
         "level" to "Level in coding:",
         "languages" to "Known coding languages:",

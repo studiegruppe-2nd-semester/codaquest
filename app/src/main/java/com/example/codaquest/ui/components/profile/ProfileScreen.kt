@@ -20,8 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,7 +41,6 @@ fun ProfileScreen(
     sharedViewModel: SharedViewModel,
 ) {
     val profileViewModel: ProfileViewModel = viewModel()
-    var showDialog by remember { mutableStateOf(false) }
 
     sharedViewModel.user?.onboardingData?.let {
         addOnboardingDataToProfileViewModel(
@@ -72,52 +69,48 @@ fun ProfileScreen(
                         contentDescription = "settings icon",
                     )
 
-                    Spacer(modifier = Modifier.height(50.dp))
-
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_logout),
-                            contentDescription = "logout icon",
-                            modifier = Modifier
-                                .clickable {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_logout),
+                        contentDescription = "logout icon",
+                        modifier = Modifier
+                            .clickable {
+                                profileViewModel.logout(
+                                    onSuccess = {
+                                        profileViewModel.showDialog = true
+                                    },
+                                )
+                            },
+                    )
+                }
+                if (profileViewModel.showDialog) {
+                    AlertDialog(
+                        onDismissRequest = { profileViewModel.showDialog = false },
+                        title = { Text("Logout") },
+                        text = { Text("Are you sure you want to log out?") },
+                        confirmButton = {
+                            Button(
+                                onClick = {
                                     profileViewModel.logout(
                                         onSuccess = {
-                                            showDialog = true
+                                            sharedViewModel.changeUser(null)
+                                            sharedViewModel.generatedProject = Project()
+                                            navController.navigate("home")
+                                            profileViewModel.showDialog = false
                                         },
                                     )
                                 },
-                        )
-                    }
-                    if (showDialog) {
-                        AlertDialog(
-                            onDismissRequest = { showDialog = false },
-                            title = { Text("Logout") },
-                            text = { Text("Are you sure you want to log out?") },
-                            confirmButton = {
-                                Button(
-                                    onClick = {
-                                        profileViewModel.logout(
-                                            onSuccess = {
-                                                sharedViewModel.changeUser(null)
-                                                sharedViewModel.generatedProject = Project()
-                                                navController.navigate("home")
-                                                showDialog = false
-                                            },
-                                        )
-                                    },
-                                ) {
-                                    Text("Logout")
-                                }
-                            },
-                            dismissButton = {
-                                Button(
-                                    onClick = { showDialog = false },
-                                ) {
-                                    Text("Cancel")
-                                }
-                            },
-                        )
-                    }
+                            ) {
+                                Text("Logout")
+                            }
+                        },
+                        dismissButton = {
+                            Button(
+                                onClick = { profileViewModel.showDialog = false },
+                            ) {
+                                Text("Cancel")
+                            }
+                        },
+                    )
                 }
 
                 Column(
