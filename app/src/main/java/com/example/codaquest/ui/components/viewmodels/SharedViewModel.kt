@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.codaquest.data.repositories.GalleryRepository
 import com.example.codaquest.data.repositories.ProjectRepository
 import com.example.codaquest.data.repositories.UserRepository
 import com.example.codaquest.data.services.AccountService
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 class SharedViewModel : ViewModel() {
     init {
         fetchUserData()
+        getGalleryProjects()
     }
 
     private val projectRepository: ProjectRepository = ProjectRepository()
@@ -33,6 +35,21 @@ class SharedViewModel : ViewModel() {
     fun changeUser(newUser: User?) {
         this.user = newUser
         println("New user: $user")
+    }
+
+    // ------------------------------------- GALLERY PROJECTS
+    var galleryProjects: List<Project>? by mutableStateOf(null)
+
+    private fun getGalleryProjects() {
+        viewModelScope.launch {
+            val galleryRepository = GalleryRepository()
+
+            galleryRepository.fetchGalleryProjects(
+                onSuccess = { fetchedProjects ->
+                    galleryProjects = fetchedProjects
+                },
+            )
+        }
     }
 
     private fun saveProjectInViewModel(project: Project) {
@@ -88,11 +105,19 @@ class SharedViewModel : ViewModel() {
 
     fun saveProject(
         uid: String,
+        project: Project? = null,
     ) {
-        projectRepository.saveUserProject(
-            generatedProject.copy(uid = uid),
-            onSuccess = { saveProjectInViewModel(it) },
-        )
+        if (project != null) {
+            projectRepository.saveUserProject(
+                project.copy(uid = uid),
+                onSuccess = { saveProjectInViewModel(it) },
+            )
+        } else {
+            projectRepository.saveUserProject(
+                generatedProject.copy(uid = uid),
+                onSuccess = { saveProjectInViewModel(it) },
+            )
+        }
     }
 
     fun deleteSavedProject(

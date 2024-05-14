@@ -35,6 +35,12 @@ fun NavBar(
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             NavBarOption(
+                contentDescription = "gallery icon",
+                getIcon("gallery", currentScreen),
+                onClick = { navController.navigate("gallery") },
+            )
+
+            NavBarOption(
                 contentDescription = "home icon",
                 getIcon("home", currentScreen),
                 onClick = { navController.navigate("home") },
@@ -70,6 +76,7 @@ fun getIcon(screen: String, currentScreen: String): Int {
             "profile" -> R.drawable.ic_profile_selected
             "login" -> R.drawable.ic_profile_selected
             "saved-projects" -> R.drawable.ic_bookmark_selected
+            "gallery" -> R.drawable.ic_bookmark_selected
             else -> R.drawable.ic_reload
         }
     } else {
@@ -78,6 +85,7 @@ fun getIcon(screen: String, currentScreen: String): Int {
             "profile" -> R.drawable.ic_profile
             "login" -> R.drawable.ic_profile
             "saved-projects" -> R.drawable.ic_bookmark
+            "gallery" -> R.drawable.ic_bookmark
             else -> R.drawable.ic_reload
         }
     }
