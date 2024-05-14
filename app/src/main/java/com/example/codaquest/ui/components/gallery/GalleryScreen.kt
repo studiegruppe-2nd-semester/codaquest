@@ -2,6 +2,7 @@ package com.example.codaquest.ui.components.gallery
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.LevelType
-import com.example.codaquest.domain.models.stringToLevelType
 import com.example.codaquest.ui.components.common.CustomTextField
 import com.example.codaquest.ui.components.common.DynamicDropdown
 import com.example.codaquest.ui.components.common.ProjectPreview
@@ -40,7 +41,9 @@ fun GalleryScreen(
     sharedViewModel: SharedViewModel,
 ) {
     val galleryViewModel: GalleryViewModel = viewModel()
-    galleryViewModel.filteredGalleryProjects = sharedViewModel.galleryProjects!!
+    if (sharedViewModel.galleryProjects != null) {
+        galleryViewModel.filteredGalleryProjects = sharedViewModel.galleryProjects!!
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -63,22 +66,40 @@ fun GalleryScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.secondary),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
                     if (galleryViewModel.showFilters) {
                         CustomTextField(
-                            value = "",
-                            onValueChange = {},
+                            value = galleryViewModel.filters.searchText,
+                            onValueChange = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(searchText = it)) },
                             label = "Search keywords",
                             keyboardType = KeyboardType.Text,
                             imeAction = ImeAction.Next,
                         )
+
+                        CustomTextField(
+                            value = galleryViewModel.filters.language,
+                            onValueChange = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(language = it)) },
+                            label = "Coding language",
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Next,
+                        )
+
+                        CustomTextField(
+                            value = galleryViewModel.filters.length,
+                            onValueChange = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(length = it)) },
+                            label = "Project length (hours)",
+                            keyboardType = KeyboardType.Number,
+                            imeAction = ImeAction.Done,
+                        )
+
                         DynamicDropdown(
-                            selectedValue = galleryViewModel.filters.level.toString(),
+                            selectedValue = galleryViewModel.filters.level,
                             expanded = galleryViewModel.filters.levelExpanded,
                             onExpandedChange = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(levelExpanded = it)) },
-                            options = listOf(LevelType.Beginner.toString(), LevelType.Intermediate.toString(), LevelType.Advanced.toString()),
+                            options = listOf("Choose level", LevelType.Beginner.toString(), LevelType.Intermediate.toString(), LevelType.Advanced.toString()),
                             label = "Level",
-                            onValueChangedEvent = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(level = stringToLevelType(it))) },
+                            onValueChangedEvent = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(level = it)) },
                         )
 
                         Box(
@@ -87,8 +108,26 @@ fun GalleryScreen(
                                 .fillMaxWidth(),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Button(onClick = { galleryViewModel.filterProjects(sharedViewModel.galleryProjects!!) }) {
+                            Button(onClick = {
+                                galleryViewModel.filterProjects(sharedViewModel.galleryProjects!!)
+                                galleryViewModel.showFilters = false
+                            }) {
                                 Text(text = "Search")
+                            }
+
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                contentAlignment = Alignment.CenterStart,
+                            ) {
+                                Text(
+                                    text = "Clear",
+                                    fontSize = 15.sp,
+                                    modifier = Modifier.clickable {
+                                        galleryViewModel.updateFilters(Filters())
+                                        galleryViewModel.filteredGalleryProjects = sharedViewModel.galleryProjects!!
+                                    },
+                                )
                             }
                         }
                     }
@@ -96,6 +135,11 @@ fun GalleryScreen(
 
                 Text(
                     text = "${galleryViewModel.filteredGalleryProjects.size} projects shown",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                )
+                Text(
+                    text = galleryViewModel.error,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                 )

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.codaquest.domain.interfaces.ErrorOperations
 import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.Project
+import com.example.codaquest.domain.models.stringToLevelType
 
 class GalleryViewModel : ViewModel(), ErrorOperations {
     var showFilters: Boolean by mutableStateOf(false)
@@ -24,7 +25,49 @@ class GalleryViewModel : ViewModel(), ErrorOperations {
     ) {
         filteredGalleryProjects = galleryProjects.filter { project ->
             /* TODO */
-            project.title?.isNotEmpty() ?: false
+            val searchTextMatch = if (filters.searchText.isEmpty()) {
+                true
+            } else if (project.title?.contains(filters.searchText, ignoreCase = true) == true) {
+                true
+            } else if (project.description?.contains(filters.searchText, ignoreCase = true) == true) {
+                true
+            } else {
+                false
+            }
+
+            val languageMatch = if (filters.language.isEmpty()) {
+                true
+            } else if (project.language?.lowercase() == filters.language.lowercase()) {
+                true
+            } else if (project.language?.lowercase()?.contains(filters.language.lowercase()) == true) {
+                true
+            } else {
+                false
+            }
+
+            val lengthMatch = if (filters.length.isEmpty()) {
+                true
+            } else if (project.length == filters.length.toIntOrNull()) {
+                true
+            } else {
+                false
+            }
+
+            val levelMatch = if (filters.level == "Choose level") {
+                true
+            } else if (project.level == stringToLevelType(filters.level)) {
+                true // No level filter specified, so consider all levels
+            } else {
+                false
+            }
+
+            searchTextMatch && languageMatch && lengthMatch && levelMatch
+        }
+
+        if (filteredGalleryProjects.isEmpty()) {
+            showError("Please clear the filters")
+        } else if (error.isNotEmpty()) {
+            showError("")
         }
     }
 
