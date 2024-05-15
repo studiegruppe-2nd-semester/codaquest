@@ -13,15 +13,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -64,23 +61,20 @@ fun SettingsScreen(
         }
 
         Column(
-            modifier = Modifier.padding(top = 15.dp)
+            modifier = Modifier.padding(top = 15.dp),
         ) {
             Text(
                 text = "Account Settings",
                 fontSize = 30.sp,
             )
             Spacer(modifier = Modifier.height(15.dp))
-            ClickableTextWithDivider(text = "Password" ) {
+            ClickableTextWithDivider(text = "Password") {
                 TODO("Needs what it should change to from the viewmodel")
             }
             Spacer(modifier = Modifier.height(8.dp))
             ClickableTextWithDivider(text = "Personal Details") {
-                
             }
         }
-
-
     }
     Box(contentAlignment = Alignment.BottomCenter) {
         NavBar(currentScreen = "settings", navController = navController, sharedViewModel = sharedViewModel)
@@ -88,19 +82,19 @@ fun SettingsScreen(
 }
 
 @Composable
-fun ClickableTextWithDivider (
-    text : String,
-    onClick : () -> Unit
+fun ClickableTextWithDivider(
+    text: String,
+    onClick: () -> Unit,
 ) {
     Text(
         text = text,
-        fontSize = 18.sp ,
+        fontSize = 18.sp,
         modifier = Modifier
-            .clickable { onClick() }
+            .clickable { onClick() },
     )
     HorizontalDivider(
         modifier = Modifier.fillMaxWidth(),
         thickness = 3.dp,
-        color = MaterialTheme.colorScheme.tertiary
+        color = MaterialTheme.colorScheme.tertiary,
     )
 }
