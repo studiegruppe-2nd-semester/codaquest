@@ -19,12 +19,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
 import com.example.codaquest.ui.components.navbar.NavBar
+import com.example.codaquest.ui.components.viewmodels.SettingsViewmodel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 // Nathasja
@@ -33,6 +37,8 @@ fun SettingsScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
 ) {
+    val settingsViewModel: SettingsViewmodel = viewModel()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -66,12 +72,13 @@ fun SettingsScreen(
             Text(
                 text = "Account Settings",
                 fontSize = 30.sp,
+                color = Color(0xFF6BB38A)
             )
             Spacer(modifier = Modifier.height(15.dp))
             ClickableTextWithDivider(text = "Password") {
                 TODO("Needs what it should change to from the viewmodel")
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             ClickableTextWithDivider(text = "Personal Details") {
             }
         }
@@ -88,7 +95,10 @@ fun ClickableTextWithDivider(
 ) {
     Text(
         text = text,
-        fontSize = 18.sp,
+        style = TextStyle(
+            fontSize = 20.sp,
+            color = MaterialTheme.colorScheme.primary
+        ),
         modifier = Modifier
             .clickable { onClick() },
     )
