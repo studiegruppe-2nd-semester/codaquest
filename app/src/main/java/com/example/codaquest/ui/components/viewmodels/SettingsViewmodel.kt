@@ -10,7 +10,7 @@ class SettingsViewmodel : ViewModel() {
     var passwordChangeTextField = mutableStateOf("")
         private set
 
-    fun onPasswordChangeClick () {
+    fun onPasswordChangeClick() {
         showPasswordChange.value = !showPasswordChange.value
     }
 }

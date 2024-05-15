@@ -95,7 +95,7 @@ fun SettingsScreen(
                 onValueChange = { newValue ->
                     settingsViewModel.passwordChangeTextField.value = newValue
                 },
-                label = { Text("Enter New Password") }
+                label = { Text("Enter New Password") },
             )
         }
     }
@@ -138,5 +138,3 @@ fun ClickableTextWithDivider(
         )
     }
 }
-
-
