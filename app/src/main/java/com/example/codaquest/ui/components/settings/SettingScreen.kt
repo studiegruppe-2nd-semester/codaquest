@@ -1,6 +1,7 @@
 package com.example.codaquest.ui.components.settings
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,12 +13,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.codaquest.R
+import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 @Composable
@@ -37,7 +40,11 @@ fun SettingsScreen(
             Image(
                 painter = painterResource(id = R.drawable.ic_back_arrow),
                 contentDescription = "back arrow icon",
-                modifier = Modifier.size(70.dp),
+                modifier = Modifier
+                    .size(70.dp)
+                    .clickable {
+                        navController.navigate("profile")
+                    },
             )
             Spacer(modifier = Modifier.width(60.dp))
             Text(
@@ -54,6 +61,9 @@ fun SettingsScreen(
                 fontSize = 25.sp,
             )
         }
+    }
+    Box(contentAlignment = Alignment.BottomCenter) {
+        NavBar(currentScreen = "settings", navController = navController, sharedViewModel = sharedViewModel )
     }
 }
 
