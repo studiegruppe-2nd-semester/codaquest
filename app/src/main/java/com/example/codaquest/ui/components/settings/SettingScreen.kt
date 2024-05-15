@@ -52,22 +52,28 @@ fun SettingsScreen(
                 painter = painterResource(id = R.drawable.ic_back_arrow),
                 contentDescription = "back arrow icon",
                 modifier = Modifier
-                    .size(70.dp)
+                    .size(50.dp)
                     .clickable {
                         navController.navigate("profile")
                     },
             )
-            Spacer(modifier = Modifier.width(60.dp))
+            Spacer(modifier = Modifier.width(90.dp))
             Text(
-                text = "Setting",
+                text = "Settings",
                 fontSize = 25.sp,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
-                    .padding(top = 15.dp),
+                    .padding(top = 7.dp),
             )
         }
+        HorizontalDivider(
+            modifier = Modifier.fillMaxWidth(),
+            thickness = 1.dp,
+            color = Color.DarkGray,
+        )
 
         Column(
-            modifier = Modifier.padding(top = 15.dp),
+            modifier = Modifier.padding(top = 20.dp),
         ) {
             Text(
                 text = "Account Settings",
