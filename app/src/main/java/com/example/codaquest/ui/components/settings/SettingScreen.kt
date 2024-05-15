@@ -81,11 +81,11 @@ fun SettingsScreen(
                 color = Color(0xFF6BB38A),
             )
             Spacer(modifier = Modifier.height(15.dp))
-            ClickableTextWithDivider(text = "Password") {
+            ClickableTextWithDivider(text1 = "Password", text2 = "Change password") {
                 TODO("Needs what it should change to from the viewmodel")
             }
             Spacer(modifier = Modifier.height(10.dp))
-            ClickableTextWithDivider(text = "Personal Details") {
+            ClickableTextWithDivider(text1 = "Personal Details", text2 = "Name, Email") {
             }
         }
     }
@@ -96,21 +96,39 @@ fun SettingsScreen(
 
 @Composable
 fun ClickableTextWithDivider(
-    text: String,
+    text1: String,
+    text2: String,
     onClick: () -> Unit,
 ) {
-    Text(
-        text = text,
-        style = TextStyle(
-            fontSize = 20.sp,
-            color = MaterialTheme.colorScheme.primary,
-        ),
-        modifier = Modifier
-            .clickable { onClick() },
-    )
-    HorizontalDivider(
-        modifier = Modifier.fillMaxWidth(),
-        thickness = 3.dp,
-        color = MaterialTheme.colorScheme.tertiary,
-    )
+    Column {
+        Text(
+            text = text1,
+            style = TextStyle(
+                fontSize = 20.sp,
+                color = MaterialTheme.colorScheme.primary,
+            ),
+            modifier = Modifier
+                .clickable { onClick() }
+        )
+        Text(
+            text = text2,
+            style = TextStyle(
+                fontSize = 15.sp,
+                color = Color(0xFF9FB4BF)
+            ),
+            modifier = Modifier
+                .padding(top = 8.dp)
+        )
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .width(1.dp),
+            thickness = 3.dp,
+            color = MaterialTheme.colorScheme.tertiary
+        )
+    }
 }
+
+
+
+
