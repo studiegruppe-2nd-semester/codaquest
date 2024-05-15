@@ -108,27 +108,23 @@ fun ClickableTextWithDivider(
                 color = MaterialTheme.colorScheme.primary,
             ),
             modifier = Modifier
-                .clickable { onClick() }
+                .clickable { onClick() },
         )
         Text(
             text = text2,
             style = TextStyle(
                 fontSize = 15.sp,
-                color = Color(0xFF9FB4BF)
+                color = Color(0xFF9FB4BF),
             ),
             modifier = Modifier
-                .padding(top = 8.dp)
+                .padding(top = 8.dp),
         )
         HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
                 .width(1.dp),
             thickness = 3.dp,
-            color = MaterialTheme.colorScheme.tertiary
+            color = MaterialTheme.colorScheme.tertiary,
         )
     }
 }
-
-
-
-
