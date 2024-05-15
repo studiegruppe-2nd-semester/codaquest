@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -82,11 +83,20 @@ fun SettingsScreen(
             )
             Spacer(modifier = Modifier.height(15.dp))
             ClickableTextWithDivider(text1 = "Password", text2 = "Change password") {
-                TODO("Needs what it should change to from the viewmodel")
+                settingsViewModel.onPasswordChangeClick()
             }
             Spacer(modifier = Modifier.height(10.dp))
             ClickableTextWithDivider(text1 = "Personal Details", text2 = "Name, Email") {
             }
+        }
+        if (settingsViewModel.showPasswordChange.value) {
+            TextField(
+                value = settingsViewModel.passwordChangeTextField.value,
+                onValueChange = { newValue ->
+                    settingsViewModel.passwordChangeTextField.value = newValue
+                },
+                label = { Text("Enter New Password") }
+            )
         }
     }
     Box(contentAlignment = Alignment.BottomCenter) {
@@ -128,3 +138,5 @@ fun ClickableTextWithDivider(
         )
     }
 }
+
+
