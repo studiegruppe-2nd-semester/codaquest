@@ -23,6 +23,7 @@ import com.example.codaquest.R
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
+// Nathasja
 @Composable
 fun SettingsScreen(
     navController: NavController,
@@ -63,14 +64,6 @@ fun SettingsScreen(
         }
     }
     Box(contentAlignment = Alignment.BottomCenter) {
-        NavBar(currentScreen = "settings", navController = navController, sharedViewModel = sharedViewModel )
+        NavBar(currentScreen = "settings", navController = navController, sharedViewModel = sharedViewModel)
     }
 }
-
-/*
-@Preview(showBackground = true)
-@Composable
-fun SettingsScreenPreview() {
-    SettingsScreen()
-}
-*/
