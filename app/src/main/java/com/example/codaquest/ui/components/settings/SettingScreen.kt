@@ -72,7 +72,7 @@ fun SettingsScreen(
             Text(
                 text = "Account Settings",
                 fontSize = 30.sp,
-                color = Color(0xFF6BB38A)
+                color = Color(0xFF6BB38A),
             )
             Spacer(modifier = Modifier.height(15.dp))
             ClickableTextWithDivider(text = "Password") {
@@ -97,7 +97,7 @@ fun ClickableTextWithDivider(
         text = text,
         style = TextStyle(
             fontSize = 20.sp,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
         ),
         modifier = Modifier
             .clickable { onClick() },
