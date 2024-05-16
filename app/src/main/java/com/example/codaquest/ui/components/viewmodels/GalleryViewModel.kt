@@ -70,7 +70,7 @@ class GalleryViewModel : ViewModel(), ErrorOperations {
         }
     }
 
-    override var error: String = ""
+    var error: String = ""
     override fun showError(error: String) {
         this.error = error
     }
