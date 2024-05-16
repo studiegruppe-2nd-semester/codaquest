@@ -3,6 +3,7 @@ package com.example.codaquest.ui.components.settings
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -46,4 +47,8 @@ fun PasswordChangeComposable(
         keyboardType = KeyboardType.Password,
         imeAction = ImeAction.Done,
     )
+    Spacer(modifier = Modifier.height(10.dp))
+    Button(onClick = { /*TODO*/ }) {
+        Text(text = "Change Password")
+    }
 }
