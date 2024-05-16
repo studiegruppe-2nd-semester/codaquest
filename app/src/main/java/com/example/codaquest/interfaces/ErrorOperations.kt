@@ -1,4 +1,4 @@
-package com.example.codaquest.interfaces
+package com.example.codaquest.domain.interfaces
 
 interface ErrorOperations {
     var error: String
