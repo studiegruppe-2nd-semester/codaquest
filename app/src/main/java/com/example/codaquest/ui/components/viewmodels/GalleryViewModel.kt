@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.codaquest.domain.interfaces.ErrorOperations
+import com.example.codaquest.interfaces.ErrorOperations
 import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.domain.models.stringToLevelType
