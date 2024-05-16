@@ -1,17 +1,16 @@
 package com.example.codaquest.ui.components.common
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,21 +18,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.codaquest.R
 import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ProjectComposable(
+fun ProjectPreview(
+    uid: String?,
     project: Project,
-    deletable: Boolean,
-    onDelete: (String) -> Unit,
+    onSaveClick: (Project) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -49,24 +45,8 @@ fun ProjectComposable(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.fillMaxWidth().padding(end = 30.dp),
+                    modifier = Modifier.fillMaxWidth(),
                 )
-            }
-
-            if (deletable) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(30.dp)
-                        .padding(top = 5.dp),
-                    contentAlignment = Alignment.TopEnd,
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_trashcan),
-                        contentDescription = "trashcan icon",
-                        modifier = Modifier.clickable { project.projectId?.let { onDelete(it) } },
-                    )
-                }
             }
         }
 
@@ -103,18 +83,32 @@ fun ProjectComposable(
             )
         }
 
-        Text(text = "Steps:", fontSize = 20.sp, modifier = Modifier.padding(vertical = 10.dp))
-        project.steps?.forEach { steps ->
-            Text(text = "- $steps\n", modifier = Modifier.padding(vertical = 5.dp))
+        if (uid != null) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Button(
+                    onClick = { onSaveClick(project) },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.tertiary,
+                        contentColor = Color.White,
+                    ),
+                ) {
+                    Text(text = "Save project")
+                }
+            }
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ProjectComposablePreview() {
+fun ProjectComposablePreviewPreview() {
     CodaQuestTheme {
-        ProjectComposable(
+        ProjectPreview(
+            uid = null,
             Project(
                 title = "Pizza Lover",
                 language = "Kotlin",
@@ -127,8 +121,7 @@ fun ProjectComposablePreview() {
                     "step 3",
                 ),
             ),
-            true,
-            onDelete = {},
+            onSaveClick = {},
         )
     }
 }
