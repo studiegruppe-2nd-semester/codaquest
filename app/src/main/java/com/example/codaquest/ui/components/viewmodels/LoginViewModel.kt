@@ -5,10 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.codaquest.data.services.AccountService
-import com.example.codaquest.interfaces.ErrorOperations
 import com.example.codaquest.domain.models.LoginInfo
 import com.example.codaquest.domain.models.LoginState
 import com.example.codaquest.domain.models.User
+import com.example.codaquest.interfaces.ErrorOperations
 import com.example.codaquest.util.UserValidationUtil
 import com.example.codaquest.util.ValidationResult
 
