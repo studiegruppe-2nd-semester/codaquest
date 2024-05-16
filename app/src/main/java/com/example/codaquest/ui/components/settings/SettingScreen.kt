@@ -28,8 +28,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
+import com.example.codaquest.domain.models.SettingsState
 import com.example.codaquest.ui.components.navbar.NavBar
-import com.example.codaquest.ui.components.viewmodels.SettingsViewmodel
+import com.example.codaquest.ui.components.viewmodels.SettingsViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 // Nathasja
@@ -38,7 +39,7 @@ fun SettingsScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
 ) {
-    val settingsViewModel: SettingsViewmodel = viewModel()
+    val settingsViewModel: SettingsViewModel = viewModel()
 
     Column(
         modifier = Modifier
@@ -74,33 +75,39 @@ fun SettingsScreen(
         )
 
         Column(
-            modifier = Modifier.padding(top = 20.dp),
+            modifier = Modifier
+                .padding(top = 20.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Account Settings",
-                fontSize = 30.sp,
-                color = Color(0xFF6BB38A),
-            )
-            Spacer(modifier = Modifier.height(15.dp))
-            ClickableTextWithDivider(text1 = "Password", text2 = "Change password") {
-                settingsViewModel.onPasswordChangeClick()
+            when (settingsViewModel.settingsState) {
+                SettingsState.ChangePassword -> PasswordChangeComposable(
+                    settingsViewModel = settingsViewModel
+                )
+                SettingsState.Overview -> {
+                    Text(
+                        text = "Account Settings",
+                        fontSize = 30.sp,
+                        color = Color(0xFF6BB38A),
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    ClickableTextWithDivider(text1 = "Password", text2 = "Change password") {
+                        settingsViewModel.settingsState = SettingsState.ChangePassword
+                    }
+
+
+                    Spacer(modifier = Modifier.height(10.dp))
+                    ClickableTextWithDivider(text1 = "Personal Details", text2 = "Name, Email") {
+                    }
+                }
             }
-            Spacer(modifier = Modifier.height(10.dp))
-            ClickableTextWithDivider(text1 = "Personal Details", text2 = "Name, Email") {
-            }
+
         }
-        if (settingsViewModel.showPasswordChange.value) {
-            TextField(
-                value = settingsViewModel.passwordChangeTextField.value,
-                onValueChange = { newValue ->
-                    settingsViewModel.passwordChangeTextField.value = newValue
-                },
-                label = { Text("Enter New Password") },
-            )
-        }
+
     }
     Box(contentAlignment = Alignment.BottomCenter) {
-        NavBar(currentScreen = "settings", navController = navController, sharedViewModel = sharedViewModel)
+        NavBar(currentScreen = "profile", navController = navController, sharedViewModel = sharedViewModel)
     }
 }
 
