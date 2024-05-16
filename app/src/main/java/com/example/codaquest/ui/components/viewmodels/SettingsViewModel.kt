@@ -10,11 +10,9 @@ import com.example.codaquest.domain.models.SettingsState
 class SettingsViewModel : ViewModel() {
     var settingsState: SettingsState by mutableStateOf(SettingsState.Overview)
 
-    var showPasswordChange : Boolean by mutableStateOf(false)
-    var showPersonalDetails : Boolean by mutableStateOf(false)
+    var showPasswordChange: Boolean by mutableStateOf(false)
+    var showPersonalDetails: Boolean by mutableStateOf(false)
 
     var passwordChangeTextField = mutableStateOf("")
         private set
-
-
 }

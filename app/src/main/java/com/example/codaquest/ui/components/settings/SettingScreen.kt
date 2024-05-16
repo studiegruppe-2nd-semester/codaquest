@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,11 +77,11 @@ fun SettingsScreen(
             modifier = Modifier
                 .padding(top = 20.dp)
                 .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             when (settingsViewModel.settingsState) {
                 SettingsState.ChangePassword -> PasswordChangeComposable(
-                    settingsViewModel = settingsViewModel
+                    settingsViewModel = settingsViewModel,
                 )
                 SettingsState.Overview -> {
                     Text(
@@ -96,15 +95,12 @@ fun SettingsScreen(
                         settingsViewModel.settingsState = SettingsState.ChangePassword
                     }
 
-
                     Spacer(modifier = Modifier.height(10.dp))
                     ClickableTextWithDivider(text1 = "Personal Details", text2 = "Name, Email") {
                     }
                 }
             }
-
         }
-
     }
     Box(contentAlignment = Alignment.BottomCenter) {
         NavBar(currentScreen = "profile", navController = navController, sharedViewModel = sharedViewModel)
