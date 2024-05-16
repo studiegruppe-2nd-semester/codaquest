@@ -24,7 +24,6 @@ class GalleryViewModel : ViewModel(), ErrorOperations {
         galleryProjects: List<Project>,
     ) {
         filteredGalleryProjects = galleryProjects.filter { project ->
-            /* TODO */
             val searchTextMatch = if (filters.searchText.isEmpty()) {
                 true
             } else if (project.title?.contains(filters.searchText, ignoreCase = true) == true) {

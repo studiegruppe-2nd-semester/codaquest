@@ -202,6 +202,7 @@ fun HomeScreen(
                 if (!sharedViewModel.generatedProject.title.isNullOrEmpty()) {
                     ProjectComposable(
                         project = sharedViewModel.generatedProject,
+                        false,
                         onDelete = { },
                     )
 
