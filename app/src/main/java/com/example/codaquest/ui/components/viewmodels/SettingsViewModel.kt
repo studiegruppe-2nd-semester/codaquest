@@ -13,6 +13,12 @@ class SettingsViewModel : ViewModel() {
     var showPasswordChange: Boolean by mutableStateOf(false)
     var showPersonalDetails: Boolean by mutableStateOf(false)
 
+
+    // States for Password
+    var newPassword : String by  mutableStateOf("")
+    var confirmNewPassword : String by mutableStateOf("")
+
+
     var passwordChangeTextField = mutableStateOf("")
         private set
 }

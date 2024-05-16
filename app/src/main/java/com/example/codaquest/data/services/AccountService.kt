@@ -60,4 +60,21 @@ class AccountService {
         Firebase.auth.signOut()
         onSuccess()
     }
+
+    //Nathasja
+    fun updatePassword (newPassword : String, onResult: (String) -> Unit) {
+        val user = Firebase.auth.currentUser
+        user?.let {
+            it.updatePassword(newPassword)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        onResult("Password updated successfully")
+                    } else {
+                        onResult("Failed to update password: ${task.exception?.message}")
+                    }
+                }
+        } ?: run {
+            onResult("No authenticated user")
+        }
+    }
 }

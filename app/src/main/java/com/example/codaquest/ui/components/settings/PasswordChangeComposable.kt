@@ -12,12 +12,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.codaquest.data.services.AccountService
 import com.example.codaquest.ui.components.common.CustomTextField
 import com.example.codaquest.ui.components.viewmodels.SettingsViewModel
 
 @Composable
 fun PasswordChangeComposable(
     settingsViewModel: SettingsViewModel,
+    accountService: AccountService,
+    navController: NavController
 ) {
     Text(
         text = "Change password",
@@ -29,9 +33,9 @@ fun PasswordChangeComposable(
     Spacer(modifier = Modifier.height(15.dp))
 
     CustomTextField(
-        value = settingsViewModel.passwordChangeTextField.value,
+        value = settingsViewModel.newPassword,
         onValueChange = { newValue ->
-            settingsViewModel.passwordChangeTextField.value = newValue
+            settingsViewModel.newPassword = newValue
         },
         label = "Enter New Password",
         keyboardType = KeyboardType.Password,
@@ -39,16 +43,25 @@ fun PasswordChangeComposable(
     )
     Spacer(modifier = Modifier.height(15.dp))
     CustomTextField(
-        value = settingsViewModel.passwordChangeTextField.value,
+        value = settingsViewModel.confirmNewPassword,
         onValueChange = { newValue ->
-            settingsViewModel.passwordChangeTextField.value = newValue
+            settingsViewModel.confirmNewPassword = newValue
         },
         label = "Confirm New Password",
         keyboardType = KeyboardType.Password,
         imeAction = ImeAction.Done,
     )
     Spacer(modifier = Modifier.height(10.dp))
-    Button(onClick = { /*TODO*/ }) {
+    Button(onClick = {
+        val newPassword = settingsViewModel.newPassword
+        val confirmPassword = settingsViewModel.confirmNewPassword
+
+        if (newPassword == confirmPassword) {
+            accountService.updatePassword(newPassword) { result ->
+                navController.navigate("Settings")
+            }
+        }
+    }) {
         Text(text = "Change Password")
     }
 }
