@@ -1,6 +1,6 @@
 package com.example.codaquest.domain.models
 
-enum class OnboardingQuestionTypes {
+enum class QuestionTypes {
     RadioButton,
     TextField,
     IntField,

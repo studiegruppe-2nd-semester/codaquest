@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.domain.models.OnboardingQuestionTypes
+import com.example.codaquest.domain.models.QuestionTypes
 import com.example.codaquest.ui.components.viewmodels.OnboardingViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
@@ -85,9 +85,9 @@ fun OnboardingScreen(
             contentAlignment = Alignment.Center,
         ) {
             when (viewModel.questions[viewModel.currentQuestion].type) {
-                OnboardingQuestionTypes.RadioButton -> OnboardingRadioButtonComposable(viewModel = viewModel)
-                OnboardingQuestionTypes.TextField -> OnboardingTextFieldComposable(viewModel = viewModel)
-                OnboardingQuestionTypes.IntField -> OnboardingIntFieldComposable(viewModel = viewModel)
+                QuestionTypes.RadioButton -> OnboardingRadioButtonComposable(viewModel = viewModel)
+                QuestionTypes.TextField -> OnboardingTextFieldComposable(viewModel = viewModel)
+                QuestionTypes.IntField -> OnboardingIntFieldComposable(viewModel = viewModel)
             }
         }
 

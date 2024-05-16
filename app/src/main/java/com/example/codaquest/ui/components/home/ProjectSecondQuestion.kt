@@ -16,12 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.codaquest.ui.components.viewmodels.HomeScreenViewModel
 import com.example.codaquest.ui.components.viewmodels.OnboardingViewModel
 import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @Composable
-fun OnboardingRadioButtonComposable(
-    viewModel: OnboardingViewModel,
+fun ProjectSecondQuestion(
+    viewModel: HomeScreenViewModel,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -54,11 +55,3 @@ fun OnboardingRadioButtonComposable(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CodaQuestTheme {
-        val viewModel: OnboardingViewModel = viewModel()
-        OnboardingRadioButtonComposable(viewModel = viewModel)
-    }
-}
