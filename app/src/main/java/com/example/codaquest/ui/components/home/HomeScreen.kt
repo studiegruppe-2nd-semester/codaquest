@@ -122,7 +122,7 @@ fun HomeScreen(
                 Text(viewModel.nextButton)
             }
         }
-    } 
+    }
 }
 
 /*
