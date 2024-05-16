@@ -9,7 +9,7 @@ import com.example.codaquest.domain.interfaces.ErrorOperations
 import com.example.codaquest.domain.models.LoginInfo
 import com.example.codaquest.domain.models.LoginState
 import com.example.codaquest.domain.models.User
-import com.example.codaquest.util.LoginSignupUtil
+import com.example.codaquest.util.UserValidationUtil
 import com.example.codaquest.util.ValidationResult
 
 class LoginViewModel : ViewModel(), ErrorOperations {
@@ -35,14 +35,7 @@ class LoginViewModel : ViewModel(), ErrorOperations {
     ) {
         showError("")
 
-//        if (loginInfo.email.isEmpty() || loginInfo.password.isEmpty()) {
-//            showError("Please enter email and password")
-//            return
-//        } else {
-//            showError("")
-//        }
-
-        val validateLogin: ValidationResult = LoginSignupUtil.validateLogin(loginInfo)
+        val validateLogin: ValidationResult = UserValidationUtil.validateLogin(loginInfo)
 
         if (validateLogin is ValidationResult.Error) {
             showError(validateLogin.message)
@@ -57,18 +50,16 @@ class LoginViewModel : ViewModel(), ErrorOperations {
 
     // ----------------------------------------- SIGN UP
     fun signUp(onSuccess: (User) -> Unit) {
-        if (loginInfo.password == loginInfo.confirmPassword) {
-            showError("")
+        val validateSignUp: ValidationResult = UserValidationUtil.validateSignUp(loginInfo)
 
-            if (loginInfo.email.isNotEmpty() && loginInfo.username.isNotEmpty() && loginInfo.password.isNotEmpty()) {
-                accountService.signUp(
-                    loginInfo = loginInfo,
-                    errorOperations = this,
-                    onSuccess = { onSuccess(it) },
-                )
-            }
+        if (validateSignUp is ValidationResult.Error) {
+            showError(validateSignUp.message)
         } else {
-            showError("Confirmed password does not match")
+            accountService.signUp(
+                loginInfo = loginInfo,
+                errorOperations = this,
+                onSuccess = { onSuccess(it) },
+            )
         }
     }
 

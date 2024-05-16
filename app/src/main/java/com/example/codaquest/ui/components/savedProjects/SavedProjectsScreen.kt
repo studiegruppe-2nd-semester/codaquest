@@ -1,6 +1,7 @@
 package com.example.codaquest.ui.components.savedProjects
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,7 +38,7 @@ fun SavedProjectsScreen(
                 TextTitle(text = "Saved projects")
 
                 Text(
-                    text = amountOfProjectsSavedText(sharedViewModel.user?.projects!!.size),
+                    text = amountOfProjectsSavedText(sharedViewModel.user?.projects?.size ?: 0),
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                 )
@@ -44,31 +46,50 @@ fun SavedProjectsScreen(
                 Spacer(modifier = Modifier.height(20.dp))
             }
 
-            if (sharedViewModel.user?.projects?.isNotEmpty() == true) {
-                items(sharedViewModel.user?.projects!!, key = { project ->
-                    project.projectId.toString() // Use the projectId as a stable key
-                }) { item ->
-                    ProjectComposable(
-                        project = item,
-                        onDelete = { projectId ->
-                            item.uid?.let { uid ->
-                                sharedViewModel.deleteSavedProject(
-                                    projectId,
-                                    uid,
-                                    "saved-projects",
-                                )
-                                if (sharedViewModel.loading) {
-                                    navController.navigate("loading")
-                                }
-                            }
-                        },
-                    )
-
-                    Spacer(modifier = Modifier.height(20.dp))
+            if (sharedViewModel.user == null) {
+                item {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(text = "Please login to save projects")
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Button(onClick = {
+                            navController.navigate("login")
+                        }) {
+                            Text(text = "Login / Sign up")
+                        }
+                    }
                 }
             } else {
-                item {
-                    Text(text = "No saved projects found")
+                if (!sharedViewModel.user?.projects.isNullOrEmpty()) {
+                    items(sharedViewModel.user?.projects!!, key = { project ->
+                        project.projectId.toString() // Use the projectId as a stable key
+                    }) { item ->
+                        ProjectComposable(
+                            project = item,
+                            true,
+                            onDelete = { projectId ->
+                                item.uid?.let { uid ->
+                                    sharedViewModel.deleteSavedProject(
+                                        projectId,
+                                        uid,
+                                        "saved-projects",
+                                    )
+                                    if (sharedViewModel.loading) {
+                                        navController.navigate("loading")
+                                    }
+                                }
+                            },
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
+                } else {
+                    item {
+                        Text(text = "No saved projects found")
+                    }
                 }
             }
         }
