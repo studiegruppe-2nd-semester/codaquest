@@ -1,4 +1,4 @@
-package com.example.codaquest.ui.components.onboarding
+package com.example.codaquest.ui.components.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,12 +15,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.codaquest.ui.components.viewmodels.HomeScreenViewModel
+import com.example.codaquest.domain.models.QuestionInfo
 
 @Composable
-fun ProjectSecondQuestion(
-    viewModel: HomeScreenViewModel,
+fun StepRadioButtons(
+    questionInfo: QuestionInfo,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -28,18 +28,18 @@ fun ProjectSecondQuestion(
     ) {
         Text(
             modifier = Modifier.padding(vertical = 20.dp),
-            text = viewModel.questions[viewModel.currentQuestion].question,
+            text = questionInfo.question,
             fontSize = 20.sp,
             textAlign = TextAlign.Center,
             lineHeight = 25.sp,
         )
 
-        viewModel.questions[viewModel.currentQuestion].options?.forEach { option ->
+        questionInfo.options?.forEach { option ->
             Button(
                 modifier = Modifier.padding(vertical = 5.dp),
-                onClick = { viewModel.questions[viewModel.currentQuestion].answer.value = option },
+                onClick = { questionInfo.answer.value = option },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = viewModel.addButtonColor(option),
+                    containerColor = addButtonColor(option, questionInfo.answer.value),
                     contentColor = Color.Black,
                 ),
             ) {
@@ -49,5 +49,14 @@ fun ProjectSecondQuestion(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun addButtonColor(answer: String, currentQuestionAnswer: String): Color {
+    return if (answer == currentQuestionAnswer) {
+        MaterialTheme.colorScheme.tertiary
+    } else {
+        MaterialTheme.colorScheme.secondary
     }
 }

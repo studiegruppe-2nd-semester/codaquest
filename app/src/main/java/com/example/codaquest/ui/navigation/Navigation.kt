@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.codaquest.ui.components.gallery.GalleryScreen
+import com.example.codaquest.ui.components.generateProject.GenerateProjectScreen
 import com.example.codaquest.ui.components.home.HomeScreen
 import com.example.codaquest.ui.components.loading.LoadingScreen
 import com.example.codaquest.ui.components.login.LoginScreen
@@ -47,6 +48,12 @@ fun SetupNavHost(
 
         composable("profile") {
             ProfileScreen(
+                navController = navController,
+                sharedViewModel = sharedViewModel,
+            )
+        }
+        composable("generate-project") {
+            GenerateProjectScreen(
                 navController = navController,
                 sharedViewModel = sharedViewModel,
             )

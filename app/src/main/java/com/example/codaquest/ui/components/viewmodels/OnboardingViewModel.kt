@@ -1,18 +1,15 @@
 package com.example.codaquest.ui.components.viewmodels
 
 import android.annotation.SuppressLint
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.codaquest.data.repositories.UserRepository
 import com.example.codaquest.domain.models.OnboardingData
-import com.example.codaquest.domain.models.QuestionSettings
+import com.example.codaquest.domain.models.QuestionInfo
 import com.example.codaquest.domain.models.QuestionTypes
 import com.example.codaquest.domain.models.User
 import com.example.codaquest.domain.models.stringToLevelType
@@ -37,6 +34,7 @@ class OnboardingViewModel : ViewModel() {
         user: User,
         onSuccess: (User) -> Unit,
     ) {
+        println(questions[currentQuestion].answer.value)
         if ((currentQuestion < questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             currentQuestion++
             if (currentQuestion == questions.size - 1) {
@@ -57,30 +55,21 @@ class OnboardingViewModel : ViewModel() {
         }
     }
 
-    val questions: List<QuestionSettings> by mutableStateOf(
+    val questions: List<QuestionInfo> by mutableStateOf(
         mutableStateListOf(
-            QuestionSettings(
+            QuestionInfo(
                 question = "What level are you at in coding?",
                 options = listOf("Beginner", "Intermediate", "Advanced"),
                 type = QuestionTypes.RadioButton,
             ),
-            QuestionSettings(
+            QuestionInfo(
                 question = "Which coding languages do you code in?",
                 type = QuestionTypes.TextField,
             ),
-            QuestionSettings(
+            QuestionInfo(
                 question = "How much time do you usually want to spend on a single project? Answer in whole hours",
                 type = QuestionTypes.IntField,
             ),
         ),
     )
-
-    @Composable
-    fun addButtonColor(answer: String): Color {
-        return if (answer == questions[currentQuestion].answer.value) {
-            MaterialTheme.colorScheme.tertiary
-        } else {
-            MaterialTheme.colorScheme.secondary
-        }
-    }
 }

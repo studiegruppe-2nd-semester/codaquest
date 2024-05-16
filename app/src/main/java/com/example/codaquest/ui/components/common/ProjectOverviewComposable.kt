@@ -26,7 +26,7 @@ import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ProjectPreview(
+fun ProjectOverviewComposable(
     uid: String?,
     project: Project,
     onSaveClick: (Project) -> Unit,
@@ -107,7 +107,7 @@ fun ProjectPreview(
 @Composable
 fun ProjectComposablePreviewPreview() {
     CodaQuestTheme {
-        ProjectPreview(
+        ProjectOverviewComposable(
             uid = null,
             Project(
                 title = "Pizza Lover",

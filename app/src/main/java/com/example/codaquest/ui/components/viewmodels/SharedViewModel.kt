@@ -9,8 +9,6 @@ import com.example.codaquest.data.repositories.GalleryRepository
 import com.example.codaquest.data.repositories.ProjectRepository
 import com.example.codaquest.data.repositories.UserRepository
 import com.example.codaquest.data.services.AccountService
-import com.example.codaquest.data.services.ApiService
-import com.example.codaquest.domain.models.GenerateProjectDetails
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.domain.models.User
 import kotlinx.coroutines.launch
@@ -70,9 +68,9 @@ class SharedViewModel : ViewModel() {
 
             val userRepository = UserRepository()
 
-            userRepository.getKey(onSuccess = {
-                if (it != null) {
-                    key = it
+            userRepository.getKey(onSuccess = { fetchedKey ->
+                if (fetchedKey != null) {
+                    key = fetchedKey
                 }
             })
 
@@ -84,40 +82,17 @@ class SharedViewModel : ViewModel() {
         }
     }
 
-    fun getProjectSuggestion(
-        projectInfo: GenerateProjectDetails,
-        onError: (String) -> Unit,
-    ) {
-        val apiService = ApiService()
-        apiService.initiateApi(this)
-
-        viewModelScope.launch {
-            apiService.generateProjectSuggestion(
-                projectInfo,
-                onSuccess = { generatedProject = it },
-                onError = { error -> onError(error) },
-            )
-        }
-    }
-
     // ------------------------------------- GENERATED PROJECT
-    var generatedProject by mutableStateOf(Project())
+    var lastGeneratedProject: Project? by mutableStateOf(null)
 
     fun saveProject(
         uid: String,
-        project: Project? = null,
+        project: Project,
     ) {
-        if (project != null) {
-            projectRepository.saveUserProject(
-                project.copy(uid = uid),
-                onSuccess = { saveProjectInViewModel(it) },
-            )
-        } else {
-            projectRepository.saveUserProject(
-                generatedProject.copy(uid = uid),
-                onSuccess = { saveProjectInViewModel(it) },
-            )
-        }
+        projectRepository.saveUserProject(
+            project.copy(uid = uid),
+            onSuccess = { saveProjectInViewModel(it) },
+        )
     }
 
     fun deleteSavedProject(

@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.domain.models.QuestionTypes
+import com.example.codaquest.ui.components.common.StepIntField
+import com.example.codaquest.ui.components.common.StepRadioButtons
+import com.example.codaquest.ui.components.common.StepTextField
 import com.example.codaquest.ui.components.viewmodels.OnboardingViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
@@ -30,7 +33,7 @@ fun OnboardingScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
 ) {
-    val viewModel: OnboardingViewModel = viewModel()
+    val onboardingViewModel: OnboardingViewModel = viewModel()
 
     Column(
         modifier = Modifier
@@ -58,7 +61,7 @@ fun OnboardingScreen(
             }
 
             LinearProgressIndicator(
-                progress = { (viewModel.currentQuestion + 1).toFloat() / viewModel.questions.size.toFloat() },
+                progress = { (onboardingViewModel.currentQuestion + 1).toFloat() / onboardingViewModel.questions.size.toFloat() },
                 modifier = Modifier
                     .padding(horizontal = 5.dp)
                     .fillMaxWidth(0.8f),
@@ -73,7 +76,7 @@ fun OnboardingScreen(
                 Text(
                     modifier = Modifier
                         .padding(horizontal = 5.dp),
-                    text = "${viewModel.currentQuestion + 1}/${viewModel.questions.size}",
+                    text = "${onboardingViewModel.currentQuestion + 1}/${onboardingViewModel.questions.size}",
                 )
             }
         }
@@ -84,10 +87,16 @@ fun OnboardingScreen(
                 .fillMaxHeight(0.5f),
             contentAlignment = Alignment.Center,
         ) {
-            when (viewModel.questions[viewModel.currentQuestion].type) {
-                QuestionTypes.RadioButton -> OnboardingRadioButtonComposable(viewModel = viewModel)
-                QuestionTypes.TextField -> OnboardingTextFieldComposable(viewModel = viewModel)
-                QuestionTypes.IntField -> OnboardingIntFieldComposable(viewModel = viewModel)
+            when (onboardingViewModel.questions[onboardingViewModel.currentQuestion].type) {
+                QuestionTypes.RadioButton -> StepRadioButtons(
+                    questionInfo = onboardingViewModel.questions[onboardingViewModel.currentQuestion],
+                )
+                QuestionTypes.TextField -> StepTextField(
+                    questionInfo = onboardingViewModel.questions[onboardingViewModel.currentQuestion],
+                )
+                QuestionTypes.IntField -> StepIntField(
+                    questionInfo = onboardingViewModel.questions[onboardingViewModel.currentQuestion],
+                )
             }
         }
 
@@ -97,10 +106,11 @@ fun OnboardingScreen(
             horizontalArrangement = Arrangement.Center,
         ) {
             Button(
+                enabled = onboardingViewModel.currentQuestion != 0,
                 modifier = Modifier.padding(5.dp),
-                onClick = { viewModel.previousQuestion() },
+                onClick = { onboardingViewModel.previousQuestion() },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (viewModel.currentQuestion == 0) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary,
+                    containerColor = if (onboardingViewModel.currentQuestion == 0) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary,
                 ),
             ) {
                 Text("Previous")
@@ -110,7 +120,7 @@ fun OnboardingScreen(
                 modifier = Modifier.padding(5.dp),
                 onClick = {
                     sharedViewModel.user?.let { user ->
-                        viewModel.nextQuestion(
+                        onboardingViewModel.nextQuestion(
                             user,
                             onSuccess = {
                                 sharedViewModel.changeUser(it)
@@ -123,7 +133,7 @@ fun OnboardingScreen(
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
             ) {
-                Text(viewModel.nextButton)
+                Text(onboardingViewModel.nextButton)
             }
         }
     }

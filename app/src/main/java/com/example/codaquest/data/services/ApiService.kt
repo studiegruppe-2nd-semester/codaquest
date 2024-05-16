@@ -10,7 +10,6 @@ import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
 import com.example.codaquest.domain.models.GenerateProjectDetails
 import com.example.codaquest.domain.models.Project
-import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.seconds
 
@@ -19,15 +18,13 @@ class ApiService {
     private lateinit var openAI: OpenAI
 
     fun initiateApi(
-        sharedViewModel: SharedViewModel,
+        key: String,
     ) {
-        openAI = sharedViewModel.key?.let {
-            OpenAI(
-                token = it,
-                timeout = Timeout(socket = 60.seconds),
-                // additional configurations...
-            )
-        }!!
+        openAI = OpenAI(
+            token = key,
+            timeout = Timeout(socket = 60.seconds),
+            // additional configurations...
+        )
     }
 
     suspend fun generateProjectSuggestion(
@@ -53,10 +50,11 @@ class ApiService {
                 ),
             ),
         )
-        val completion: ChatCompletion = openAI.chatCompletion(chatCompletionRequest)
-        val apiResponse = completion.choices[0].message.content
 
         try {
+            val completion: ChatCompletion = openAI.chatCompletion(chatCompletionRequest)
+            val apiResponse = completion.choices[0].message.content
+
             val project = apiResponse?.let { Json.decodeFromString<Project>(it) }
             // Process the decoded project object here
             println("Project: $project")
@@ -70,39 +68,4 @@ class ApiService {
             onError("Something went wrong.\nPlease generate new project")
         }
     }
-
-    /*
-    private fun getJsonIntoHashMap(apiResponse: JSONObject?): Project {
-        val apiResponseHashMap = hashMapOf<String, Any>()
-
-        val jsonObjectKeys = apiResponse?.keys()
-
-        while (jsonObjectKeys?.hasNext() == true) {
-            val key = jsonObjectKeys.next()
-            val value = apiResponse.get(key)
-//            println("Type of $key: ${value::class.simpleName}")
-            apiResponseHashMap[key] = value
-        }
-
-        val stepsJsonArray = apiResponseHashMap["steps"] as? JSONArray
-        val stepsList = stepsJsonArray?.let { jsonArray ->
-            List(jsonArray.length()) { i -> jsonArray.getString(i) }
-        }
-
-        val project = Project(
-            title = apiResponseHashMap["title"]?.toString(),
-            language = apiResponseHashMap["language"]?.toString(),
-            length = apiResponseHashMap["length"]?.toString()?.toInt(),
-            level = apiResponseHashMap["level"]?.toString()?.let { stringToLevelType(it) }, // Use parsed enum value
-            description = apiResponseHashMap["description"]?.toString(),
-            steps = stepsList,
-        )
-
-        for ((key, value) in apiResponseHashMap) {
-            println("Key: $key, Value: $value")
-        }
-
-        return project
-    }
-     */
 }
