@@ -94,8 +94,6 @@ fun HomeScreen(
             }
         }
 
-
-
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -114,13 +112,8 @@ fun HomeScreen(
             Button(
                 modifier = Modifier.padding(5.dp),
                 onClick = {
-
-
                     // Her skal der til sidst generes et projekt.
-                          viewModel.nextQuestion()
-
-
-
+                    viewModel.nextQuestion()
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -129,19 +122,14 @@ fun HomeScreen(
                 Text(viewModel.nextButton)
             }
         }
-
-
-
-
-    }}
+    } 
+}
 
 /*
 sharedViewModel.getProjectSuggestion(
 viewModel.generateProjectDetails,
 onError = { error -> viewModel.showError(error) },
 ) */
-
-
 
 /* {
     LazyColumn(

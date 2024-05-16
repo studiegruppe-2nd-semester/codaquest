@@ -9,4 +9,3 @@ data class QuestionSettings(
     val type: QuestionTypes,
     var answer: MutableState<String> = mutableStateOf(""),
 )
-
