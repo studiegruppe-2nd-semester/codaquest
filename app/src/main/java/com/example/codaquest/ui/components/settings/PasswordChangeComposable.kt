@@ -21,7 +21,7 @@ import com.example.codaquest.ui.components.viewmodels.SettingsViewModel
 fun PasswordChangeComposable(
     settingsViewModel: SettingsViewModel,
     accountService: AccountService,
-    navController: NavController
+    navController: NavController,
 ) {
     Text(
         text = "Change password",

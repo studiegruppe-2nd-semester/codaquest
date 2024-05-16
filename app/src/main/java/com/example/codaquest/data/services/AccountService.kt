@@ -61,8 +61,8 @@ class AccountService {
         onSuccess()
     }
 
-    //Nathasja
-    fun updatePassword (newPassword : String, onResult: (String) -> Unit) {
+    // Nathasja
+    fun updatePassword(newPassword: String, onResult: (String) -> Unit) {
         val user = Firebase.auth.currentUser
         user?.let {
             it.updatePassword(newPassword)
