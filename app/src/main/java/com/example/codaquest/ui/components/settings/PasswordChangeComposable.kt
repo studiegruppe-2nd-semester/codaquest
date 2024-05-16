@@ -60,6 +60,8 @@ fun PasswordChangeComposable(
             accountService.updatePassword(newPassword) { result ->
                 navController.navigate("Settings")
             }
+        } else {
+            println("Error")
         }
     }) {
         Text(text = "Change Password")
