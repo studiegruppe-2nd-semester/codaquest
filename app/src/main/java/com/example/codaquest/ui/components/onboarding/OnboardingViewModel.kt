@@ -10,12 +10,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.example.codaquest.models.OnboardingData
-import com.example.codaquest.models.OnboardingQuestion
-import com.example.codaquest.models.OnboardingQuestionTypes
-import com.example.codaquest.models.User
-import com.example.codaquest.models.stringToLevelType
-import com.example.codaquest.repositories.UserRepository
+import com.example.codaquest.data.repositories.UserRepository
+import com.example.codaquest.domain.models.OnboardingData
+import com.example.codaquest.domain.models.QuestionInfo
+import com.example.codaquest.domain.models.QuestionTypes
+import com.example.codaquest.domain.models.User
+import com.example.codaquest.domain.models.stringToLevelType
 
 @SuppressLint("MutableCollectionMutableState")
 class OnboardingViewModel : ViewModel() {
@@ -57,20 +57,20 @@ class OnboardingViewModel : ViewModel() {
         }
     }
 
-    val questions: List<OnboardingQuestion> by mutableStateOf(
+    val questions: List<QuestionInfo> by mutableStateOf(
         mutableStateListOf(
-            OnboardingQuestion(
-                question = "At what level are you in coding?",
+            QuestionInfo(
+                question = "What level are you at in coding?",
                 options = listOf("Beginner", "Intermediate", "Advanced"),
-                type = OnboardingQuestionTypes.RadioButton,
+                type = QuestionTypes.RadioButton,
             ),
-            OnboardingQuestion(
+            QuestionInfo(
                 question = "Which coding languages do you code in?",
-                type = OnboardingQuestionTypes.TextField,
+                type = QuestionTypes.TextField,
             ),
-            OnboardingQuestion(
+            QuestionInfo(
                 question = "How much time do you usually want to spend on a single project? Answer in whole hours",
-                type = OnboardingQuestionTypes.IntField,
+                type = QuestionTypes.IntField,
             ),
         ),
     )

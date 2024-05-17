@@ -4,8 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.codaquest.interfaces.ErrorOperations
-import com.example.codaquest.models.GenerateProjectDetails
+import com.example.codaquest.domain.interfaces.ErrorOperations
+import com.example.codaquest.domain.models.GenerateProjectDetails
 
 class HomeScreenViewModel : ViewModel(), ErrorOperations {
     var generateProjectDetails: GenerateProjectDetails by mutableStateOf(GenerateProjectDetails())

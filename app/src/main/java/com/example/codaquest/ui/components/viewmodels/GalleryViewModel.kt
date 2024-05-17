@@ -4,10 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.codaquest.domain.interfaces.ErrorOperations
 import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.domain.models.stringToLevelType
-import com.example.codaquest.interfaces.ErrorOperations
 
 class GalleryViewModel : ViewModel(), ErrorOperations {
     var showFilters: Boolean by mutableStateOf(false)
@@ -70,7 +70,7 @@ class GalleryViewModel : ViewModel(), ErrorOperations {
         }
     }
 
-    var error: String = ""
+    override var error: String = ""
     override fun showError(error: String) {
         this.error = error
     }

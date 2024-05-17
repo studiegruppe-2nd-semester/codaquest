@@ -29,7 +29,7 @@ import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.ui.components.common.CustomTextField
 import com.example.codaquest.ui.components.common.DynamicDropdown
-import com.example.codaquest.ui.components.common.ProjectPreview
+import com.example.codaquest.ui.components.common.ProjectOverviewComposable
 import com.example.codaquest.ui.components.common.TextTitle
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.GalleryViewModel
@@ -151,12 +151,12 @@ fun GalleryScreen(
                 items(galleryViewModel.filteredGalleryProjects, key = { project ->
                     project.projectId.toString() // Use the projectId as a stable key
                 }) { item ->
-                    ProjectPreview(
+                    ProjectOverviewComposable(
                         uid = sharedViewModel.user?.userUid,
                         project = item,
                         onSaveClick = {
                             sharedViewModel.user?.userUid?.let { uid ->
-                                sharedViewModel.saveProject(uid)
+                                sharedViewModel.saveProject(uid, item)
                                 navController.navigate("saved-projects")
                             }
                         },

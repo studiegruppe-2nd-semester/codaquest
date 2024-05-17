@@ -4,12 +4,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.codaquest.interfaces.ErrorOperations
-import com.example.codaquest.models.LoginInfo
-import com.example.codaquest.models.LoginState
-import com.example.codaquest.models.User
-import com.example.codaquest.services.AccountService
-import com.example.codaquest.util.LoginSignupUtil
+import com.example.codaquest.data.services.AccountService
+import com.example.codaquest.domain.interfaces.ErrorOperations
+import com.example.codaquest.domain.models.LoginInfo
+import com.example.codaquest.domain.models.LoginState
+import com.example.codaquest.domain.models.User
+import com.example.codaquest.util.UserValidationUtil
 import com.example.codaquest.util.ValidationResult
 
 class LoginViewModel : ViewModel(), ErrorOperations {
@@ -42,7 +42,7 @@ class LoginViewModel : ViewModel(), ErrorOperations {
 //            showError("")
 //        }
 
-        val validateLogin: ValidationResult = LoginSignupUtil.validateLogin(loginInfo)
+        val validateLogin: ValidationResult = UserValidationUtil.validateLogin(loginInfo)
 
         if (validateLogin is ValidationResult.Error) {
             showError(validateLogin.message)
