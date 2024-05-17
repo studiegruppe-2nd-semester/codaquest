@@ -84,7 +84,6 @@ fun SettingsScreen(
                 SettingsState.ChangePassword -> PasswordChangeComposable(
                     settingsViewModel = settingsViewModel,
                     navController = navController,
-                    accountService = AccountService(),
                 )
                 SettingsState.Overview -> {
                     Text(
