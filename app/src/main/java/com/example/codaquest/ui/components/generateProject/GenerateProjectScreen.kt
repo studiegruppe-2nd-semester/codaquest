@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.domain.models.QuestionTypes
 import com.example.codaquest.ui.components.common.ProjectComposable
+import com.example.codaquest.ui.components.common.StepDropdown
 import com.example.codaquest.ui.components.common.StepIntField
 import com.example.codaquest.ui.components.common.StepRadioButtons
 import com.example.codaquest.ui.components.common.StepTextField
@@ -126,11 +127,19 @@ fun GenerateProjectScreen(
                     QuestionTypes.TextField -> StepTextField(
                         questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
                     )
+
                     QuestionTypes.RadioButton -> StepRadioButtons(
                         questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
                     )
+
                     QuestionTypes.IntField -> StepIntField(
                         questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
+                    )
+
+                    QuestionTypes.Dropdown -> StepDropdown(
+                        questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
+                        expanded = generateProjectViewModel.dropdownExpanded,
+                        onExpandedChange = { generateProjectViewModel.dropdownExpanded = it },
                     )
                 }
             }

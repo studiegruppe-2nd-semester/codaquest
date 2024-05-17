@@ -24,6 +24,8 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
         this.error = error
     }
 
+    var dropdownExpanded: Boolean by mutableStateOf(false)
+
     val questions: List<QuestionInfo> by mutableStateOf(
         mutableStateListOf(
             QuestionInfo(

@@ -17,6 +17,8 @@ import com.example.codaquest.domain.models.stringToLevelType
 @SuppressLint("MutableCollectionMutableState")
 class OnboardingViewModel : ViewModel() {
     private val userRepository: UserRepository = UserRepository()
+
+    var dropdownExpanded: Boolean by mutableStateOf(false)
     var currentQuestion: Int by mutableIntStateOf(0)
         private set
 

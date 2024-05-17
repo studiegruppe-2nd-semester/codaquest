@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.domain.models.QuestionTypes
+import com.example.codaquest.ui.components.common.StepDropdown
 import com.example.codaquest.ui.components.common.StepIntField
 import com.example.codaquest.ui.components.common.StepRadioButtons
 import com.example.codaquest.ui.components.common.StepTextField
@@ -91,11 +92,19 @@ fun OnboardingScreen(
                 QuestionTypes.RadioButton -> StepRadioButtons(
                     questionInfo = onboardingViewModel.questions[onboardingViewModel.currentQuestion],
                 )
+
                 QuestionTypes.TextField -> StepTextField(
                     questionInfo = onboardingViewModel.questions[onboardingViewModel.currentQuestion],
                 )
+
                 QuestionTypes.IntField -> StepIntField(
                     questionInfo = onboardingViewModel.questions[onboardingViewModel.currentQuestion],
+                )
+
+                QuestionTypes.Dropdown -> StepDropdown(
+                    questionInfo = onboardingViewModel.questions[onboardingViewModel.currentQuestion],
+                    expanded = onboardingViewModel.dropdownExpanded,
+                    onExpandedChange = { onboardingViewModel.dropdownExpanded = it },
                 )
             }
         }
