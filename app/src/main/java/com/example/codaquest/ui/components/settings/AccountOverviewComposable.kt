@@ -13,9 +13,9 @@ import androidx.navigation.NavController
 import com.example.codaquest.ui.components.viewmodels.SettingsViewModel
 
 @Composable
-fun AccountOverviewComposable (
+fun AccountOverviewComposable(
     settingsViewModel: SettingsViewModel,
-    navController: NavController
+    navController: NavController,
 ) {
     Column {
         Text(
@@ -25,18 +25,16 @@ fun AccountOverviewComposable (
         )
         Spacer(modifier = Modifier.height(15.dp))
 
-
         Text(
-            text = "Name: John Doe",
+            text = "",
             fontSize = 20.sp,
-            color = Color.Black
+            color = Color.Black,
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "Username: johndoe123",
+            text = "",
             fontSize = 20.sp,
-            color = Color.Black
+            color = Color.Black,
         )
-
     }
 }

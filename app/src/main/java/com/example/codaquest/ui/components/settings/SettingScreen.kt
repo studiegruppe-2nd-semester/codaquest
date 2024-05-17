@@ -95,15 +95,16 @@ fun SettingsScreen(
                     ClickableTextWithDivider(
                         text1 = "Password",
                         text2 = "Change password",
-                        onClick = {settingsViewModel.settingsState = SettingsState.ChangePassword})
-
+                        onClick = { settingsViewModel.settingsState = SettingsState.ChangePassword },
+                    )
 
                     Spacer(modifier = Modifier.height(10.dp))
 
                     ClickableTextWithDivider(
                         text1 = "Personal Details",
                         text2 = "Name, Username",
-                        onClick = {settingsViewModel.settingsState = SettingsState.AccountOverview})
+                        onClick = { settingsViewModel.settingsState = SettingsState.AccountOverview },
+                    )
 
                     Spacer(modifier = Modifier.height(10.dp))
 
@@ -111,15 +112,12 @@ fun SettingsScreen(
                         text1 = "Delete account",
                         text2 = "Permanently delete your account",
                         onClick = { TODO() },
-                        textColor = Color(0xFFB11C10)
+                        textColor = Color(0xFFB11C10),
                     )
-
                 }
                 SettingsState.AccountOverview -> {
-                    AccountOverviewComposable(settingsViewModel = settingsViewModel, navController = navController )
+                    AccountOverviewComposable(settingsViewModel = settingsViewModel, navController = navController)
                 }
-
-
             }
         }
     }
@@ -133,7 +131,7 @@ fun ClickableTextWithDivider(
     text1: String,
     text2: String,
     onClick: () -> Unit,
-    textColor : Color = MaterialTheme.colorScheme.primary,
+    textColor: Color = MaterialTheme.colorScheme.primary,
 ) {
     Column {
         Text(
