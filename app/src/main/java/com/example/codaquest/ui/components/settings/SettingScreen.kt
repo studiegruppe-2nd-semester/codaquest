@@ -92,14 +92,34 @@ fun SettingsScreen(
                     )
                     Spacer(modifier = Modifier.height(15.dp))
 
-                    ClickableTextWithDivider(text1 = "Password", text2 = "Change password") {
-                        settingsViewModel.settingsState = SettingsState.ChangePassword
-                    }
+                    ClickableTextWithDivider(
+                        text1 = "Password",
+                        text2 = "Change password",
+                        onClick = {settingsViewModel.settingsState = SettingsState.ChangePassword})
+
 
                     Spacer(modifier = Modifier.height(10.dp))
-                    ClickableTextWithDivider(text1 = "Personal Details", text2 = "Name, Email") {
-                    }
+
+                    ClickableTextWithDivider(
+                        text1 = "Personal Details",
+                        text2 = "Name, Username",
+                        onClick = {settingsViewModel.settingsState = SettingsState.AccountOverview})
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    ClickableTextWithDivider(
+                        text1 = "Delete account",
+                        text2 = "Permanently delete your account",
+                        onClick = { TODO() },
+                        textColor = Color(0xFFB11C10)
+                    )
+
                 }
+                SettingsState.AccountOverview -> {
+                    AccountOverviewComposable(settingsViewModel = settingsViewModel, navController = navController )
+                }
+
+
             }
         }
     }
@@ -113,13 +133,14 @@ fun ClickableTextWithDivider(
     text1: String,
     text2: String,
     onClick: () -> Unit,
+    textColor : Color = MaterialTheme.colorScheme.primary,
 ) {
     Column {
         Text(
             text = text1,
             style = TextStyle(
                 fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.primary,
+                color = textColor,
             ),
             modifier = Modifier
                 .clickable { onClick() },

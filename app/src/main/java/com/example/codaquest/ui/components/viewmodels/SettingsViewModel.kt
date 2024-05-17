@@ -16,6 +16,8 @@ class SettingsViewModel() : ViewModel(), ErrorOperations {
     // States for Password
     var newPassword: String by mutableStateOf("")
     var confirmNewPassword: String by mutableStateOf("")
+
+    // Error states
     override var error by mutableStateOf("")
 
     override fun showError(error: String) {
