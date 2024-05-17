@@ -36,7 +36,7 @@ fun StepDropdown(
                 expanded = expanded,
                 onExpandedChange = { onExpandedChange(it) },
                 options = questionInfo.options,
-                label = "Level",
+                label = "",
                 onValueChangedEvent = { questionInfo.answer.value = it },
             )
         }

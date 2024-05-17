@@ -17,18 +17,22 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
+import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.domain.models.OnboardingData
 import com.example.codaquest.domain.models.Project
+import com.example.codaquest.ui.components.common.CustomTextField
+import com.example.codaquest.ui.components.common.DynamicDropdown
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.ProfileViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
@@ -143,14 +147,12 @@ fun ProfileScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(50.dp),
+                            .height(35.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
                         Text(
                             text = "Onboarding answers",
-//                        style = MaterialTheme.typography.titleLarge,
-                            fontSize = 30.sp,
-//                            modifier = Modifier.fillMaxWidth(),
+                            fontSize = 25.sp,
                         )
 
                         Image(
@@ -170,17 +172,41 @@ fun ProfileScreen(
                         Text(text = answer.value)
 
                         when (profileViewModel.editingOnboardingAnswers) {
-                            true -> TextField(
-                                value = when (answer.key) {
-                                    "level" -> profileViewModel.level
-                                    "languages" -> profileViewModel.languages
-                                    "project-length" -> profileViewModel.projectLength
-                                    else -> ""
-                                },
-                                onValueChange = { newValue ->
-                                    profileViewModel.editOnboardingAnswers(answer.key, newValue)
-                                },
-                            )
+                            true -> {
+                                if (answer.key == "level") {
+                                    Box(modifier = Modifier.fillMaxWidth(0.8f)) {
+                                        DynamicDropdown(
+                                            selectedValue = profileViewModel.level,
+                                            expanded = profileViewModel.onboardingLevelExpanded,
+                                            onExpandedChange = { profileViewModel.onboardingLevelExpanded = it },
+                                            options = LevelType.entries.map { it.toString() },
+                                            label = "",
+                                            onValueChangedEvent = {newValue ->
+                                                profileViewModel.editOnboardingAnswers(answer.key, newValue)
+                                            }
+                                        )
+                                    }
+                                }
+                                else {
+                                    CustomTextField(
+                                        value = when (answer.key) {
+                                            "languages" -> profileViewModel.languages
+                                            "project-length" -> profileViewModel.projectLength
+                                            else -> ""
+                                        },
+                                        onValueChange = { newValue ->
+                                            profileViewModel.editOnboardingAnswers(answer.key, newValue)
+                                        },
+                                        label = "",
+                                        keyboardType = when (answer.key) {
+                                            "languages" -> KeyboardType.Text
+                                            "project-length" -> KeyboardType.Number
+                                            else -> KeyboardType.Text
+                                        },
+                                        imeAction = ImeAction.Done
+                                    )
+                                }
+                            }
 
                             false -> Text(text = findOnboardingData(answer.key, sharedViewModel.user?.onboardingData))
                         }
@@ -195,6 +221,7 @@ fun ProfileScreen(
                                     user,
                                     onSuccess = { updatedUser ->
                                         sharedViewModel.changeUser(updatedUser)
+                                        profileViewModel.editingOnboardingAnswers = false
                                     },
                                 )
                             }

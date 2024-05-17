@@ -23,6 +23,7 @@ class ProfileViewModel : ViewModel() {
     )
 
     var editingOnboardingAnswers: Boolean by mutableStateOf(false)
+    var onboardingLevelExpanded: Boolean by mutableStateOf(false)
 
     fun toggleEditingOnboardingAnswers() {
         editingOnboardingAnswers = !editingOnboardingAnswers

@@ -8,4 +8,5 @@ data class QuestionInfo(
     val options: List<String>? = null,
     val type: QuestionTypes,
     var answer: MutableState<String> = mutableStateOf(""),
+    var dropdownAnswer: MutableState<String> = mutableStateOf(""),
 )

@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.codaquest.data.services.ApiService
 import com.example.codaquest.domain.interfaces.ErrorOperations
 import com.example.codaquest.domain.models.GenerateProjectDetails
+import com.example.codaquest.domain.models.OnboardingData
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.domain.models.QuestionInfo
 import com.example.codaquest.domain.models.QuestionTypes
@@ -48,6 +49,14 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
         ),
     )
 
+    fun addOnboardingAnswersAsDefaultAnswers(
+        onboardingData: OnboardingData
+    ) {
+        questions[1].answer.value = onboardingData.level.toString()
+        questions[2].dropdownAnswer.value = "Choose known coding language"
+        questions[3].answer.value = onboardingData.projectLength.toString()
+    }
+
     var currentQuestion: Int by mutableIntStateOf(0)
         private set
 
@@ -64,7 +73,12 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
 
         if ((currentQuestion < questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             currentQuestion++
-        } else {
+        }
+        else if ((currentQuestion < questions.size - 1) && !questions[currentQuestion].dropdownAnswer.value.contains("choose", ignoreCase = true)) {
+            questions[currentQuestion].answer.value = questions[currentQuestion].dropdownAnswer.value
+            currentQuestion++
+        }
+        else {
             showError("Please enter a value")
         }
     }
