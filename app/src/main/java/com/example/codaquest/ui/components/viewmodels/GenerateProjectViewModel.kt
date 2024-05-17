@@ -50,7 +50,7 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
     )
 
     fun addOnboardingAnswersAsDefaultAnswers(
-        onboardingData: OnboardingData
+        onboardingData: OnboardingData,
     ) {
         questions[1].answer.value = onboardingData.level.toString()
         questions[2].dropdownAnswer.value = "Choose known coding language"
@@ -73,12 +73,10 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
 
         if ((currentQuestion < questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             currentQuestion++
-        }
-        else if ((currentQuestion < questions.size - 1) && !questions[currentQuestion].dropdownAnswer.value.contains("choose", ignoreCase = true)) {
+        } else if ((currentQuestion < questions.size - 1) && !questions[currentQuestion].dropdownAnswer.value.contains("choose", ignoreCase = true)) {
             questions[currentQuestion].answer.value = questions[currentQuestion].dropdownAnswer.value
             currentQuestion++
-        }
-        else {
+        } else {
             showError("Please enter a value")
         }
     }

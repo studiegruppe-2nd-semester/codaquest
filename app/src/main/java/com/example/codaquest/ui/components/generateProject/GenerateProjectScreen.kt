@@ -47,7 +47,7 @@ fun GenerateProjectScreen(
 
     sharedViewModel.user?.onboardingData?.let { onboardingData ->
         generateProjectViewModel.addOnboardingAnswersAsDefaultAnswers(
-            onboardingData
+            onboardingData,
         )
     }
 
@@ -143,10 +143,9 @@ fun GenerateProjectScreen(
 
                             StepTextFieldAndDropdown(
                                 generateProjectViewModel = generateProjectViewModel,
-                                options = languageOptions
+                                options = languageOptions,
                             )
-                        }
-                        else {
+                        } else {
                             StepTextField(
                                 questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
                             )
@@ -169,9 +168,10 @@ fun GenerateProjectScreen(
                 }
             }
 
-            Box(modifier = Modifier
-                .fillMaxWidth(),
-                contentAlignment = Alignment.Center
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(text = generateProjectViewModel.error)
             }

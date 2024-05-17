@@ -181,13 +181,12 @@ fun ProfileScreen(
                                             onExpandedChange = { profileViewModel.onboardingLevelExpanded = it },
                                             options = LevelType.entries.map { it.toString() },
                                             label = "",
-                                            onValueChangedEvent = {newValue ->
+                                            onValueChangedEvent = { newValue ->
                                                 profileViewModel.editOnboardingAnswers(answer.key, newValue)
-                                            }
+                                            },
                                         )
                                     }
-                                }
-                                else {
+                                } else {
                                     CustomTextField(
                                         value = when (answer.key) {
                                             "languages" -> profileViewModel.languages
@@ -203,7 +202,7 @@ fun ProfileScreen(
                                             "project-length" -> KeyboardType.Number
                                             else -> KeyboardType.Text
                                         },
-                                        imeAction = ImeAction.Done
+                                        imeAction = ImeAction.Done,
                                     )
                                 }
                             }

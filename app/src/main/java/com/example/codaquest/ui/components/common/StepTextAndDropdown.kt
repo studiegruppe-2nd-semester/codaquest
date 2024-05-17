@@ -34,9 +34,10 @@ fun StepTextFieldAndDropdown(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Box(modifier = Modifier
-            .fillMaxWidth(0.7f),
-            contentAlignment = Alignment.Center
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(0.7f),
+            contentAlignment = Alignment.Center,
         ) {
             DynamicDropdown(
                 selectedValue = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion].dropdownAnswer.value,
@@ -50,7 +51,6 @@ fun StepTextFieldAndDropdown(
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(text = "Or write custom answer")
-
 
         Spacer(modifier = Modifier.height(20.dp))
 
