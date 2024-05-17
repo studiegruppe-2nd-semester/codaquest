@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -67,8 +66,7 @@ fun PasswordChangeComposable(
         }) {
             Text(text = "Change Password")
         }
-    }
-    else {
+    } else {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -76,7 +74,7 @@ fun PasswordChangeComposable(
             verticalArrangement = Arrangement.spacedBy(15.dp),
         ) {
             Text(text = "Please login again to confirm the change of password")
-            
+
             CustomTextField(
                 value = settingsViewModel.loginInfo.email,
                 onValueChange = { settingsViewModel.loginInfo = settingsViewModel.loginInfo.copy(email = it) },
@@ -96,7 +94,7 @@ fun PasswordChangeComposable(
             Button(
                 onClick = {
                     settingsViewModel.updatePassword(
-                        onSuccess = { navController.navigate("profile") }
+                        onSuccess = { navController.navigate("profile") },
                     )
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -105,11 +103,9 @@ fun PasswordChangeComposable(
             ) {
                 Text(text = "Re-authenticate")
             }
-
         }
     }
     if (settingsViewModel.error.isNotEmpty()) {
         Text(text = settingsViewModel.error)
     }
-
 }

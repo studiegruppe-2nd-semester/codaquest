@@ -31,15 +31,14 @@ class SettingsViewModel() : ViewModel(), ErrorOperations {
         if (newPassword == confirmNewPassword) {
             showError("")
             reAuthenticate = true
-        }
-        else {
+        } else {
             showError("Passwords do not match")
         }
     }
     fun updatePassword(
-        onSuccess: () -> Unit
+        onSuccess: () -> Unit,
     ) {
-        accountService.updatePassword(loginInfo,newPassword) { success, message ->
+        accountService.updatePassword(loginInfo, newPassword) { success, message ->
             showError(message)
             if (success) {
                 println("Password  updated successfully")
@@ -49,6 +48,5 @@ class SettingsViewModel() : ViewModel(), ErrorOperations {
                 println("Failed to update password: $message")
             }
         }
-
     }
 }

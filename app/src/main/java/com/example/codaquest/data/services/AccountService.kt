@@ -10,7 +10,6 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import java.lang.Exception
-import kotlin.math.log
 
 class AccountService {
     private val userRepository = UserRepository()
@@ -69,7 +68,7 @@ class AccountService {
     fun updatePassword(
         loginInfo: LoginInfo,
         newPassword: String,
-        onResult: (Boolean,String) -> Unit
+        onResult: (Boolean, String) -> Unit,
     ) {
         val user = Firebase.auth.currentUser
 
@@ -99,4 +98,4 @@ class AccountService {
             onResult(false, "No authenticated user.")
         }
     }
-    }
+}
