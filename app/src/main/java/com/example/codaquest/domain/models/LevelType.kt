@@ -7,8 +7,8 @@ enum class LevelType {
 }
 
 // This function we use to  convert a string to enum class. We use this in:
-//** data/repositories/ProjectRepository
-//** data/repositories/UserRepository
+// ** data/repositories/ProjectRepository
+// ** data/repositories/UserRepository
 fun stringToLevelType(levelString: String): LevelType {
     return when (levelString) {
         "Beginner" -> LevelType.Beginner
