@@ -27,7 +27,7 @@ fun AccountOverviewComposable(
     sharedViewModel: SharedViewModel,
     navController: NavController,
 ) {
-    Column (
+    Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Text(
@@ -35,7 +35,7 @@ fun AccountOverviewComposable(
             fontSize = 30.sp,
             color = Color(0xFF6BB38A),
         )
-        Box (
+        Box(
             modifier = Modifier
                 .padding(5.dp)
                 .fillMaxWidth()
@@ -43,7 +43,6 @@ fun AccountOverviewComposable(
                 .background(color = MaterialTheme.colorScheme.secondary)
                 .padding(15.dp, 10.dp),
         ) {
-
             Spacer(modifier = Modifier.height(15.dp))
             sharedViewModel.user?.username?.let { username ->
                 Text(
@@ -59,6 +58,5 @@ fun AccountOverviewComposable(
                 color = Color.Black,
             )
         }
-
     }
 }
