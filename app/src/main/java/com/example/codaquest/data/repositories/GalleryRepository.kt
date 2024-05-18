@@ -13,7 +13,7 @@ class GalleryRepository {
     ) {
         db.collection("gallery")
             .get()
-            .addOnSuccessListener { documents ->
+            .addOnSuccessListener {  documents ->
                 val projects: List<Project> = documents.map { document ->
                     Project(
                         projectId = document.id,
