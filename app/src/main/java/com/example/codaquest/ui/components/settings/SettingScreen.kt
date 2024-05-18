@@ -116,7 +116,7 @@ fun SettingsScreen(
                     )
                 }
                 SettingsState.AccountOverview -> {
-                    AccountOverviewComposable(settingsViewModel = settingsViewModel, navController = navController)
+                    AccountOverviewComposable(settingsViewModel = settingsViewModel, navController = navController, sharedViewModel = sharedViewModel)
                 }
             }
         }
