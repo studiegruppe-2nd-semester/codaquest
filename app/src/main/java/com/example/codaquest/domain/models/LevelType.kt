@@ -14,6 +14,6 @@ fun stringToLevelType(levelString: String): LevelType {
         "Beginner" -> LevelType.Beginner
         "Intermediate" -> LevelType.Intermediate
         "Advanced" -> LevelType.Advanced
-        else -> LevelType.Beginner // Handle the default case appropriately
+        else -> LevelType.Beginner
     }
 }
