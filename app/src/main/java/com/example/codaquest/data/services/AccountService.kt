@@ -1,6 +1,5 @@
 package com.example.codaquest.data.services
 
-import android.nfc.Tag
 import android.util.Log
 import com.example.codaquest.data.repositories.UserRepository
 import com.example.codaquest.domain.interfaces.ErrorOperations
@@ -100,7 +99,7 @@ class AccountService {
         }
     }
 
-    fun deleteAccount (onCompleted: (Boolean) -> Unit) {
+    fun deleteAccount(onCompleted: (Boolean) -> Unit) {
         val user = Firebase.auth.currentUser!!
 
         user.delete()

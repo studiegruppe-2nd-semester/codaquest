@@ -86,7 +86,7 @@ fun SetupNavHost(
             SettingsScreen(
                 navController = navController,
                 sharedViewModel = sharedViewModel,
-                loginViewModel = LoginViewModel()
+                loginViewModel = LoginViewModel(),
 
             )
         }

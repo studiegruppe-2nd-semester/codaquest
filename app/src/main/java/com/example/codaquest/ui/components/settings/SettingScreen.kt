@@ -1,6 +1,5 @@
 package com.example.codaquest.ui.components.settings
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,7 +40,7 @@ import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 fun SettingsScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
 ) {
     val settingsViewModel: SettingsViewModel = viewModel()
 
@@ -111,7 +110,6 @@ fun SettingsScreen(
                         onClick = { settingsViewModel.settingsState = SettingsState.AccountOverview },
                     )
 
-
                     Spacer(modifier = Modifier.height(10.dp))
 
                     ClickableTextWithDivider(
@@ -131,27 +129,27 @@ fun SettingsScreen(
         AlertDialog(
             onDismissRequest = {
                 settingsViewModel.showReLoginPopUp = false
-                settingsViewModel.showPopUpDialog = false },
+                settingsViewModel.showPopUpDialog = false
+            },
             title = {
-                    if (settingsViewModel.showReLoginPopUp) {
-                        Text(text = "Login")
-                    } else {
-                        Text("Delete Account")
-                    }
-                    },
+                if (settingsViewModel.showReLoginPopUp) {
+                    Text(text = "Login")
+                } else {
+                    Text("Delete Account")
+                }
+            },
             text = {
-                   if (settingsViewModel.showReLoginPopUp) {
-                       ReAuthLoginComposable(
-                           navController = navController,
-                           sharedViewModel = sharedViewModel,
-                           loginViewModel = loginViewModel,
-                           onReAuthSucces = {
-                               settingsViewModel.showReLoginPopUp = false
-                               settingsViewModel.showPopUpDialog = true
-                           }
-                       )
-
-                   }
+                if (settingsViewModel.showReLoginPopUp) {
+                    ReAuthLoginComposable(
+                        navController = navController,
+                        sharedViewModel = sharedViewModel,
+                        loginViewModel = loginViewModel,
+                        onReAuthSucces = {
+                            settingsViewModel.showReLoginPopUp = false
+                            settingsViewModel.showPopUpDialog = true
+                        },
+                    )
+                }
             },
             confirmButton = {
                 if (settingsViewModel.showPopUpDialog && !settingsViewModel.showReLoginPopUp) {
@@ -161,27 +159,24 @@ fun SettingsScreen(
                                 navController.navigate("home")
                                 settingsViewModel.showPopUpDialog = false
                             }
-                        }
+                        },
                     ) {
                         Text(text = "Delete Account")
                     }
                 }
-
-
             },
             dismissButton = {
                 Button(
                     onClick = {
                         settingsViewModel.showReLoginPopUp = false
                         settingsViewModel.showPopUpDialog = false
-                    }
+                    },
                 ) {
                     Text(text = "Cancel")
                 }
-            }
+            },
         )
     }
-
 
     Box(contentAlignment = Alignment.BottomCenter) {
         NavBar(currentScreen = "profile", navController = navController, sharedViewModel = sharedViewModel)
@@ -223,5 +218,3 @@ fun ClickableTextWithDivider(
         )
     }
 }
-
-

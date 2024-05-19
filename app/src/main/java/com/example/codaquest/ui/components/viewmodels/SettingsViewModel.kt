@@ -1,8 +1,5 @@
 package com.example.codaquest.ui.components.viewmodels
 
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -59,8 +56,7 @@ class SettingsViewModel() : ViewModel(), ErrorOperations {
         }
     }
 
-    fun deleteAccount (onCompleted: (Boolean) -> Unit) {
+    fun deleteAccount(onCompleted: (Boolean) -> Unit) {
         accountService.deleteAccount(onCompleted)
     }
-
 }
