@@ -1,5 +1,8 @@
 package com.example.codaquest.ui.components.viewmodels
 
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,6 +15,10 @@ import com.example.codaquest.domain.models.SettingsState
 // Nathasja
 class SettingsViewModel() : ViewModel(), ErrorOperations {
     var settingsState: SettingsState by mutableStateOf(SettingsState.Overview)
+
+    // State to show pop up dialog
+    var showPopUpDialog by mutableStateOf(false)
+    var showReLoginPopUp by mutableStateOf(false)
 
     // States for Password
     var newPassword: String by mutableStateOf("")
@@ -51,4 +58,9 @@ class SettingsViewModel() : ViewModel(), ErrorOperations {
             }
         }
     }
+
+    fun deleteAccount (onCompleted: (Boolean) -> Unit) {
+        accountService.deleteAccount(onCompleted)
+    }
+
 }

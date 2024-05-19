@@ -1,5 +1,6 @@
 package com.example.codaquest.data.services
 
+import android.nfc.Tag
 import android.util.Log
 import com.example.codaquest.data.repositories.UserRepository
 import com.example.codaquest.domain.interfaces.ErrorOperations
@@ -97,5 +98,20 @@ class AccountService {
             Log.e("AccountService", "No authenticated user.")
             onResult(false, "No authenticated user.")
         }
+    }
+
+    fun deleteAccount (onCompleted: (Boolean) -> Unit) {
+        val user = Firebase.auth.currentUser!!
+
+        user.delete()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d("Delete Account", "Account Deleted")
+                    onCompleted(true)
+                } else {
+                    Log.e("Delete Account", "Account Deletion Failed: ${task.exception}")
+                    onCompleted(false)
+                }
+            }
     }
 }

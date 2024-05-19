@@ -14,6 +14,7 @@ import com.example.codaquest.ui.components.onboarding.OnboardingScreen
 import com.example.codaquest.ui.components.profile.ProfileScreen
 import com.example.codaquest.ui.components.savedProjects.SavedProjectsScreen
 import com.example.codaquest.ui.components.settings.SettingsScreen
+import com.example.codaquest.ui.components.viewmodels.LoginViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 @Composable
@@ -85,6 +86,8 @@ fun SetupNavHost(
             SettingsScreen(
                 navController = navController,
                 sharedViewModel = sharedViewModel,
+                loginViewModel = LoginViewModel()
+
             )
         }
     }

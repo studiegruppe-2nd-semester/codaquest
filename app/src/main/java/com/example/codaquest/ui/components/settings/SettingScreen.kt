@@ -1,5 +1,6 @@
 package com.example.codaquest.ui.components.settings
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,6 +32,7 @@ import androidx.navigation.NavController
 import com.example.codaquest.R
 import com.example.codaquest.domain.models.SettingsState
 import com.example.codaquest.ui.components.navbar.NavBar
+import com.example.codaquest.ui.components.viewmodels.LoginViewModel
 import com.example.codaquest.ui.components.viewmodels.SettingsViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
@@ -37,6 +41,7 @@ import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 fun SettingsScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
+    loginViewModel: LoginViewModel
 ) {
     val settingsViewModel: SettingsViewModel = viewModel()
 
@@ -106,12 +111,13 @@ fun SettingsScreen(
                         onClick = { settingsViewModel.settingsState = SettingsState.AccountOverview },
                     )
 
+
                     Spacer(modifier = Modifier.height(10.dp))
 
                     ClickableTextWithDivider(
-                        text1 = "Delete account",
+                        text1 = "Delete Account",
                         text2 = "Permanently delete your account",
-                        onClick = { TODO() },
+                        onClick = { settingsViewModel.showReLoginPopUp = true },
                         textColor = Color(0xFFB11C10),
                     )
                 }
@@ -121,6 +127,62 @@ fun SettingsScreen(
             }
         }
     }
+    if (settingsViewModel.showReLoginPopUp || settingsViewModel.showPopUpDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                settingsViewModel.showReLoginPopUp = false
+                settingsViewModel.showPopUpDialog = false },
+            title = {
+                    if (settingsViewModel.showReLoginPopUp) {
+                        Text(text = "Login")
+                    } else {
+                        Text("Delete Account")
+                    }
+                    },
+            text = {
+                   if (settingsViewModel.showReLoginPopUp) {
+                       ReAuthLoginComposable(
+                           navController = navController,
+                           sharedViewModel = sharedViewModel,
+                           loginViewModel = loginViewModel,
+                           onReAuthSucces = {
+                               settingsViewModel.showReLoginPopUp = false
+                               settingsViewModel.showPopUpDialog = true
+                           }
+                       )
+
+                   }
+            },
+            confirmButton = {
+                if (settingsViewModel.showPopUpDialog && !settingsViewModel.showReLoginPopUp) {
+                    Button(
+                        onClick = {
+                            settingsViewModel.deleteAccount {
+                                navController.navigate("home")
+                                settingsViewModel.showPopUpDialog = false
+                            }
+                        }
+                    ) {
+                        Text(text = "Delete Account")
+                    }
+                }
+
+
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        settingsViewModel.showReLoginPopUp = false
+                        settingsViewModel.showPopUpDialog = false
+                    }
+                ) {
+                    Text(text = "Cancel")
+                }
+            }
+        )
+    }
+
+
     Box(contentAlignment = Alignment.BottomCenter) {
         NavBar(currentScreen = "profile", navController = navController, sharedViewModel = sharedViewModel)
     }
@@ -161,3 +223,5 @@ fun ClickableTextWithDivider(
         )
     }
 }
+
+
