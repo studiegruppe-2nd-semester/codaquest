@@ -64,6 +64,7 @@ class UserRepository {
     ) {
         val dataMap: Map<String, String> = mapOf(
             "username" to username,
+            "email" to email
         )
         db.collection("users").document(uid).set(dataMap)
             .addOnSuccessListener {
