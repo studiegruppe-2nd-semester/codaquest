@@ -71,7 +71,7 @@ class UserRepository {
                     User(
                         userUid = uid,
                         username = username,
-                        email = email
+                        email = email,
                     ),
                 )
             }
