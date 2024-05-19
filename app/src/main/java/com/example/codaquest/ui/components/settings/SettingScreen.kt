@@ -102,7 +102,7 @@ fun SettingsScreen(
 
                     ClickableTextWithDivider(
                         text1 = "Personal Details",
-                        text2 = "Name, Username",
+                        text2 = "Username, email",
                         onClick = { settingsViewModel.settingsState = SettingsState.AccountOverview },
                     )
 

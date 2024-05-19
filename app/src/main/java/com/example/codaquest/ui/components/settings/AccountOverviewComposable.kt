@@ -43,20 +43,23 @@ fun AccountOverviewComposable(
                 .background(color = MaterialTheme.colorScheme.secondary)
                 .padding(15.dp, 10.dp),
         ) {
-            Spacer(modifier = Modifier.height(15.dp))
-            sharedViewModel.user?.username?.let { username ->
-                Text(
-                    text = "Username: $username ",
-                    fontSize = 20.sp,
-                    color = Color.Black,
-                )
+            Column {
+                sharedViewModel.user?.username?.let { username ->
+                    Text(
+                        text = "Username: $username",
+                        fontSize = 20.sp,
+                        color = Color.Black,
+                    )
+                }
+                Spacer(modifier = Modifier.height(15.dp))
+                sharedViewModel.user?.email?.let { email ->
+                    Text(
+                        text = "Email: $email",
+                        fontSize = 20.sp,
+                        color = Color.Black,
+                    )
+                }
             }
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "",
-                fontSize = 20.sp,
-                color = Color.Black,
-            )
         }
     }
 }

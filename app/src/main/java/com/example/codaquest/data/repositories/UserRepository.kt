@@ -41,6 +41,7 @@ class UserRepository {
                         User(
                             userUid = document.id,
                             username = document.data?.get("username")?.toString(),
+                            email = document.data?.get("email")?.toString(),
                             onboardingData = onboardingData,
                             projects = projects,
                         ),
@@ -58,6 +59,7 @@ class UserRepository {
     fun addUserData(
         uid: String,
         username: String,
+        email: String,
         onSuccess: (User) -> Unit,
     ) {
         val dataMap: Map<String, String> = mapOf(
@@ -69,6 +71,7 @@ class UserRepository {
                     User(
                         userUid = uid,
                         username = username,
+                        email = email
                     ),
                 )
             }

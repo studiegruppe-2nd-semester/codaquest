@@ -23,7 +23,7 @@ class AccountService {
             .addOnSuccessListener {
                 val user = Firebase.auth.currentUser
                 if (user != null) {
-                    userRepository.addUserData(user.uid, loginInfo.username, onSuccess = { onSuccess(it) })
+                    userRepository.addUserData(user.uid, loginInfo.username, loginInfo.email, onSuccess = { onSuccess(it) })
                 }
             }
             .addOnFailureListener {
