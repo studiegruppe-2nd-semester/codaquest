@@ -1,5 +1,7 @@
 package com.example.codaquest.data.repositories
 
+import android.content.ContentValues
+import android.util.Log
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.domain.models.stringToLevelType
 import com.google.firebase.Firebase
@@ -31,6 +33,9 @@ class GalleryRepository {
                 }
 
                 onSuccess(projects)
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error fetching gallery projects", e)
             }
     }
 }

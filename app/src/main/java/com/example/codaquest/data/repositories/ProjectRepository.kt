@@ -36,6 +36,9 @@ class ProjectRepository {
 
                 onSuccess(projects)
             }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error fetching saved user projects", e)
+            }
     }
 
     fun saveUserProject(
@@ -51,7 +54,7 @@ class ProjectRepository {
                 )
             }
             .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
+                Log.w(ContentValues.TAG, "Error in adding project to user", e)
             }
     }
 
@@ -63,6 +66,9 @@ class ProjectRepository {
             .delete()
             .addOnSuccessListener {
                 onSuccess()
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error deleting project from user", e)
             }
     }
 }

@@ -20,7 +20,7 @@ class UserRepository {
                 document.data?.get("key")?.toString()?.let { onSuccess(it) }
             }
             .addOnFailureListener { e ->
-                println("Error getting documents: $e")
+                println("Error fetching key: $e")
             }
     }
 
@@ -51,7 +51,7 @@ class UserRepository {
                 Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
             }
             .addOnFailureListener { exception ->
-                Log.w(ContentValues.TAG, "Error getting documents: ", exception)
+                Log.w(ContentValues.TAG, "Error getting user data: ", exception)
             }
     }
 
@@ -73,7 +73,7 @@ class UserRepository {
                 )
             }
             .addOnFailureListener { e ->
-                Log.d("addData", "addData failure: $e")
+                Log.d("addData", "Error adding user data: $e")
             }
     }
 
@@ -106,7 +106,7 @@ class UserRepository {
                 )
             }
             .addOnFailureListener { e ->
-                Log.d("update", "update failure: $e")
+                Log.d("update", "Error updating user's onboarding data: $e")
             }
     }
 }

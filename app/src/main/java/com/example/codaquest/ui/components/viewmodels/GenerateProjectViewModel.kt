@@ -62,7 +62,14 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
 
     fun previousQuestion() {
         if (currentQuestion > 0) {
-            currentQuestion--
+            if (error.isNotEmpty()) {
+                showError("")
+            }
+            if (showGeneratedProject) {
+                showGeneratedProject = false
+            } else {
+                currentQuestion--
+            }
         }
     }
 
@@ -85,6 +92,8 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
         key: String,
         onSuccess: (Project) -> Unit,
     ) {
+        loading = true
+
         val apiService = ApiService()
         apiService.initiateApi(key)
 
@@ -98,11 +107,18 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
         viewModelScope.launch {
             apiService.generateProjectSuggestion(
                 generateProjectDetails,
-                onSuccess = { onSuccess(it) },
-                onError = { error -> showError(error) },
+                onSuccess = {
+                    onSuccess(it)
+                    loading = false
+                },
+                onError = { error ->
+                    showError(error)
+                    loading = false
+                },
             )
         }
     }
 
     var showGeneratedProject: Boolean by mutableStateOf(false)
+    var loading: Boolean by mutableStateOf(false)
 }

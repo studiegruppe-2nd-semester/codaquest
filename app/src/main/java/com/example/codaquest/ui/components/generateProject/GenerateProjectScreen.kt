@@ -3,12 +3,8 @@ package com.example.codaquest.ui.components.generateProject
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
 import com.example.codaquest.domain.models.QuestionTypes
+import com.example.codaquest.ui.components.common.LoadingDots
 import com.example.codaquest.ui.components.common.ProjectComposable
 import com.example.codaquest.ui.components.common.StepDropdown
 import com.example.codaquest.ui.components.common.StepIntField
@@ -51,120 +48,134 @@ fun GenerateProjectScreen(
         )
     }
 
-    Column(
+    LazyColumn(
         modifier = Modifier
-            .padding(0.5.dp)
-            .fillMaxSize(),
+            .padding(0.5.dp),
     ) {
-        // PROGRESS BAR
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.1f),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Button(
+        item {
+            // PROGRESS BAR
+            Row(
                 modifier = Modifier
-                    .padding(horizontal = 5.dp)
-                    .fillMaxWidth(0.1f),
-                contentPadding = PaddingValues(0.dp),
-                onClick = { navController.navigate("home") },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                ),
+                    .fillMaxWidth()
+                    .height(60.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Image(painter = painterResource(id = R.drawable.ic_back_arrow), contentDescription = "arrow icon")
-            }
-
-            LinearProgressIndicator(
-                progress = { (generateProjectViewModel.currentQuestion + 1).toFloat() / generateProjectViewModel.questions.size.toFloat() },
-                modifier = Modifier
-                    .padding(horizontal = 5.dp)
-                    .fillMaxWidth(0.8f),
-                color = MaterialTheme.colorScheme.primary, // progress color
-            )
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
+                Button(
                     modifier = Modifier
-                        .padding(horizontal = 5.dp),
-                    text = "${generateProjectViewModel.currentQuestion + 1}/${generateProjectViewModel.questions.size}",
+                        .padding(horizontal = 5.dp)
+                        .fillMaxWidth(0.1f),
+                    contentPadding = PaddingValues(0.dp),
+                    onClick = { navController.navigate("home") },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                    ),
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_back_arrow),
+                        contentDescription = "arrow icon",
+                    )
+                }
+
+                LinearProgressIndicator(
+                    progress = { (generateProjectViewModel.currentQuestion + 1).toFloat() / generateProjectViewModel.questions.size.toFloat() },
+                    modifier = Modifier
+                        .padding(horizontal = 5.dp)
+                        .fillMaxWidth(0.8f),
+                    color = MaterialTheme.colorScheme.primary, // progress color
                 )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 5.dp),
+                        text = "${generateProjectViewModel.currentQuestion + 1}/${generateProjectViewModel.questions.size}",
+                    )
+                }
             }
-        }
 
-        if (generateProjectViewModel.showGeneratedProject) {
-            LazyColumn {
-                item {
-                    sharedViewModel.lastGeneratedProject?.let { ProjectComposable(project = it, deletable = false, onDelete = {}) }
+            if (generateProjectViewModel.showGeneratedProject) {
+                sharedViewModel.lastGeneratedProject?.let {
+                    ProjectComposable(
+                        project = it,
+                        deletable = false,
+                        onDelete = {},
+                    )
+                }
 
-                    if (sharedViewModel.user?.userUid != null) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            Button(
-                                onClick = {
-                                    sharedViewModel.user?.userUid?.let { uid ->
-                                        sharedViewModel.lastGeneratedProject?.let { project ->
-                                            sharedViewModel.saveProject(uid, project)
-                                        }
-                                        navController.navigate("saved-projects")
+                if (sharedViewModel.user?.userUid != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Button(
+                            onClick = {
+                                sharedViewModel.user?.userUid?.let { uid ->
+                                    sharedViewModel.lastGeneratedProject?.let { project ->
+                                        sharedViewModel.saveProject(uid, project)
                                     }
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.tertiary,
-                                    contentColor = Color.White,
-                                ),
-                            ) {
-                                Text(text = "Save project")
-                            }
+                                    navController.navigate("saved-projects")
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.tertiary,
+                                contentColor = Color.White,
+                            ),
+                        ) {
+                            Text(text = "Save project")
                         }
                     }
                 }
-            }
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.5f),
-                contentAlignment = Alignment.Center,
-            ) {
-                when (generateProjectViewModel.questions[generateProjectViewModel.currentQuestion].type) {
-                    QuestionTypes.TextField -> {
-                        if (sharedViewModel.user?.onboardingData?.languages != null && generateProjectViewModel.questions[generateProjectViewModel.currentQuestion].question.contains("language")) {
-                            val languageOptions: MutableList<String> = mutableListOf("Choose known coding language")
-                            languageOptions.addAll(sharedViewModel.user?.onboardingData?.languages!!.split(",").map { it.trim() })
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    when (generateProjectViewModel.questions[generateProjectViewModel.currentQuestion].type) {
+                        QuestionTypes.TextField -> {
+                            if (sharedViewModel.user?.onboardingData?.languages != null && generateProjectViewModel.questions[generateProjectViewModel.currentQuestion].question.contains(
+                                    "language",
+                                )
+                            ) {
+                                val languageOptions: MutableList<String> =
+                                    mutableListOf("Choose known coding language")
+                                languageOptions.addAll(
+                                    sharedViewModel.user?.onboardingData?.languages!!.split(
+                                        ",",
+                                    ).map { it.trim() },
+                                )
 
-                            StepTextFieldAndDropdown(
-                                generateProjectViewModel = generateProjectViewModel,
-                                options = languageOptions,
-                            )
-                        } else {
-                            StepTextField(
-                                questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
-                            )
+                                StepTextFieldAndDropdown(
+                                    generateProjectViewModel = generateProjectViewModel,
+                                    options = languageOptions,
+                                )
+                            } else {
+                                StepTextField(
+                                    questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
+                                )
+                            }
                         }
+
+                        QuestionTypes.RadioButton -> StepRadioButtons(
+                            questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
+                        )
+
+                        QuestionTypes.IntField -> StepIntField(
+                            questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
+                        )
+
+                        QuestionTypes.Dropdown -> StepDropdown(
+                            questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
+                            expanded = generateProjectViewModel.dropdownExpanded,
+                            onExpandedChange = { generateProjectViewModel.dropdownExpanded = it },
+                        )
                     }
-
-                    QuestionTypes.RadioButton -> StepRadioButtons(
-                        questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
-                    )
-
-                    QuestionTypes.IntField -> StepIntField(
-                        questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
-                    )
-
-                    QuestionTypes.Dropdown -> StepDropdown(
-                        questionInfo = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion],
-                        expanded = generateProjectViewModel.dropdownExpanded,
-                        onExpandedChange = { generateProjectViewModel.dropdownExpanded = it },
-                    )
                 }
             }
 
@@ -176,7 +187,16 @@ fun GenerateProjectScreen(
                 Text(text = generateProjectViewModel.error)
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Box(
+                modifier = Modifier
+                    .height(20.dp)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (generateProjectViewModel.loading) {
+                    LoadingDots()
+                }
+            }
 
             Row(
                 modifier = Modifier
@@ -194,7 +214,7 @@ fun GenerateProjectScreen(
                 }
 
                 // After answering last question, the button should generate project instead of going to next question
-                if ((generateProjectViewModel.currentQuestion == generateProjectViewModel.questions.size - 1)) {
+                if (generateProjectViewModel.currentQuestion == generateProjectViewModel.questions.size - 1) {
                     Button(
                         enabled = generateProjectViewModel.questions[generateProjectViewModel.currentQuestion].answer.value.isNotEmpty(),
                         modifier = Modifier.padding(5.dp),
@@ -202,8 +222,7 @@ fun GenerateProjectScreen(
                             sharedViewModel.key?.let {
                                 generateProjectViewModel.getProjectSuggestion(
                                     key = it,
-                                    onSuccess = {
-                                            project ->
+                                    onSuccess = { project ->
                                         sharedViewModel.lastGeneratedProject = project
                                         generateProjectViewModel.showGeneratedProject = true
                                     },
