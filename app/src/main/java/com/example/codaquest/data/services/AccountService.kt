@@ -1,7 +1,6 @@
 package com.example.codaquest.data.services
 
 import com.example.codaquest.data.repositories.UserRepository
-import com.example.codaquest.domain.interfaces.ErrorOperations
 import com.example.codaquest.domain.models.LoginInfo
 import com.example.codaquest.domain.models.User
 import com.google.firebase.Firebase
@@ -13,7 +12,7 @@ class AccountService {
 
     fun signUp(
         loginInfo: LoginInfo,
-        errorOperations: ErrorOperations,
+        onError: (String) -> Unit,
         onSuccess: (User) -> Unit,
     ) {
         Firebase.auth.createUserWithEmailAndPassword(loginInfo.email, loginInfo.password)
@@ -24,13 +23,13 @@ class AccountService {
                 }
             }
             .addOnFailureListener {
-                errorOperations.showError("User already exists")
+                onError("User already exists")
             }
     }
 
     fun login(
         loginInfo: LoginInfo,
-        errorOperations: ErrorOperations,
+        onError: (String) -> Unit,
         onSuccess: (User) -> Unit,
     ) {
         Firebase.auth.signInWithEmailAndPassword(loginInfo.email, loginInfo.password)
@@ -46,7 +45,7 @@ class AccountService {
                 }
             }
             .addOnFailureListener {
-                errorOperations.showError("Wrong username or password")
+                onError("User not found")
             }
     }
 

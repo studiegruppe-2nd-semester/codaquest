@@ -28,12 +28,6 @@ fun RowScope.NavBarOption(
             },
         contentAlignment = Alignment.Center,
     ) {
-//        Text(
-//            text = contentDescription,
-//            fontSize = 20.sp,
-//            color = Color.White,
-//            textAlign = TextAlign.Center
-//        )
         Image(
             painter = painterResource(id = painterResourceId),
             contentDescription = contentDescription,

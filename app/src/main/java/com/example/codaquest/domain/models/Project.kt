@@ -12,7 +12,7 @@ data class Project(
 
     var language: String? = null,
     val length: Int? = null,
-    val level: LevelType? = LevelType.Beginner,
+    val level: LevelType? = null,
 
     val description: String? = null,
 

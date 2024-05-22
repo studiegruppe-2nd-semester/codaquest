@@ -106,7 +106,7 @@ class UserValidationUtilTest {
     }
 
     @Test
-    fun `valid password returns success`() {
+    fun `valid email and password returns success`() {
         val result = UserValidationUtil.validateLogin(
             LoginInfo(
                 email = "email@email.com",
