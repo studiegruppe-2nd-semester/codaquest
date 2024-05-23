@@ -83,7 +83,6 @@ fun ProfileScreen(
                                 profileViewModel.logout(
                                     onSuccess = {
                                         sharedViewModel.changeUser(null)
-                                        profileViewModel.showDialog = true
                                         profileViewModel.showConfirmationDialog = true
                                     },
                                 )
