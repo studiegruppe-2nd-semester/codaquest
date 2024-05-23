@@ -105,29 +105,28 @@ fun GenerateProjectScreen(
                         onDelete = {},
                     )
                 }
-
-                if (sharedViewModel.user?.userUid != null) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Button(
-                            onClick = {
-                                sharedViewModel.user?.userUid?.let { uid ->
-                                    sharedViewModel.lastGeneratedProject?.let { project ->
-                                        sharedViewModel.saveProject(uid, project)
-                                    }
-                                    navController.navigate("saved-projects")
+            }
+            if (sharedViewModel.user?.userUid != null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Button(
+                        onClick = {
+                            sharedViewModel.user?.userUid?.let { uid ->
+                                sharedViewModel.lastGeneratedProject?.let { project ->
+                                    sharedViewModel.saveProject(uid, project)
                                 }
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.tertiary,
-                                contentColor = Color.White,
-                            ),
-                        ) {
-                            Text(text = "Save project")
-                        }
+                                navController.navigate("saved-projects")
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.tertiary,
+                            contentColor = Color.White,
+                        ),
+                    ) {
+                        Text(text = "Save project")
                     }
                 }
             } else {

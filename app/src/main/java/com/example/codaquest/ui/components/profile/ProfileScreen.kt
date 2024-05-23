@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,6 +30,7 @@ import com.example.codaquest.R
 import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.domain.models.OnboardingData
 import com.example.codaquest.domain.models.Project
+import com.example.codaquest.ui.components.common.ConfirmationDialog
 import com.example.codaquest.ui.components.common.CustomTextField
 import com.example.codaquest.ui.components.common.DynamicDropdown
 import com.example.codaquest.ui.components.navbar.NavBar
@@ -78,42 +78,31 @@ fun ProfileScreen(
                             .clickable {
                                 profileViewModel.logout(
                                     onSuccess = {
-                                        profileViewModel.showDialog = true
+                                        profileViewModel.showConfirmationDialog = true
                                     },
                                 )
                             },
                     )
                 }
-                if (profileViewModel.showDialog) {
-                    AlertDialog(
-                        onDismissRequest = { profileViewModel.showDialog = false },
-                        title = { Text("Logout") },
-                        text = { Text("Are you sure you want to log out?") },
-                        confirmButton = {
-                            Button(
-                                onClick = {
-                                    profileViewModel.logout(
-                                        onSuccess = {
-                                            sharedViewModel.changeUser(null)
-                                            sharedViewModel.lastGeneratedProject = Project()
-                                            navController.navigate("home")
-                                            profileViewModel.showDialog = false
-                                        },
-                                    )
-                                },
-                            ) {
-                                Text("Logout")
-                            }
-                        },
-                        dismissButton = {
-                            Button(
-                                onClick = { profileViewModel.showDialog = false },
-                            ) {
-                                Text("Cancel")
-                            }
-                        },
-                    )
-                }
+
+                ConfirmationDialog(
+                    showDialog = profileViewModel.showConfirmationDialog,
+                    onDismiss = { profileViewModel.showConfirmationDialog = false },
+                    onConfirm = {
+                        profileViewModel.logout(
+                            onSuccess = {
+                                sharedViewModel.changeUser(null)
+                                sharedViewModel.lastGeneratedProject = Project()
+                                navController.navigate("home")
+                                profileViewModel.showConfirmationDialog = false
+                            },
+                        )
+                    },
+                    dialogTitle = "Log out",
+                    dialogMessage = "Are you sure you want to log out?",
+                    dismissButtonMessage = "Cancel",
+                    confirmButtonMessage = "Log out",
+                )
 
                 Column(
                     modifier = Modifier
