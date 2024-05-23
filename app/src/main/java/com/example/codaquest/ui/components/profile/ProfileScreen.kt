@@ -28,7 +28,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.codaquest.R
 import com.example.codaquest.domain.models.OnboardingData
-import com.example.codaquest.domain.models.Project
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.ProfileViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
@@ -78,6 +77,7 @@ fun ProfileScreen(
                             .clickable {
                                 profileViewModel.logout(
                                     onSuccess = {
+                                        sharedViewModel.changeUser(null)
                                         profileViewModel.showDialog = true
                                     },
                                 )
@@ -95,7 +95,6 @@ fun ProfileScreen(
                                     profileViewModel.logout(
                                         onSuccess = {
                                             sharedViewModel.changeUser(null)
-                                            sharedViewModel.lastGeneratedProject = Project()
                                             navController.navigate("home")
                                             profileViewModel.showDialog = false
                                         },

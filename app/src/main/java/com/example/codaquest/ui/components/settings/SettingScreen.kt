@@ -150,8 +150,7 @@ fun SettingsScreen(
                             settingsViewModel.showPopUpDialog = true
                         },
                     )
-                }
-                else if (settingsViewModel.showPopUpDialog) {
+                } else if (settingsViewModel.showPopUpDialog) {
                     Text(text = settingsViewModel.error)
                 }
             },
@@ -160,6 +159,7 @@ fun SettingsScreen(
                     Button(
                         onClick = {
                             settingsViewModel.deleteAccount(onCompleted = {
+                                sharedViewModel.changeUser(null)
                                 settingsViewModel.showPopUpDialog = false
                                 navController.navigate("home")
                             })

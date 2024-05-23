@@ -116,14 +116,14 @@ class UserRepository {
 
     fun deleteUserData(
         uid: String,
-        onSuccess: () -> Unit
+        onSuccess: () -> Unit,
     ) {
         db.collection("users").document(uid)
             .delete()
             .addOnSuccessListener {
                 projectRepository.deleteAllUserProjects(
                     uid,
-                    onSuccess = onSuccess
+                    onSuccess = onSuccess,
                 )
                 Log.d("DELETE", "DocumentSnapshot successfully deleted!")
             }

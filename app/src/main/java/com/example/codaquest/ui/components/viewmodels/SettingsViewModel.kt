@@ -66,7 +66,7 @@ class SettingsViewModel() : ViewModel(), ErrorOperations {
             accountService.deleteAccount(
                 loginInfo,
                 onCompleted = onCompleted,
-                onError = { showError(it) }
+                onError = { showError(it) },
             )
         }
     }

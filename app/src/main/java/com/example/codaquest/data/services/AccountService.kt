@@ -9,7 +9,6 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
-import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
 class AccountService {
@@ -62,13 +61,14 @@ class AccountService {
         onSuccess: () -> Unit,
     ) {
         Firebase.auth.signOut()
+        println("logout successful")
         onSuccess()
     }
 
     private fun reAuthenticate(
         user: FirebaseUser,
         email: String,
-        password: String
+        password: String,
     ): Boolean {
         println("Trying to re-authenticate...")
         println(email)
@@ -107,8 +107,7 @@ class AccountService {
                         onResult(false, task.exception?.message ?: "Failed to update password.")
                     }
                 }
-        }
-        else {
+        } else {
             Log.e("AccountService", "No authenticated user.")
             onResult(false, "No authenticated user.")
         }
@@ -117,7 +116,7 @@ class AccountService {
     fun deleteAccount(
         loginInfo: LoginInfo,
         onCompleted: () -> Unit,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
     ) {
         val user = Firebase.auth.currentUser!!
         val uid = user.uid
@@ -133,15 +132,14 @@ class AccountService {
                             uid,
                             onSuccess = {
                                 logout(onSuccess = { onCompleted() })
-                            }
+                            },
                         )
                     } else {
                         Log.e("Delete Account", "Account Deletion Failed: ${task.exception}")
                         onError("Could not delete account")
                     }
                 }
-        }
-        else {
+        } else {
             Log.e("AccountService", "No authenticated user.")
             onError("Could not re-authenticate")
         }
