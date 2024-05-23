@@ -4,4 +4,5 @@ enum class QuestionTypes {
     RadioButton,
     TextField,
     IntField,
+    Dropdown,
 }

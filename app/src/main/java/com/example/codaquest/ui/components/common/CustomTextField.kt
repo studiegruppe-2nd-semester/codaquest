@@ -15,7 +15,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 fun CustomTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
+    label: String?,
     keyboardType: KeyboardType,
     imeAction: ImeAction,
 ) {
@@ -27,7 +27,11 @@ fun CustomTextField(
     TextField(
         value = value,
         onValueChange = { onValueChange(it) },
-        label = { Text(label) },
+        label = if (label != null) {
+            { Text(label) }
+        } else {
+            null
+        },
         visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType,

@@ -14,7 +14,7 @@ class ProfileViewModel : ViewModel() {
     private val accountService = AccountService()
     private val userRepository: UserRepository = UserRepository()
 
-    var showDialog by mutableStateOf(false)
+    var showConfirmationDialog by mutableStateOf(false)
 
     val onboardingAnswerTitles: Map<String, String> = mapOf(
         "level" to "Level in coding:",
@@ -23,6 +23,7 @@ class ProfileViewModel : ViewModel() {
     )
 
     var editingOnboardingAnswers: Boolean by mutableStateOf(false)
+    var onboardingLevelExpanded: Boolean by mutableStateOf(false)
 
     fun toggleEditingOnboardingAnswers() {
         editingOnboardingAnswers = !editingOnboardingAnswers

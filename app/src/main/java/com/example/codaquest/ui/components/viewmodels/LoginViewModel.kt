@@ -42,7 +42,7 @@ class LoginViewModel : ViewModel(), ErrorOperations {
         } else {
             accountService.login(
                 loginInfo = loginInfo,
-                errorOperations = this,
+                onError = { showError(it) },
                 onSuccess = { onSuccess(it) },
             )
         }
@@ -57,7 +57,7 @@ class LoginViewModel : ViewModel(), ErrorOperations {
         } else {
             accountService.signUp(
                 loginInfo = loginInfo,
-                errorOperations = this,
+                onError = { showError(it) },
                 onSuccess = { onSuccess(it) },
             )
         }

@@ -20,13 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.codaquest.R
-import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.domain.models.Project
-import com.example.codaquest.ui.theme.CodaQuestTheme
+import com.example.codaquest.ui.components.viewmodels.ConfirmationDialogViewModel
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -35,6 +34,8 @@ fun ProjectComposable(
     deletable: Boolean,
     onDelete: (String) -> Unit,
 ) {
+    val confirmationDialogViewModel: ConfirmationDialogViewModel = viewModel()
+
     Column(
         modifier = Modifier
             .padding(5.dp)
@@ -49,7 +50,9 @@ fun ProjectComposable(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.fillMaxWidth().padding(end = 30.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(end = 30.dp),
                 )
             }
 
@@ -64,7 +67,11 @@ fun ProjectComposable(
                     Image(
                         painter = painterResource(id = R.drawable.ic_trashcan),
                         contentDescription = "trashcan icon",
-                        modifier = Modifier.clickable { project.projectId?.let { onDelete(it) } },
+                        modifier = Modifier.clickable {
+                            // project.projectId?.let { onDelete(it) }
+                            /*showDeleteDialog = true*/
+                            confirmationDialogViewModel.showConfirmationDialog = true
+                        },
                     )
                 }
             }
@@ -96,6 +103,46 @@ fun ProjectComposable(
             }
         }
 
+        if (confirmationDialogViewModel.showConfirmationDialog) {
+            ConfirmationDialog(
+                showDialog = confirmationDialogViewModel.showConfirmationDialog,
+                onDismiss = { confirmationDialogViewModel.showConfirmationDialog = false },
+                onConfirm = {
+                    project.projectId?.let { onDelete(it) }
+                    confirmationDialogViewModel.showConfirmationDialog = false
+                },
+                dialogTitle = "Delete Project",
+                dialogMessage = "Are you sure you want to delete the project?",
+                dismissButtonMessage = "Cancel",
+                confirmButtonMessage = "Delete",
+            )
+        }
+
+      /*  if (showDeleteDialog) {
+            AlertDialog(
+                onDismissRequest = { showDeleteDialog = false },
+                title = { Text(text = "Delete Project") },
+                text = { Text(text = "Are you sure you want to delete project?") },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            project.projectId?.let { onDelete(it) }
+                            showDeleteDialog = false
+                        },
+                    ) {
+                        Text("Delete")
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = { showDeleteDialog = false },
+                    ) {
+                        Text("Cancel")
+                    }
+                }
+            )
+        }*/
+
         project.description?.let {
             Text(
                 text = it,
@@ -110,7 +157,7 @@ fun ProjectComposable(
     }
 }
 
-@Preview(showBackground = true)
+/*Preview(showBackground = true)
 @Composable
 fun ProjectComposablePreview() {
     CodaQuestTheme {
@@ -128,7 +175,7 @@ fun ProjectComposablePreview() {
                 ),
             ),
             true,
-            onDelete = {},
+            onDelete = {}
         )
     }
-}
+}*/

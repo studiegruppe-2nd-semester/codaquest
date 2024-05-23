@@ -1,8 +1,7 @@
 package com.example.codaquest.domain.models
 
 data class OnboardingData(
-
-    val level: LevelType?,
+    val level: LevelType? = null,
     val languages: String? = null,
     val projectLength: Int? = null,
 )

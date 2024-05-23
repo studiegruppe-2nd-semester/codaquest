@@ -70,7 +70,8 @@ fun SavedProjectsScreen(
                         ProjectComposable(
                             project = item,
                             true,
-                            onDelete = { projectId ->
+                            onDelete = {
+                                    projectId ->
                                 item.uid?.let { uid ->
                                     sharedViewModel.deleteSavedProject(
                                         projectId,

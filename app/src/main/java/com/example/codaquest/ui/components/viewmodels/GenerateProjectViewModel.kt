@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.codaquest.data.services.ApiService
 import com.example.codaquest.domain.interfaces.ErrorOperations
 import com.example.codaquest.domain.models.GenerateProjectDetails
+import com.example.codaquest.domain.models.OnboardingData
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.domain.models.QuestionInfo
 import com.example.codaquest.domain.models.QuestionTypes
@@ -23,6 +24,8 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
     override fun showError(error: String) {
         this.error = error
     }
+
+    var dropdownExpanded: Boolean by mutableStateOf(false)
 
     val questions: List<QuestionInfo> by mutableStateOf(
         mutableStateListOf(
@@ -46,12 +49,27 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
         ),
     )
 
+    fun addOnboardingAnswersAsDefaultAnswers(
+        onboardingData: OnboardingData,
+    ) {
+        questions[1].answer.value = onboardingData.level.toString()
+        questions[2].dropdownAnswer.value = "Choose known coding language"
+        questions[3].answer.value = onboardingData.projectLength.toString()
+    }
+
     var currentQuestion: Int by mutableIntStateOf(0)
         private set
 
     fun previousQuestion() {
         if (currentQuestion > 0) {
-            currentQuestion--
+            if (error.isNotEmpty()) {
+                showError("")
+            }
+            if (showGeneratedProject) {
+                showGeneratedProject = false
+            } else {
+                currentQuestion--
+            }
         }
     }
 
@@ -62,6 +80,9 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
 
         if ((currentQuestion < questions.size - 1) && questions[currentQuestion].answer.value.isNotEmpty()) {
             currentQuestion++
+        } else if ((currentQuestion < questions.size - 1) && !questions[currentQuestion].dropdownAnswer.value.contains("choose", ignoreCase = true)) {
+            questions[currentQuestion].answer.value = questions[currentQuestion].dropdownAnswer.value
+            currentQuestion++
         } else {
             showError("Please enter a value")
         }
@@ -71,6 +92,8 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
         key: String,
         onSuccess: (Project) -> Unit,
     ) {
+        loading = true
+
         val apiService = ApiService()
         apiService.initiateApi(key)
 
@@ -84,11 +107,18 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
         viewModelScope.launch {
             apiService.generateProjectSuggestion(
                 generateProjectDetails,
-                onSuccess = { onSuccess(it) },
-                onError = { error -> showError(error) },
+                onSuccess = {
+                    onSuccess(it)
+                    loading = false
+                },
+                onError = { error ->
+                    showError(error)
+                    loading = false
+                },
             )
         }
     }
 
     var showGeneratedProject: Boolean by mutableStateOf(false)
+    var loading: Boolean by mutableStateOf(false)
 }
