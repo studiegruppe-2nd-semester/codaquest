@@ -31,7 +31,6 @@ import androidx.navigation.NavController
 import com.example.codaquest.R
 import com.example.codaquest.domain.models.SettingsState
 import com.example.codaquest.ui.components.navbar.NavBar
-import com.example.codaquest.ui.components.viewmodels.LoginViewModel
 import com.example.codaquest.ui.components.viewmodels.SettingsViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
@@ -40,7 +39,6 @@ import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 fun SettingsScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
-    loginViewModel: LoginViewModel,
 ) {
     val settingsViewModel: SettingsViewModel = viewModel()
 
@@ -59,7 +57,11 @@ fun SettingsScreen(
                 modifier = Modifier
                     .size(50.dp)
                     .clickable {
-                        navController.navigate("profile")
+                        if (settingsViewModel.goToProfile) {
+                            navController.navigate("profile")
+                        } else {
+                            settingsViewModel.settingsState = SettingsState.Overview
+                        }
                     },
             )
             Spacer(modifier = Modifier.width(90.dp))
@@ -84,11 +86,15 @@ fun SettingsScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             when (settingsViewModel.settingsState) {
-                SettingsState.ChangePassword -> PasswordChangeComposable(
-                    settingsViewModel = settingsViewModel,
-                    navController = navController,
-                )
+                SettingsState.ChangePassword -> {
+                    settingsViewModel.goToProfile = false
+                    PasswordChangeComposable(
+                        settingsViewModel = settingsViewModel,
+                        navController = navController,
+                    )
+                }
                 SettingsState.Overview -> {
+                    settingsViewModel.goToProfile = true
                     Text(
                         text = "Account Settings",
                         fontSize = 30.sp,
@@ -120,7 +126,10 @@ fun SettingsScreen(
                     )
                 }
                 SettingsState.AccountOverview -> {
-                    AccountOverviewComposable(settingsViewModel = settingsViewModel, navController = navController, sharedViewModel = sharedViewModel)
+                    settingsViewModel.goToProfile = false
+                    PersonalDetailsComposable(
+                        sharedViewModel = sharedViewModel,
+                    )
                 }
             }
         }

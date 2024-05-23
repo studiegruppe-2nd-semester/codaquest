@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 
 // Nathasja
 class SettingsViewModel() : ViewModel(), ErrorOperations {
+    var goToProfile: Boolean by mutableStateOf(true)
+
     var settingsState: SettingsState by mutableStateOf(SettingsState.Overview)
 
     // State to show pop up dialog

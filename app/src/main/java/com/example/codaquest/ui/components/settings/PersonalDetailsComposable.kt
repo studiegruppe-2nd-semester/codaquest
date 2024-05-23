@@ -12,29 +12,32 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.example.codaquest.ui.components.viewmodels.SettingsViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 @Composable
-fun AccountOverviewComposable(
-    settingsViewModel: SettingsViewModel,
+fun PersonalDetailsComposable(
     sharedViewModel: SharedViewModel,
-    navController: NavController,
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        Text(
-            text = "Account Overview",
-            fontSize = 30.sp,
-            color = Color(0xFF6BB38A),
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = "Personal details",
+                fontSize = 30.sp,
+                color = Color(0xFF6BB38A),
+            )
+        }
         Box(
             modifier = Modifier
                 .padding(5.dp)
