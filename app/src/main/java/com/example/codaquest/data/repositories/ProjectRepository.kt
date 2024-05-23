@@ -65,4 +65,27 @@ class ProjectRepository {
                 onSuccess()
             }
     }
+
+    fun deleteAllUserProjects(
+        uid: String,
+        onSuccess: () -> Unit
+    ) {
+        //TODO
+        val batch = db.batch()
+
+        db.collection("projects")
+            .whereEqualTo("uid", uid)
+            .get().result.forEach {
+                batch.delete(it.reference)
+            }
+
+        batch.commit()
+            .addOnSuccessListener {
+                onSuccess()
+                Log.d("DELETE", "Projects successfully deleted!")
+            }
+            .addOnFailureListener { e ->
+                Log.w("DELETE", "Error deleting projects", e)
+            }
+    }
 }

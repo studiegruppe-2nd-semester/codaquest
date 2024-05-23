@@ -4,10 +4,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.codaquest.data.services.AccountService
 import com.example.codaquest.domain.interfaces.ErrorOperations
 import com.example.codaquest.domain.models.LoginInfo
 import com.example.codaquest.domain.models.SettingsState
+import kotlinx.coroutines.launch
 
 // Nathasja
 class SettingsViewModel() : ViewModel(), ErrorOperations {
@@ -44,19 +46,28 @@ class SettingsViewModel() : ViewModel(), ErrorOperations {
     fun updatePassword(
         onSuccess: () -> Unit,
     ) {
-        accountService.updatePassword(loginInfo, newPassword) { success, message ->
-            showError(message)
-            if (success) {
-                println("Password  updated successfully")
-                onSuccess()
-            } else {
-                showError("Failed to update password\nPlease try again")
-                println("Failed to update password: $message")
+        viewModelScope.launch {
+            accountService.updatePassword(loginInfo, newPassword) { success, message ->
+                showError(message)
+                if (success) {
+                    println("Password  updated successfully")
+                    showError("")
+                    onSuccess()
+                } else {
+                    showError("Failed to update password\nPlease try again")
+                    println("Failed to update password: $message")
+                }
             }
         }
     }
 
-    fun deleteAccount(onCompleted: (Boolean) -> Unit) {
-        accountService.deleteAccount(onCompleted)
+    fun deleteAccount(onCompleted: () -> Unit) {
+        viewModelScope.launch {
+            accountService.deleteAccount(
+                loginInfo,
+                onCompleted = onCompleted,
+                onError = { showError(it) }
+            )
+        }
     }
 }

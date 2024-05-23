@@ -113,4 +113,22 @@ class UserRepository {
                 Log.d("update", "update failure: $e")
             }
     }
+
+    fun deleteUserData(
+        uid: String,
+        onSuccess: () -> Unit
+    ) {
+        db.collection("users").document(uid)
+            .delete()
+            .addOnSuccessListener {
+                projectRepository.deleteAllUserProjects(
+                    uid,
+                    onSuccess = onSuccess
+                )
+                Log.d("DELETE", "DocumentSnapshot successfully deleted!")
+            }
+            .addOnFailureListener { e ->
+                Log.w("DELETE", "Error deleting document", e)
+            }
+    }
 }

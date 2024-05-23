@@ -9,6 +9,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
 class AccountService {
@@ -64,25 +65,38 @@ class AccountService {
         onSuccess()
     }
 
+    private fun reAuthenticate(
+        user: FirebaseUser,
+        email: String,
+        password: String
+    ): Boolean {
+        println("Trying to re-authenticate...")
+        println(email)
+        println(password)
+
+        val credential = EmailAuthProvider
+            .getCredential(email, password)
+
+        try {
+            user.reauthenticate(credential)
+            return true
+        } catch (e: Exception) {
+            println("Error: $e")
+            return false
+        }
+    }
+
     // Nathasja
-    fun updatePassword(
+    suspend fun updatePassword(
         loginInfo: LoginInfo,
         newPassword: String,
         onResult: (Boolean, String) -> Unit,
     ) {
-        val user = Firebase.auth.currentUser
+        val user = Firebase.auth.currentUser!!
 
-        val credential = EmailAuthProvider
-            .getCredential(loginInfo.email, loginInfo.password)
+        val reAuthenticate = reAuthenticate(user, loginInfo.email, loginInfo.password)
 
-        try {
-            user?.reauthenticate(credential)
-        } catch (e: Exception) {
-            println("Error: $e")
-            return
-        }
-
-        if (user != null) {
+        if (reAuthenticate) {
             user.updatePassword(newPassword)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -93,24 +107,43 @@ class AccountService {
                         onResult(false, task.exception?.message ?: "Failed to update password.")
                     }
                 }
-        } else {
+        }
+        else {
             Log.e("AccountService", "No authenticated user.")
             onResult(false, "No authenticated user.")
         }
     }
 
-    fun deleteAccount(onCompleted: (Boolean) -> Unit) {
+    fun deleteAccount(
+        loginInfo: LoginInfo,
+        onCompleted: () -> Unit,
+        onError: (String) -> Unit
+    ) {
         val user = Firebase.auth.currentUser!!
+        val uid = user.uid
 
-        user.delete()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d("Delete Account", "Account Deleted")
-                    onCompleted(true)
-                } else {
-                    Log.e("Delete Account", "Account Deletion Failed: ${task.exception}")
-                    onCompleted(false)
+        val reAuthenticate = reAuthenticate(user, loginInfo.email, loginInfo.password)
+
+        if (reAuthenticate) {
+            user.delete()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d("Delete Account", "Account Deleted")
+                        userRepository.deleteUserData(
+                            uid,
+                            onSuccess = {
+                                logout(onSuccess = { onCompleted() })
+                            }
+                        )
+                    } else {
+                        Log.e("Delete Account", "Account Deletion Failed: ${task.exception}")
+                        onError("Could not delete account")
+                    }
                 }
-            }
+        }
+        else {
+            Log.e("AccountService", "No authenticated user.")
+            onError("Could not re-authenticate")
+        }
     }
 }

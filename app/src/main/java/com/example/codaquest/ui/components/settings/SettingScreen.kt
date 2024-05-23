@@ -141,24 +141,28 @@ fun SettingsScreen(
             text = {
                 if (settingsViewModel.showReLoginPopUp) {
                     ReAuthLoginComposable(
-                        navController = navController,
-                        sharedViewModel = sharedViewModel,
-                        loginViewModel = loginViewModel,
-                        onReAuthSucces = {
+                        explanationText = "Please login again to delete your account",
+                        loginInfo = settingsViewModel.loginInfo,
+                        onEmailChange = { settingsViewModel.loginInfo = settingsViewModel.loginInfo.copy(email = it) },
+                        onPasswordChange = { settingsViewModel.loginInfo = settingsViewModel.loginInfo.copy(password = it) },
+                        onReAuthSuccess = {
                             settingsViewModel.showReLoginPopUp = false
                             settingsViewModel.showPopUpDialog = true
                         },
                     )
+                }
+                else if (settingsViewModel.showPopUpDialog) {
+                    Text(text = settingsViewModel.error)
                 }
             },
             confirmButton = {
                 if (settingsViewModel.showPopUpDialog && !settingsViewModel.showReLoginPopUp) {
                     Button(
                         onClick = {
-                            settingsViewModel.deleteAccount {
-                                navController.navigate("home")
+                            settingsViewModel.deleteAccount(onCompleted = {
                                 settingsViewModel.showPopUpDialog = false
-                            }
+                                navController.navigate("home")
+                            })
                         },
                     ) {
                         Text(text = "Delete Account")

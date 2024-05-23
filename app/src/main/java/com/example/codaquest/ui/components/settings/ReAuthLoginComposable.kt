@@ -12,36 +12,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import com.example.codaquest.domain.models.LoginInfo
 import com.example.codaquest.ui.components.common.CustomTextField
-import com.example.codaquest.ui.components.viewmodels.LoginViewModel
-import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 @Composable
 fun ReAuthLoginComposable(
-    navController: NavController,
-    sharedViewModel: SharedViewModel,
-    loginViewModel: LoginViewModel,
-    onReAuthSucces: () -> Unit,
+    explanationText: String,
+    loginInfo: LoginInfo,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onReAuthSuccess: () -> Unit,
 ) {
     Column(
         modifier = Modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(15.dp),
     ) {
-        Text(text = "Please login again to delete your account")
+        Text(text = explanationText)
 
         CustomTextField(
-            value = loginViewModel.loginInfo.email,
-            onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(email = it) },
+            value = loginInfo.email,
+            onValueChange = { onEmailChange(it) },
             label = "Email",
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
         )
 
         CustomTextField(
-            value = loginViewModel.loginInfo.password,
-            onValueChange = { loginViewModel.loginInfo = loginViewModel.loginInfo.copy(password = it) },
+            value = loginInfo.password,
+            onValueChange = { onPasswordChange(it) },
             label = "Password",
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done,
@@ -49,13 +48,7 @@ fun ReAuthLoginComposable(
 
         Button(
             onClick = {
-                loginViewModel.login(
-                    onSuccess = {
-                        sharedViewModel.changeUser(it)
-                        loginViewModel.showError("")
-                        onReAuthSucces()
-                    },
-                )
+                onReAuthSuccess()
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.secondary,
