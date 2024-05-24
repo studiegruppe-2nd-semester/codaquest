@@ -16,6 +16,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -29,6 +31,7 @@ import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.ui.components.common.CustomTextField
 import com.example.codaquest.ui.components.common.DynamicDropdown
+import com.example.codaquest.ui.components.common.ProjectComposable
 import com.example.codaquest.ui.components.common.ProjectOverviewComposable
 import com.example.codaquest.ui.components.common.TextTitle
 import com.example.codaquest.ui.components.navbar.NavBar
@@ -44,6 +47,8 @@ fun GalleryScreen(
     if (sharedViewModel.galleryProjects != null) {
         galleryViewModel.filteredGalleryProjects = sharedViewModel.galleryProjects!!
     }
+
+    val expandedProjectIds = remember { mutableStateMapOf<String, Boolean>() }
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -71,7 +76,13 @@ fun GalleryScreen(
                     if (galleryViewModel.showFilters) {
                         CustomTextField(
                             value = galleryViewModel.filters.searchText,
-                            onValueChange = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(searchText = it)) },
+                            onValueChange = {
+                                galleryViewModel.updateFilters(
+                                    galleryViewModel.filters.copy(
+                                        searchText = it,
+                                    ),
+                                )
+                            },
                             label = "Search keywords",
                             keyboardType = KeyboardType.Text,
                             imeAction = ImeAction.Next,
@@ -79,7 +90,13 @@ fun GalleryScreen(
 
                         CustomTextField(
                             value = galleryViewModel.filters.language,
-                            onValueChange = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(language = it)) },
+                            onValueChange = {
+                                galleryViewModel.updateFilters(
+                                    galleryViewModel.filters.copy(
+                                        language = it,
+                                    ),
+                                )
+                            },
                             label = "Coding language",
                             keyboardType = KeyboardType.Number,
                             imeAction = ImeAction.Next,
@@ -87,7 +104,13 @@ fun GalleryScreen(
 
                         CustomTextField(
                             value = galleryViewModel.filters.length,
-                            onValueChange = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(length = it)) },
+                            onValueChange = {
+                                galleryViewModel.updateFilters(
+                                    galleryViewModel.filters.copy(
+                                        length = it,
+                                    ),
+                                )
+                            },
                             label = "Project length (hours)",
                             keyboardType = KeyboardType.Number,
                             imeAction = ImeAction.Done,
@@ -96,10 +119,25 @@ fun GalleryScreen(
                         DynamicDropdown(
                             selectedValue = galleryViewModel.filters.level,
                             expanded = galleryViewModel.filters.levelExpanded,
-                            onExpandedChange = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(levelExpanded = it)) },
-                            options = listOf("Choose level", LevelType.Beginner.toString(), LevelType.Intermediate.toString(), LevelType.Advanced.toString()),
+                            onExpandedChange = {
+                                galleryViewModel.updateFilters(
+                                    galleryViewModel.filters.copy(
+                                        levelExpanded = it,
+                                    ),
+                                )
+                            },
+                            options = listOf(
+                                "Choose level",
+                                LevelType.Beginner.toString(),
+                                LevelType.Intermediate.toString(),
+                                LevelType.Advanced.toString(),
+                            ),
                             label = "Level",
-                            onValueChangedEvent = { galleryViewModel.updateFilters(galleryViewModel.filters.copy(level = it)) },
+                            onValueChangedEvent = {
+                                galleryViewModel.updateFilters(
+                                    galleryViewModel.filters.copy(level = it),
+                                )
+                            },
                         )
 
                         Box(
@@ -125,14 +163,14 @@ fun GalleryScreen(
                                     fontSize = 15.sp,
                                     modifier = Modifier.clickable {
                                         galleryViewModel.updateFilters(Filters())
-                                        galleryViewModel.filteredGalleryProjects = sharedViewModel.galleryProjects!!
+                                        galleryViewModel.filteredGalleryProjects =
+                                            sharedViewModel.galleryProjects!!
                                     },
                                 )
                             }
                         }
                     }
                 }
-
                 Text(
                     text = "${galleryViewModel.filteredGalleryProjects.size} projects shown",
                     modifier = Modifier.fillMaxWidth(),
@@ -146,25 +184,100 @@ fun GalleryScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
             }
+            items(galleryViewModel.filteredGalleryProjects, key = { project ->
+                project.projectId.toString()
+            }) { item ->
+                val isExpanded = expandedProjectIds[item.projectId.toString()] ?: false
 
-            if (galleryViewModel.filteredGalleryProjects.isNotEmpty()) {
-                items(galleryViewModel.filteredGalleryProjects, key = { project ->
-                    project.projectId.toString() // Use the projectId as a stable key
-                }) { item ->
-                    ProjectOverviewComposable(
-                        uid = sharedViewModel.user?.userUid,
-                        project = item,
-                        onSaveClick = {
-                            sharedViewModel.user?.userUid?.let { uid ->
-                                sharedViewModel.saveProject(uid, item)
-                                navController.navigate("saved-projects")
-                            }
-                        },
-                    )
-
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            expandedProjectIds[item.projectId.toString()] = !isExpanded
+                        }
+                        .padding(8.dp),
+                ) {
+                    if (isExpanded) {
+                        ProjectComposable(
+                            project = item,
+                            deletable = false,
+                            onDelete = {},
+                        )
+                        ProjectOverviewComposable(
+                            uid = sharedViewModel.user?.userUid,
+                            project = item,
+                            onSaveClick = {
+                                sharedViewModel.user?.userUid?.let { uid ->
+                                    sharedViewModel.saveProject(uid, item)
+                                    navController.navigate("saved-projects")
+                                }
+                            },
+                        )
+                    } else {
+                        ProjectOverviewComposable(
+                            uid = sharedViewModel.user?.userUid,
+                            project = item,
+                            onSaveClick = {
+                                sharedViewModel.user?.userUid?.let { uid ->
+                                    sharedViewModel.saveProject(uid, item)
+                                    navController.navigate("saved-projects")
+                                }
+                            },
+                        )
+                    }
                     Spacer(modifier = Modifier.height(20.dp))
                 }
-            } else {
+            }
+        }
+    }
+    Box(contentAlignment = Alignment.BottomCenter) {
+        NavBar("gallery", navController, sharedViewModel)
+    }
+}
+/*
+            /*if (galleryViewModel.filteredGalleryProjects.isNotEmpty()) {
+                items(galleryViewModel.filteredGalleryProjects, key = { project ->
+                    project.projectId.toString()*/ // Use the projectId as a stable key
+                }) { item ->
+                    val isExpanded = expandedProjectIds[item.projectId.toString()] ?: false
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable {
+                                expandedProjectIds[item.projectId.toString()] = !isExpanded
+                            }
+                            .padding(8.dp)
+                    ) {
+                        if (galleryViewModel.filteredGalleryProjects.isNotEmpty()) {
+                            items(items = galleryViewModel.filteredGalleryProjects, key = { project ->
+                                project.projectId.toString() // Use the projectId as a stable key
+                            }) { item ->
+                                ProjectOverviewComposable(
+                                    uid = sharedViewModel.user?.userUid,
+                                    project = item,
+                                    onSaveClick = {
+                                        sharedViewModel.user?.userUid?.let { uid ->
+                                            sharedViewModel.saveProject(uid, item)
+                                            navController.navigate("saved-projects")
+                                        }
+                                    }
+                                )
+                            }
+                        } else {
+                                // Expanded view
+                                ProjectComposable(
+                                    project = item,
+                                    deletable = false,
+                                    onDelete = {}
+                                )
+                            }
+                        // Summary view
+                    }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
+                } else {
                 item {
                     Text(text = "No projects found in the gallery")
                 }
@@ -175,4 +288,4 @@ fun GalleryScreen(
     Box(contentAlignment = Alignment.BottomCenter) {
         NavBar("gallery", navController, sharedViewModel)
     }
-}
+}*/

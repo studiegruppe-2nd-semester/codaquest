@@ -118,31 +118,6 @@ fun ProjectComposable(
             )
         }
 
-      /*  if (showDeleteDialog) {
-            AlertDialog(
-                onDismissRequest = { showDeleteDialog = false },
-                title = { Text(text = "Delete Project") },
-                text = { Text(text = "Are you sure you want to delete project?") },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            project.projectId?.let { onDelete(it) }
-                            showDeleteDialog = false
-                        },
-                    ) {
-                        Text("Delete")
-                    }
-                },
-                dismissButton = {
-                    Button(
-                        onClick = { showDeleteDialog = false },
-                    ) {
-                        Text("Cancel")
-                    }
-                }
-            )
-        }*/
-
         project.description?.let {
             Text(
                 text = it,
