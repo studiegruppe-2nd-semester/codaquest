@@ -105,31 +105,32 @@ fun GenerateProjectScreen(
                         onDelete = {},
                     )
                 }
-            }
-            if (sharedViewModel.user?.userUid != null) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Button(
-                        onClick = {
-                            sharedViewModel.user?.userUid?.let { uid ->
-                                sharedViewModel.lastGeneratedProject?.let { project ->
-                                    sharedViewModel.saveProject(uid, project)
-                                }
-                                navController.navigate("saved-projects")
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.tertiary,
-                            contentColor = Color.White,
-                        ),
+                if (sharedViewModel.user?.userUid != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center,
                     ) {
-                        Text(text = "Save project")
+                        Button(
+                            onClick = {
+                                sharedViewModel.user?.userUid?.let { uid ->
+                                    sharedViewModel.lastGeneratedProject?.let { project ->
+                                        sharedViewModel.saveProject(uid, project)
+                                    }
+                                    navController.navigate("saved-projects")
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.tertiary,
+                                contentColor = Color.White,
+                            ),
+                        ) {
+                            Text(text = "Save project")
+                        }
                     }
                 }
-            } else {
+            }
+            else {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -224,6 +225,7 @@ fun GenerateProjectScreen(
                                     onSuccess = { project ->
                                         sharedViewModel.lastGeneratedProject = project
                                         generateProjectViewModel.showGeneratedProject = true
+                                        generateProjectViewModel.error = ""
                                     },
                                 )
                             }

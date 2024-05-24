@@ -69,6 +69,9 @@ class GenerateProjectViewModel : ViewModel(), ErrorOperations {
                 showGeneratedProject = false
             } else {
                 currentQuestion--
+                if (!questions[currentQuestion].dropdownAnswer.value.contains("choose", ignoreCase = true)) {
+                    questions[currentQuestion].answer.value = ""
+                }
             }
         }
     }

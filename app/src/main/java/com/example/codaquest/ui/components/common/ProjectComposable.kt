@@ -131,26 +131,3 @@ fun ProjectComposable(
         }
     }
 }
-
-/*Preview(showBackground = true)
-@Composable
-fun ProjectComposablePreview() {
-    CodaQuestTheme {
-        ProjectComposable(
-            Project(
-                title = "Pizza Lover",
-                language = "Kotlin",
-                length = 5,
-                level = LevelType.Beginner,
-                description = "This project is about pizza bla bla",
-                steps = listOf(
-                    "Step 1",
-                    "step 2",
-                    "step 3",
-                ),
-            ),
-            true,
-            onDelete = {}
-        )
-    }
-}*/
