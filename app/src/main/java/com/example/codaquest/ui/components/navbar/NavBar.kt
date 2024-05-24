@@ -35,15 +35,15 @@ fun NavBar(
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             NavBarOption(
-                contentDescription = "gallery icon",
-                getIcon("gallery", currentScreen),
-                onClick = { navController.navigate("gallery") },
-            )
-
-            NavBarOption(
                 contentDescription = "home icon",
                 getIcon("home", currentScreen),
                 onClick = { navController.navigate("home") },
+            )
+
+            NavBarOption(
+                contentDescription = "gallery icon",
+                getIcon("gallery", currentScreen),
+                onClick = { navController.navigate("gallery") },
             )
 
             NavBarOption(

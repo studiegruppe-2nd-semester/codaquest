@@ -69,6 +69,10 @@ fun ProfileScreen(
                     Image(
                         painter = painterResource(id = R.drawable.ic_settings),
                         contentDescription = "settings icon",
+                        modifier = Modifier
+                            .clickable {
+                                navController.navigate("settings")
+                            },
                     )
 
                     Image(
@@ -78,6 +82,7 @@ fun ProfileScreen(
                             .clickable {
                                 profileViewModel.logout(
                                     onSuccess = {
+                                        sharedViewModel.changeUser(null)
                                         profileViewModel.showConfirmationDialog = true
                                     },
                                 )

@@ -41,6 +41,7 @@ class UserRepository {
                         User(
                             userUid = document.id,
                             username = document.data?.get("username")?.toString(),
+                            email = document.data?.get("email")?.toString(),
                             onboardingData = onboardingData,
                             projects = projects,
                         ),
@@ -58,10 +59,12 @@ class UserRepository {
     fun addUserData(
         uid: String,
         username: String,
+        email: String,
         onSuccess: (User) -> Unit,
     ) {
         val dataMap: Map<String, String> = mapOf(
             "username" to username,
+            "email" to email,
         )
         db.collection("users").document(uid).set(dataMap)
             .addOnSuccessListener {
@@ -69,6 +72,7 @@ class UserRepository {
                     User(
                         userUid = uid,
                         username = username,
+                        email = email,
                     ),
                 )
             }
@@ -107,6 +111,24 @@ class UserRepository {
             }
             .addOnFailureListener { e ->
                 Log.d("update", "Error updating user's onboarding data: $e")
+            }
+    }
+
+    fun deleteUserData(
+        uid: String,
+        onSuccess: () -> Unit,
+    ) {
+        db.collection("users").document(uid)
+            .delete()
+            .addOnSuccessListener {
+                projectRepository.deleteAllUserProjects(
+                    uid,
+                    onSuccess = onSuccess,
+                )
+                Log.d("DELETE", "DocumentSnapshot successfully deleted!")
+            }
+            .addOnFailureListener { e ->
+                Log.w("DELETE", "Error deleting document", e)
             }
     }
 }

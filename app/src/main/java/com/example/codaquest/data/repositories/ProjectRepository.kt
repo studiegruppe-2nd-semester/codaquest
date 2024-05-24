@@ -71,4 +71,40 @@ class ProjectRepository {
                 Log.w(ContentValues.TAG, "Error deleting project from user", e)
             }
     }
+
+    fun deleteAllUserProjects(
+        uid: String,
+        onSuccess: () -> Unit,
+    ) {
+        // TODO
+        val batch = db.batch()
+
+        db.collection("projects")
+            .whereEqualTo("uid", uid)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val querySnapshot = task.result
+                    if (querySnapshot != null) {
+                        querySnapshot.forEach { document ->
+                            batch.delete(document.reference)
+                        }
+
+                        batch.commit()
+                            .addOnSuccessListener {
+                                onSuccess()
+                                Log.d("DELETE", "Projects successfully deleted!")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("DELETE", "Error deleting projects", e)
+                            }
+                    } else {
+                        Log.w("DELETE", "Query snapshot is null")
+                    }
+                } else {
+                    val exception = task.exception ?: Exception("Unknown error occurred during Firestore query")
+                    Log.w("DELETE", "Error querying projects", exception)
+                }
+            }
+    }
 }
