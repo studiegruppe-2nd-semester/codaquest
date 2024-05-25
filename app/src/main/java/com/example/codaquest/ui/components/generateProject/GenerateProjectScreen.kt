@@ -129,8 +129,7 @@ fun GenerateProjectScreen(
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

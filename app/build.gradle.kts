@@ -98,7 +98,9 @@ dependencies {
     // View model
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
 
+    //OpenAI API Client
     implementation("com.aallam.openai:openai-client:3.7.1")
+
     implementation("io.ktor:ktor-client-android:2.3.10")
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
