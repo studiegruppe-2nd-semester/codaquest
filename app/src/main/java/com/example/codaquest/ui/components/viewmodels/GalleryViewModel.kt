@@ -62,7 +62,7 @@ class GalleryViewModel : ViewModel(), ErrorOperations, ProjectDialogOperations {
             }
 
             searchTextMatch && languageMatch && lengthMatch && levelMatch
-        }
+        }.sortedBy { it.title }
 
         if (filteredGalleryProjects.isEmpty()) {
             showError("Please clear the filters")

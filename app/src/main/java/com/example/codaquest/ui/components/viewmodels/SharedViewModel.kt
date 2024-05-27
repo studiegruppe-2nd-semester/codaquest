@@ -44,7 +44,7 @@ class SharedViewModel : ViewModel() {
 
             galleryRepository.fetchGalleryProjects(
                 onSuccess = { fetchedProjects ->
-                    galleryProjects = fetchedProjects
+                    galleryProjects = fetchedProjects.sortedBy { it.title }
                 },
             )
         }
