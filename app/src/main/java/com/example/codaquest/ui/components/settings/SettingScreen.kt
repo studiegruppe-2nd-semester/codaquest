@@ -58,7 +58,7 @@ fun SettingsScreen(
                     .size(50.dp)
                     .clickable {
                         if (settingsViewModel.goToProfile) {
-                            navController.navigate("profile")
+                            navController.popBackStack()
                         } else {
                             settingsViewModel.settingsState = SettingsState.Overview
                         }

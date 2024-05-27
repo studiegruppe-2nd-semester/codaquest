@@ -29,7 +29,6 @@ import androidx.navigation.NavController
 import com.example.codaquest.R
 import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.domain.models.OnboardingData
-import com.example.codaquest.domain.models.Project
 import com.example.codaquest.ui.components.common.ConfirmationDialog
 import com.example.codaquest.ui.components.common.CustomTextField
 import com.example.codaquest.ui.components.common.DynamicDropdown
@@ -82,7 +81,6 @@ fun ProfileScreen(
                             .clickable {
                                 profileViewModel.logout(
                                     onSuccess = {
-                                        sharedViewModel.changeUser(null)
                                         profileViewModel.showConfirmationDialog = true
                                     },
                                 )
@@ -97,7 +95,7 @@ fun ProfileScreen(
                         profileViewModel.logout(
                             onSuccess = {
                                 sharedViewModel.changeUser(null)
-                                sharedViewModel.lastGeneratedProject = Project()
+                                sharedViewModel.lastGeneratedProject = null
                                 navController.navigate("home")
                                 profileViewModel.showConfirmationDialog = false
                             },

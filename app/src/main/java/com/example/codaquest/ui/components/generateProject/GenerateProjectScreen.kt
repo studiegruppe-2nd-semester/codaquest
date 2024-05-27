@@ -65,7 +65,7 @@ fun GenerateProjectScreen(
                         .padding(horizontal = 5.dp)
                         .fillMaxWidth(0.1f),
                     contentPadding = PaddingValues(0.dp),
-                    onClick = { navController.navigate("home") },
+                    onClick = { navController.popBackStack() },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Transparent,
                     ),

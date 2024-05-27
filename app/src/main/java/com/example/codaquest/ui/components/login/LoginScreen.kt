@@ -35,7 +35,7 @@ fun LoginScreen(
             .fillMaxSize(),
     ) {
         Button(
-            onClick = { navController.navigate("home") },
+            onClick = { navController.popBackStack() },
             contentPadding = PaddingValues(),
             modifier = Modifier.size(40.dp),
         ) {
