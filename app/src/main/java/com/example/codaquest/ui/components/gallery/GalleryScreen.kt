@@ -16,8 +16,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -31,7 +29,6 @@ import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.ui.components.common.CustomTextField
 import com.example.codaquest.ui.components.common.DynamicDropdown
-import com.example.codaquest.ui.components.common.ProjectComposable
 import com.example.codaquest.ui.components.common.ProjectOverviewComposable
 import com.example.codaquest.ui.components.common.TextTitle
 import com.example.codaquest.ui.components.navbar.NavBar
@@ -47,8 +44,6 @@ fun GalleryScreen(
     if (sharedViewModel.galleryProjects != null) {
         galleryViewModel.filteredGalleryProjects = sharedViewModel.galleryProjects!!
     }
-
-    val expandedProjectIds = remember { mutableStateMapOf<String, Boolean>() }
 
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
@@ -184,108 +179,32 @@ fun GalleryScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
             }
-            items(galleryViewModel.filteredGalleryProjects, key = { project ->
-                project.projectId.toString()
-            }) { item ->
-                val isExpanded = expandedProjectIds[item.projectId.toString()] ?: false
 
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            expandedProjectIds[item.projectId.toString()] = !isExpanded
-                        }
-                        .padding(8.dp),
-                ) {
-                    if (isExpanded) {
-                        ProjectComposable(
-                            project = item,
-                            deletable = false,
-                            onDelete = {},
-                        )
-                        ProjectOverviewComposable(
-                            uid = sharedViewModel.user?.userUid,
-                            project = item,
-                            onSaveClick = {
-                                sharedViewModel.user?.userUid?.let { uid ->
-                                    sharedViewModel.saveProject(uid, item)
-                                    navController.navigate("saved-projects")
-                                }
-                            },
-                        )
-                    } else {
-                        ProjectOverviewComposable(
-                            uid = sharedViewModel.user?.userUid,
-                            project = item,
-                            onSaveClick = {
-                                sharedViewModel.user?.userUid?.let { uid ->
-                                    sharedViewModel.saveProject(uid, item)
-                                    navController.navigate("saved-projects")
-                                }
-                            },
-                        )
-                    }
+            if (galleryViewModel.filteredGalleryProjects.isNotEmpty()) {
+                items(galleryViewModel.filteredGalleryProjects, key = { project ->
+                    project.projectId.toString() // Use the projectId as a stable key
+                }) { project ->
+                    ProjectOverviewComposable(
+                        uid = sharedViewModel.user?.userUid,
+                        project = project,
+                        showProjectDialog = galleryViewModel.showProjectDialog,
+                        onDismissDialog = { galleryViewModel.showProjectDialog = false },
+                        onOpenDialog = { galleryViewModel.showProjectDialog = true },
+                        onSaveClick = {
+                            sharedViewModel.user?.userUid?.let { uid ->
+                                sharedViewModel.saveProject(uid, project)
+                                navController.navigate("saved-projects")
+                            }
+                        },
+                    )
+
                     Spacer(modifier = Modifier.height(20.dp))
                 }
             }
         }
     }
+
     Box(contentAlignment = Alignment.BottomCenter) {
         NavBar("gallery", navController, sharedViewModel)
     }
 }
-/*
-            /*if (galleryViewModel.filteredGalleryProjects.isNotEmpty()) {
-                items(galleryViewModel.filteredGalleryProjects, key = { project ->
-                    project.projectId.toString()*/ // Use the projectId as a stable key
-                }) { item ->
-                    val isExpanded = expandedProjectIds[item.projectId.toString()] ?: false
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable {
-                                expandedProjectIds[item.projectId.toString()] = !isExpanded
-                            }
-                            .padding(8.dp)
-                    ) {
-                        if (galleryViewModel.filteredGalleryProjects.isNotEmpty()) {
-                            items(items = galleryViewModel.filteredGalleryProjects, key = { project ->
-                                project.projectId.toString() // Use the projectId as a stable key
-                            }) { item ->
-                                ProjectOverviewComposable(
-                                    uid = sharedViewModel.user?.userUid,
-                                    project = item,
-                                    onSaveClick = {
-                                        sharedViewModel.user?.userUid?.let { uid ->
-                                            sharedViewModel.saveProject(uid, item)
-                                            navController.navigate("saved-projects")
-                                        }
-                                    }
-                                )
-                            }
-                        } else {
-                                // Expanded view
-                                ProjectComposable(
-                                    project = item,
-                                    deletable = false,
-                                    onDelete = {}
-                                )
-                            }
-                        // Summary view
-                    }
-
-                        Spacer(modifier = Modifier.height(20.dp))
-                    }
-                } else {
-                item {
-                    Text(text = "No projects found in the gallery")
-                }
-            }
-        }
-    }
-
-    Box(contentAlignment = Alignment.BottomCenter) {
-        NavBar("gallery", navController, sharedViewModel)
-    }
-}*/

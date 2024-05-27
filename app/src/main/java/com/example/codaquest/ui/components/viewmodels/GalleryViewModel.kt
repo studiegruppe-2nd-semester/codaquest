@@ -5,11 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.codaquest.domain.interfaces.ErrorOperations
+import com.example.codaquest.domain.interfaces.ProjectDialogOperations
 import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.domain.models.stringToLevelType
 
-class GalleryViewModel : ViewModel(), ErrorOperations {
+class GalleryViewModel : ViewModel(), ErrorOperations, ProjectDialogOperations {
     var showFilters: Boolean by mutableStateOf(false)
 
     var filters: Filters by mutableStateOf(Filters())
@@ -69,6 +70,8 @@ class GalleryViewModel : ViewModel(), ErrorOperations {
             showError("")
         }
     }
+
+    override var showProjectDialog: Boolean by mutableStateOf(false)
 
     override var error: String = ""
     override fun showError(error: String) {

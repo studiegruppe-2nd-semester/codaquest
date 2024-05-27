@@ -99,20 +99,11 @@ fun GenerateProjectScreen(
 
             if (generateProjectViewModel.showGeneratedProject) {
                 sharedViewModel.lastGeneratedProject?.let {
-                    ProjectComposable(
-                        project = it,
-                        deletable = false,
-                        onDelete = {},
-                    )
-                }
-                if (sharedViewModel.user?.userUid != null) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Button(
-                            onClick = {
+                    if (sharedViewModel.user?.userUid != null) {
+                        ProjectComposable(
+                            project = it,
+                            uid = sharedViewModel.user?.userUid,
+                            onSaveClick = {
                                 sharedViewModel.user?.userUid?.let { uid ->
                                     sharedViewModel.lastGeneratedProject?.let { project ->
                                         sharedViewModel.saveProject(uid, project)
@@ -120,13 +111,11 @@ fun GenerateProjectScreen(
                                     navController.navigate("saved-projects")
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.tertiary,
-                                contentColor = Color.White,
-                            ),
-                        ) {
-                            Text(text = "Save project")
-                        }
+                        )
+                    } else {
+                        ProjectComposable(
+                            project = it,
+                        )
                     }
                 }
             } else {

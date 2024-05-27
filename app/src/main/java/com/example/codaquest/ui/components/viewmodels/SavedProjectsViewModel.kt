@@ -6,6 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.codaquest.domain.interfaces.ProjectDialogOperations
 
-class HomeScreenViewModel : ViewModel(), ProjectDialogOperations {
+class SavedProjectsViewModel : ViewModel(), ProjectDialogOperations {
     override var showProjectDialog: Boolean by mutableStateOf(false)
 }

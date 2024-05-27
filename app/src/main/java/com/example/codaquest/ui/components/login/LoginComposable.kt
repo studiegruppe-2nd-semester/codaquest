@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.codaquest.ui.components.common.CustomTextField
+import com.example.codaquest.ui.components.common.LoadingDots
 import com.example.codaquest.ui.components.viewmodels.LoginViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
@@ -64,5 +65,9 @@ fun LoginComposable(
         }
 
         Text(text = loginViewModel.error)
+
+        if (loginViewModel.loading) {
+            LoadingDots()
+        }
     }
 }

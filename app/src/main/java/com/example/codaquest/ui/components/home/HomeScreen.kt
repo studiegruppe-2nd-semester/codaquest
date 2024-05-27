@@ -83,6 +83,9 @@ fun HomeScreen(
                     ProjectOverviewComposable(
                         uid = sharedViewModel.user?.userUid,
                         project = project,
+                        showProjectDialog = homeScreenViewModel.showProjectDialog,
+                        onDismissDialog = { homeScreenViewModel.showProjectDialog = false },
+                        onOpenDialog = { homeScreenViewModel.showProjectDialog = true },
                         onSaveClick = {
                             sharedViewModel.user?.userUid?.let { uid ->
                                 sharedViewModel.saveProject(uid, project)

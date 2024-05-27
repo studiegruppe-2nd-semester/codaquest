@@ -16,10 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.codaquest.ui.components.common.ProjectComposable
+import com.example.codaquest.ui.components.common.ProjectOverviewComposable
 import com.example.codaquest.ui.components.common.TextTitle
 import com.example.codaquest.ui.components.navbar.NavBar
+import com.example.codaquest.ui.components.viewmodels.SavedProjectsViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
 // Ane
@@ -28,6 +30,8 @@ fun SavedProjectsScreen(
     navController: NavController,
     sharedViewModel: SharedViewModel,
 ) {
+    val savedProjectsViewModel: SavedProjectsViewModel = viewModel()
+
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = Modifier
@@ -66,13 +70,16 @@ fun SavedProjectsScreen(
                 if (!sharedViewModel.user?.projects.isNullOrEmpty()) {
                     items(sharedViewModel.user?.projects!!, key = { project ->
                         project.projectId.toString() // Use the projectId as a stable key
-                    }) { item ->
-                        ProjectComposable(
-                            project = item,
-                            true,
+                    }) { project ->
+                        ProjectOverviewComposable(
+                            uid = sharedViewModel.user?.userUid,
+                            project = project,
+                            showProjectDialog = savedProjectsViewModel.showProjectDialog,
+                            onDismissDialog = { savedProjectsViewModel.showProjectDialog = false },
+                            onOpenDialog = { savedProjectsViewModel.showProjectDialog = true },
                             onDelete = {
                                     projectId ->
-                                item.uid?.let { uid ->
+                                project.uid?.let { uid ->
                                     sharedViewModel.deleteSavedProject(
                                         projectId,
                                         uid,

@@ -16,6 +16,9 @@ class LoginViewModel : ViewModel(), ErrorOperations {
     // ----------------------------------------- ACCOUNT SERVICE
     private val accountService = AccountService()
 
+    // ----------------------------------------- LOADING
+    var loading: Boolean by mutableStateOf(false)
+
     // ----------------------------------------- LOGIN/SIGNUP STATE
     var state: LoginState by mutableStateOf(LoginState.Login)
         private set
@@ -34,6 +37,7 @@ class LoginViewModel : ViewModel(), ErrorOperations {
         onSuccess: (User) -> Unit,
     ) {
         showError("")
+        loading = true
 
         val validateLogin: ValidationResult = UserValidationUtil.validateLogin(loginInfo)
 
@@ -43,7 +47,10 @@ class LoginViewModel : ViewModel(), ErrorOperations {
             accountService.login(
                 loginInfo = loginInfo,
                 onError = { showError(it) },
-                onSuccess = { onSuccess(it) },
+                onSuccess = {
+                    onSuccess(it)
+                    loading = false
+                },
             )
         }
     }
@@ -68,5 +75,8 @@ class LoginViewModel : ViewModel(), ErrorOperations {
 
     override fun showError(error: String) {
         this.error = error
+        if (loading) {
+            loading = false
+        }
     }
 }

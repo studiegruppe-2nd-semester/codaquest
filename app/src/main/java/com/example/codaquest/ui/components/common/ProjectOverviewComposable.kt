@@ -1,6 +1,7 @@
 package com.example.codaquest.ui.components.common
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,18 +19,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.domain.models.Project
-import com.example.codaquest.ui.theme.CodaQuestTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ProjectOverviewComposable(
-    uid: String?,
     project: Project,
-    onSaveClick: (Project) -> Unit,
+    showProjectDialog: Boolean,
+    onDismissDialog: () -> Unit,
+    onOpenDialog: (Project) -> Unit,
+    uid: String?,
+    onSaveClick: ((Project) -> Unit)? = null, // Makes the parameter optional
+    onDelete: ((String) -> Unit?)? = null,
 ) {
     Column(
         modifier = Modifier
@@ -37,7 +39,10 @@ fun ProjectOverviewComposable(
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(20.dp))
             .background(color = MaterialTheme.colorScheme.secondary)
-            .padding(15.dp, 10.dp),
+            .padding(15.dp, 10.dp)
+            .clickable {
+                onOpenDialog(project)
+            },
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
@@ -83,14 +88,16 @@ fun ProjectOverviewComposable(
             )
         }
 
-        if (uid != null) {
+        if (uid != null && onSaveClick != null) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center,
             ) {
                 Button(
-                    onClick = { onSaveClick(project) },
+                    onClick = {
+                        onSaveClick(project)
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.tertiary,
                         contentColor = Color.White,
@@ -101,27 +108,25 @@ fun ProjectOverviewComposable(
             }
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun ProjectComposablePreviewPreview() {
-    CodaQuestTheme {
-        ProjectOverviewComposable(
-            uid = null,
-            Project(
-                title = "Pizza Lover",
-                language = "Kotlin",
-                length = 5,
-                level = LevelType.Beginner,
-                description = "This project is about pizza bla bla",
-                steps = listOf(
-                    "Step 1",
-                    "step 2",
-                    "step 3",
-                ),
-            ),
-            onSaveClick = {},
-        )
+    if (showProjectDialog) {
+        if (onDelete != null) {
+            ProjectDialog(
+                project = project,
+                onDelete = {
+                    onDelete(it)
+                },
+                onDismissDialog = onDismissDialog,
+                uid = uid,
+                onSaveClick = onSaveClick,
+            )
+        } else {
+            ProjectDialog(
+                project = project,
+                onDismissDialog = onDismissDialog,
+                uid = uid,
+                onSaveClick = onSaveClick,
+            )
+        }
     }
 }
