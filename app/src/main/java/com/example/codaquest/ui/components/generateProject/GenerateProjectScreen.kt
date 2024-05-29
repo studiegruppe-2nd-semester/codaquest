@@ -104,12 +104,10 @@ fun GenerateProjectScreen(
                             project = it,
                             uid = sharedViewModel.user?.userUid,
                             onSaveClick = {
-                                sharedViewModel.user?.userUid?.let { uid ->
-                                    sharedViewModel.lastGeneratedProject?.let { project ->
-                                        sharedViewModel.saveProject(uid, project)
-                                    }
-                                    navController.navigate("saved-projects")
+                                sharedViewModel.lastGeneratedProject?.let { project ->
+                                    sharedViewModel.saveProject(project)
                                 }
+                                navController.navigate("gallery")
                             },
                         )
                     } else {

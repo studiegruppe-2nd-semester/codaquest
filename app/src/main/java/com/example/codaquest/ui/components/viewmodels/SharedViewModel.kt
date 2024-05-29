@@ -52,11 +52,13 @@ class SharedViewModel : ViewModel() {
     }
 
     private fun saveProjectInViewModel(project: Project) {
-        if (user?.projects != null) {
-            user?.projects!!.add(project)
-            changeUser(user)
+        if (galleryProjects.isNullOrEmpty()) {
+            galleryProjects = listOf(project)
         } else {
-            changeUser(user?.copy(projects = mutableListOf(project)))
+            val list = mutableListOf<Project>()
+            list.addAll(galleryProjects!!)
+            list.add(project)
+            galleryProjects = list
         }
     }
 
@@ -87,11 +89,10 @@ class SharedViewModel : ViewModel() {
     var lastGeneratedProject: Project? by mutableStateOf(null)
 
     fun saveProject(
-        uid: String,
         project: Project,
     ) {
         projectRepository.saveUserProject(
-            project.copy(uid = uid),
+            project,
             onSuccess = { saveProjectInViewModel(it) },
         )
     }

@@ -45,7 +45,7 @@ class ProjectRepository {
         project: Project,
         onSuccess: (Project) -> Unit,
     ) {
-        db.collection("projects")
+        db.collection("gallery")
             .add(project)
             .addOnSuccessListener { documentReference ->
                 Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: $documentReference")

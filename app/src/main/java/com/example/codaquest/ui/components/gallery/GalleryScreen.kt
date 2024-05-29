@@ -191,12 +191,6 @@ fun GalleryScreen(
                         showProjectDialog = galleryViewModel.showProjectDialog,
                         onDismissDialog = { galleryViewModel.showProjectDialog = false },
                         onOpenDialog = { galleryViewModel.showProjectDialog = true },
-                        onSaveClick = {
-                            sharedViewModel.user?.userUid?.let { uid ->
-                                sharedViewModel.saveProject(uid, project)
-                                navController.navigate("saved-projects")
-                            }
-                        },
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))

@@ -87,10 +87,8 @@ fun HomeScreen(
                         onDismissDialog = { homeScreenViewModel.showProjectDialog = false },
                         onOpenDialog = { homeScreenViewModel.showProjectDialog = true },
                         onSaveClick = {
-                            sharedViewModel.user?.userUid?.let { uid ->
-                                sharedViewModel.saveProject(uid, project)
-                                navController.navigate("saved-projects")
-                            }
+                            sharedViewModel.saveProject(project)
+                            navController.navigate("gallery")
                         },
                     )
                 }
