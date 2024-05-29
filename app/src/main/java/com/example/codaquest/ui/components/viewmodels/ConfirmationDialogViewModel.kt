@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
+// Aaron
 class ConfirmationDialogViewModel : ViewModel() {
     var showConfirmationDialog: Boolean by mutableStateOf(false)
 }

@@ -17,6 +17,7 @@ import com.example.codaquest.domain.models.User
 import com.example.codaquest.ui.components.common.NavBarOption
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
+// Ane
 @Composable
 fun NavBar(
     currentScreen: String,

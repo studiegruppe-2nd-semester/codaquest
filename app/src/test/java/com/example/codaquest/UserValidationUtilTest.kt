@@ -7,6 +7,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
+// Ane
 class UserValidationUtilTest {
     // ------------------------------------- EMAIL
     @Test
@@ -18,10 +19,6 @@ class UserValidationUtilTest {
             ),
         )
         assertTrue(result is ValidationResult.Error)
-
-        // If you want to check the error message, you can do:
-//        val errorMessage = (result as ValidationResult.Error).message
-//        assertEquals("Email cannot be empty", errorMessage)
     }
 
     @Test
@@ -32,7 +29,6 @@ class UserValidationUtilTest {
                 password = "password",
             ),
         )
-//        assertTrue(result is ValidationResult.Error)
         assertEquals("Wrong email format", (result as ValidationResult.Error).message)
     }
 
@@ -55,7 +51,6 @@ class UserValidationUtilTest {
                 password = "password",
             ),
         )
-//        assertTrue(result is ValidationResult.Error)
         assertEquals("Wrong email format", (result as ValidationResult.Error).message)
     }
 
@@ -67,7 +62,6 @@ class UserValidationUtilTest {
                 password = "password",
             ),
         )
-//        assertTrue(result is ValidationResult.Error)
         assertEquals("Wrong email format", (result as ValidationResult.Error).message)
     }
 

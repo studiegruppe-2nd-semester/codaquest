@@ -31,6 +31,7 @@ import com.example.codaquest.R
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.ui.components.viewmodels.ConfirmationDialogViewModel
 
+// Aaron og Ane
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ProjectComposable(

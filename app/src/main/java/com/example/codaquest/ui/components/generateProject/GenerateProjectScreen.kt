@@ -34,7 +34,7 @@ import com.example.codaquest.ui.components.common.StepTextFieldAndDropdown
 import com.example.codaquest.ui.components.viewmodels.GenerateProjectViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
-// Kasper
+// Kasper og Ane
 @Composable
 fun GenerateProjectScreen(
     navController: NavController,

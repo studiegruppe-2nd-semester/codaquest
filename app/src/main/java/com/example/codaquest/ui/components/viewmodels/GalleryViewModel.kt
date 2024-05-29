@@ -10,6 +10,7 @@ import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.Project
 import com.example.codaquest.domain.models.stringToLevelType
 
+// Ane
 class GalleryViewModel : ViewModel(), ErrorOperations, ProjectDialogOperations {
     var showFilters: Boolean by mutableStateOf(false)
 

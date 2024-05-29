@@ -3,6 +3,7 @@ package com.example.codaquest.domain.models
 import com.google.firebase.firestore.DocumentId
 import kotlinx.serialization.Serializable
 
+// Ane
 @Serializable
 data class Project(
     var uid: String? = null,

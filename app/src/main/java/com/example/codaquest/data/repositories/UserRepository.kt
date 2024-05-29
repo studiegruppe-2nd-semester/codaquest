@@ -7,7 +7,7 @@ import com.example.codaquest.domain.models.User
 import com.example.codaquest.domain.models.stringToLevelType
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-
+// Kasper og Ane
 class UserRepository {
     private val db = Firebase.firestore
     private val projectRepository = ProjectRepository()
@@ -81,6 +81,7 @@ class UserRepository {
             }
     }
 
+    // Nathasja og Ane
     fun addOnboardingDataToUserData(
         onboardingData: OnboardingData,
         user: User,
@@ -114,6 +115,7 @@ class UserRepository {
             }
     }
 
+    // Nathasja
     fun deleteUserData(
         uid: String,
         onSuccess: () -> Unit,

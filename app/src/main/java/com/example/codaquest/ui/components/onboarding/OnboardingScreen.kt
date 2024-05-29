@@ -29,6 +29,7 @@ import com.example.codaquest.ui.components.common.StepTextField
 import com.example.codaquest.ui.components.viewmodels.OnboardingViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
+// Nathasja og Ane
 @Composable
 fun OnboardingScreen(
     navController: NavController,

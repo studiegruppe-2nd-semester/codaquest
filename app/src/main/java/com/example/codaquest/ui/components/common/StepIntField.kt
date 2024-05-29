@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.codaquest.domain.models.QuestionInfo
 
+// Ane og Kasper
 @Composable
 fun StepIntField(
     questionInfo: QuestionInfo,
@@ -37,15 +38,5 @@ fun StepIntField(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done,
         )
-
-//        TextField(
-//            value = ,
-//            onValueChange = ,
-//            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = ),
-//            colors = TextFieldDefaults.colors(
-//                focusedContainerColor = MaterialTheme.colorScheme.secondary,
-//                unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
-//            ),
-//        )
     }
 }

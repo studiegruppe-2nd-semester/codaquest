@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.codaquest.domain.models.QuestionInfo
 
+// Kasper og Ane
 @Composable
 fun StepRadioButtons(
     questionInfo: QuestionInfo,

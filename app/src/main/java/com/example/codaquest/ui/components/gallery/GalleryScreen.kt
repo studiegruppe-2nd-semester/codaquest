@@ -35,6 +35,7 @@ import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.GalleryViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
+// Aaron og Ane
 @Composable
 fun GalleryScreen(
     navController: NavController,

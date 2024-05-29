@@ -18,6 +18,7 @@ import com.example.codaquest.domain.models.QuestionTypes
 import com.example.codaquest.domain.models.stringToLevelType
 import kotlinx.coroutines.launch
 
+// Kasper og Ane
 @SuppressLint("MutableCollectionMutableState")
 class GenerateProjectViewModel : ViewModel(), ErrorOperations {
     override var error: String by mutableStateOf("")

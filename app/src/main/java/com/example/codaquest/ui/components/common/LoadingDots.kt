@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.codaquest.ui.components.viewmodels.LoadingViewModel
 
+// Ane
 @Composable
 fun LoadingDots() {
     val loadingViewModel: LoadingViewModel = viewModel()
