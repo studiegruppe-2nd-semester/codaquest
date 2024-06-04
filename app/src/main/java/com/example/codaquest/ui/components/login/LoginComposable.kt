@@ -19,6 +19,7 @@ import com.example.codaquest.ui.components.common.LoadingDots
 import com.example.codaquest.ui.components.viewmodels.LoginViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
+// Ane og Nathasja
 @Composable
 fun LoginComposable(
     navController: NavController,

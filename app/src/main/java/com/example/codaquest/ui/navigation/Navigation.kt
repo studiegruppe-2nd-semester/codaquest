@@ -16,6 +16,7 @@ import com.example.codaquest.ui.components.savedProjects.SavedProjectsScreen
 import com.example.codaquest.ui.components.settings.SettingsScreen
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
+// Nathasja
 @Composable
 fun SetupNavHost(
     navController: NavHostController,

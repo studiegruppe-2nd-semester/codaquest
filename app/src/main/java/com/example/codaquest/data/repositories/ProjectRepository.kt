@@ -6,7 +6,7 @@ import com.example.codaquest.domain.models.Project
 import com.example.codaquest.domain.models.stringToLevelType
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-
+// Kasper
 class ProjectRepository {
     private val db = Firebase.firestore
 
@@ -58,6 +58,7 @@ class ProjectRepository {
             }
     }
 
+    // Ane
     fun deleteSavedProject(
         projectId: String,
         onSuccess: () -> Unit,
@@ -72,11 +73,11 @@ class ProjectRepository {
             }
     }
 
+    // Nathasja
     fun deleteAllUserProjects(
         uid: String,
         onSuccess: () -> Unit,
     ) {
-        // TODO
         val batch = db.batch()
 
         db.collection("projects")

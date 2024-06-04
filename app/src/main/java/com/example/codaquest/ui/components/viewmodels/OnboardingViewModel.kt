@@ -14,6 +14,7 @@ import com.example.codaquest.domain.models.QuestionTypes
 import com.example.codaquest.domain.models.User
 import com.example.codaquest.domain.models.stringToLevelType
 
+// Nathasja og Ane
 @SuppressLint("MutableCollectionMutableState")
 class OnboardingViewModel : ViewModel() {
     private val userRepository: UserRepository = UserRepository()

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+// Ane
 class LoadingViewModel : ViewModel() {
     private val loadingList: List<String> = listOf(".", "..", "...")
     var loadingText: String by mutableStateOf(loadingList[0])

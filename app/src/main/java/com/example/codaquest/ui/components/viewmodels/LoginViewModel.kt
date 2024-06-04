@@ -12,6 +12,7 @@ import com.example.codaquest.domain.models.User
 import com.example.codaquest.util.UserValidationUtil
 import com.example.codaquest.util.ValidationResult
 
+// Ane
 class LoginViewModel : ViewModel(), ErrorOperations {
     // ----------------------------------------- ACCOUNT SERVICE
     private val accountService = AccountService()

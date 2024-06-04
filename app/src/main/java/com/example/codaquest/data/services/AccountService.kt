@@ -9,7 +9,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import java.lang.Exception
-
+// Ane
 class AccountService {
     private val userRepository = UserRepository()
 
@@ -64,6 +64,7 @@ class AccountService {
         onSuccess()
     }
 
+    // Nathasja
     private fun reAuthenticate(
         user: FirebaseUser,
         email: String,
@@ -112,6 +113,7 @@ class AccountService {
         }
     }
 
+    // Nathasja
     fun deleteAccount(
         loginInfo: LoginInfo,
         onCompleted: () -> Unit,

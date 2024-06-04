@@ -27,6 +27,7 @@ import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.HomeScreenViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
+// Kasper og Ane
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -43,7 +44,6 @@ fun HomeScreen(
 
     ) {
         item {
-            // your code starts here!
             Text(
                 text = "Project generator",
                 modifier = Modifier

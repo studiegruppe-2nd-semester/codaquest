@@ -36,6 +36,7 @@ import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.ProfileViewModel
 import com.example.codaquest.ui.components.viewmodels.SharedViewModel
 
+// Ane og Aaron
 @Composable
 fun ProfileScreen(
     navController: NavController,
@@ -55,7 +56,6 @@ fun ProfileScreen(
             modifier = Modifier
                 .padding(5.dp)
                 .padding(bottom = 65.dp),
-//            .fillMaxSize()
         ) {
             item {
                 Row(
