@@ -5,7 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.codaquest.domain.interfaces.ProjectDialogOperations
+import com.example.codaquest.domain.models.Project
 
 class SavedProjectsViewModel : ViewModel(), ProjectDialogOperations {
     override var showProjectDialog: Boolean by mutableStateOf(false)
+
+    override var selectedDialogProject: Project? by mutableStateOf(null)
 }

@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.codaquest.ui.components.common.ProjectDialog
 import com.example.codaquest.ui.components.common.ProjectOverviewComposable
 import com.example.codaquest.ui.components.common.TextTitle
 import com.example.codaquest.ui.components.navbar.NavBar
@@ -74,21 +75,9 @@ fun SavedProjectsScreen(
                         ProjectOverviewComposable(
                             uid = sharedViewModel.user?.userUid,
                             project = project,
-                            showProjectDialog = savedProjectsViewModel.showProjectDialog,
-                            onDismissDialog = { savedProjectsViewModel.showProjectDialog = false },
-                            onOpenDialog = { savedProjectsViewModel.showProjectDialog = true },
-                            onDelete = {
-                                    projectId ->
-                                project.uid?.let { uid ->
-                                    sharedViewModel.deleteSavedProject(
-                                        projectId,
-                                        uid,
-                                        "saved-projects",
-                                    )
-                                    if (sharedViewModel.loading) {
-                                        navController.navigate("loading")
-                                    }
-                                }
+                            onOpenDialog = {
+                                savedProjectsViewModel.selectedDialogProject = project
+                                savedProjectsViewModel.showProjectDialog = true
                             },
                         )
 
@@ -101,6 +90,32 @@ fun SavedProjectsScreen(
                 }
             }
         }
+    }
+
+    if (savedProjectsViewModel.showProjectDialog && savedProjectsViewModel.selectedDialogProject != null) {
+        ProjectDialog(
+            project = savedProjectsViewModel.selectedDialogProject!!,
+            onDelete = { projectId ->
+                savedProjectsViewModel.selectedDialogProject!!.uid?.let { uid ->
+                    sharedViewModel.deleteSavedProject(
+                        projectId,
+                        uid,
+                        "saved-projects",
+                    )
+                    if (sharedViewModel.loading) {
+                        navController.navigate("loading")
+                    }
+                }
+            },
+            onDismissDialog = { savedProjectsViewModel.showProjectDialog = false },
+            uid = sharedViewModel.user?.userUid,
+            onSaveClick = { project ->
+                sharedViewModel.user?.userUid?.let { uid ->
+                    sharedViewModel.saveProject(uid, project)
+                    navController.navigate("saved-projects")
+                }
+            },
+        )
     }
 
     Box(contentAlignment = Alignment.BottomCenter) {

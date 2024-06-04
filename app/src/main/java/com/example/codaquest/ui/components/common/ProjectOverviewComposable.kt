@@ -26,12 +26,9 @@ import com.example.codaquest.domain.models.Project
 @Composable
 fun ProjectOverviewComposable(
     project: Project,
-    showProjectDialog: Boolean,
-    onDismissDialog: () -> Unit,
-    onOpenDialog: (Project) -> Unit,
+    onOpenDialog: () -> Unit,
     uid: String?,
     onSaveClick: ((Project) -> Unit)? = null, // Makes the parameter optional
-    onDelete: ((String) -> Unit?)? = null,
 ) {
     Column(
         modifier = Modifier
@@ -41,7 +38,7 @@ fun ProjectOverviewComposable(
             .background(color = MaterialTheme.colorScheme.secondary)
             .padding(15.dp, 10.dp)
             .clickable {
-                onOpenDialog(project)
+                onOpenDialog()
             },
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
@@ -106,27 +103,6 @@ fun ProjectOverviewComposable(
                     Text(text = "Save project")
                 }
             }
-        }
-    }
-
-    if (showProjectDialog) {
-        if (onDelete != null) {
-            ProjectDialog(
-                project = project,
-                onDelete = {
-                    onDelete(it)
-                },
-                onDismissDialog = onDismissDialog,
-                uid = uid,
-                onSaveClick = onSaveClick,
-            )
-        } else {
-            ProjectDialog(
-                project = project,
-                onDismissDialog = onDismissDialog,
-                uid = uid,
-                onSaveClick = onSaveClick,
-            )
         }
     }
 }

@@ -73,6 +73,8 @@ class GalleryViewModel : ViewModel(), ErrorOperations, ProjectDialogOperations {
 
     override var showProjectDialog: Boolean by mutableStateOf(false)
 
+    override var selectedDialogProject: Project? by mutableStateOf(null)
+
     override var error: String = ""
     override fun showError(error: String) {
         this.error = error

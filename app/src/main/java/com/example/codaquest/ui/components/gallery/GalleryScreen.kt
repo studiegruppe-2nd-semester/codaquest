@@ -29,6 +29,7 @@ import com.example.codaquest.domain.models.Filters
 import com.example.codaquest.domain.models.LevelType
 import com.example.codaquest.ui.components.common.CustomTextField
 import com.example.codaquest.ui.components.common.DynamicDropdown
+import com.example.codaquest.ui.components.common.ProjectDialog
 import com.example.codaquest.ui.components.common.ProjectOverviewComposable
 import com.example.codaquest.ui.components.common.TextTitle
 import com.example.codaquest.ui.components.navbar.NavBar
@@ -93,7 +94,7 @@ fun GalleryScreen(
                                 )
                             },
                             label = "Coding language",
-                            keyboardType = KeyboardType.Number,
+                            keyboardType = KeyboardType.Text,
                             imeAction = ImeAction.Next,
                         )
 
@@ -187,9 +188,10 @@ fun GalleryScreen(
                     ProjectOverviewComposable(
                         uid = sharedViewModel.user?.userUid,
                         project = project,
-                        showProjectDialog = galleryViewModel.showProjectDialog,
-                        onDismissDialog = { galleryViewModel.showProjectDialog = false },
-                        onOpenDialog = { galleryViewModel.showProjectDialog = true },
+                        onOpenDialog = {
+                            galleryViewModel.selectedDialogProject = project
+                            galleryViewModel.showProjectDialog = true
+                        },
                         onSaveClick = {
                             sharedViewModel.user?.userUid?.let { uid ->
                                 sharedViewModel.saveProject(uid, project)
@@ -202,6 +204,20 @@ fun GalleryScreen(
                 }
             }
         }
+    }
+
+    if (galleryViewModel.showProjectDialog && galleryViewModel.selectedDialogProject != null) {
+        ProjectDialog(
+            project = galleryViewModel.selectedDialogProject!!,
+            onDismissDialog = { galleryViewModel.showProjectDialog = false },
+            uid = sharedViewModel.user?.userUid,
+            onSaveClick = { project ->
+                sharedViewModel.user?.userUid?.let { uid ->
+                    sharedViewModel.saveProject(uid, project)
+                    navController.navigate("saved-projects")
+                }
+            },
+        )
     }
 
     Box(contentAlignment = Alignment.BottomCenter) {

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.codaquest.ui.components.common.ProjectDialog
 import com.example.codaquest.ui.components.common.ProjectOverviewComposable
 import com.example.codaquest.ui.components.navbar.NavBar
 import com.example.codaquest.ui.components.viewmodels.HomeScreenViewModel
@@ -83,9 +84,10 @@ fun HomeScreen(
                     ProjectOverviewComposable(
                         uid = sharedViewModel.user?.userUid,
                         project = project,
-                        showProjectDialog = homeScreenViewModel.showProjectDialog,
-                        onDismissDialog = { homeScreenViewModel.showProjectDialog = false },
-                        onOpenDialog = { homeScreenViewModel.showProjectDialog = true },
+                        onOpenDialog = {
+                            homeScreenViewModel.selectedDialogProject = project
+                            homeScreenViewModel.showProjectDialog = true
+                        },
                         onSaveClick = {
                             sharedViewModel.user?.userUid?.let { uid ->
                                 sharedViewModel.saveProject(uid, project)
@@ -96,6 +98,20 @@ fun HomeScreen(
                 }
             }
         }
+    }
+
+    if (homeScreenViewModel.showProjectDialog && homeScreenViewModel.selectedDialogProject != null) {
+        ProjectDialog(
+            project = homeScreenViewModel.selectedDialogProject!!,
+            onDismissDialog = { homeScreenViewModel.showProjectDialog = false },
+            uid = sharedViewModel.user?.userUid,
+            onSaveClick = { project ->
+                sharedViewModel.user?.userUid?.let { uid ->
+                    sharedViewModel.saveProject(uid, project)
+                    navController.navigate("saved-projects")
+                }
+            },
+        )
     }
 
     Box(contentAlignment = Alignment.BottomCenter) {
